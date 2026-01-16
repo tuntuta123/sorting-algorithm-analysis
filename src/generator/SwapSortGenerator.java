@@ -9,6 +9,7 @@ public class SwapSortGenerator extends AbstractGenerator{
 	public SwapSortGenerator(double swapRatio, int size){
 		super(size);
 		this.swaps = (int)(swapRatio * size);
+		init();
 	}
 	
 	public int getSwaps(){
