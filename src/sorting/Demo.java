@@ -13,6 +13,17 @@ public class Demo{
 		
 		InsertionSorting.sort(l1);
 		System.out.println("After sorting : " + l1);
+
+		//BubbleSort
+		BubbleSort bubble=new BubbleSort();
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(5);
+        list.add(6);
+        list.add(1);
+        list.add(3);
+        bubble.sort(list);
+        bubble.printList(list);
+
 	}
 
 }
