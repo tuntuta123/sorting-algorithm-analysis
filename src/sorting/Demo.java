@@ -7,6 +7,7 @@ public class Demo{
 
 	public static void main(String[] args){
 		SwapSortGenerator veryRandom = new SwapSortGenerator(1.0,100);
+		SwapSortGenerator veryRandom2 = new SwapSortGenerator(1.0,100);
 		
 		List<Integer> l1 = veryRandom.getList();
 		System.out.println("Before sorting : " + l1);
@@ -23,6 +24,12 @@ public class Demo{
         list.add(3);
         bubble.sort(list);
         bubble.printList(list);
+        
+        List<Integer> l2 = veryRandom2.getList();
+		System.out.println("Before sorting : " + l2);
+		
+		MergeSorting.sort(l2);
+		System.out.println("After sorting : " + l2);
 
 	}
 
