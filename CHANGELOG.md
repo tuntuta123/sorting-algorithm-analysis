@@ -14,3 +14,22 @@ All notable changes to this project are documented in this file.
 
 ### Notes
 
+
+## [0.1.1] - 2026-01-21
+
+### Added
+- Sorting algorithms added
+- MergeSort
+- BubbleSort
+- InsertionSort
+- QuickSort
+- Small demo for testing the algorithms
+
+### Notes
+
+## [0.1.2] - 2026-01-01
+
+### Added
+- Listener classes added for future JavaFX compatibility
+- Implemented listeners in the algorithms
+
