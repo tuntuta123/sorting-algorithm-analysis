@@ -25,12 +25,7 @@ public class BubbleSort{
 			if(bool==false){
 				break;
 			}
-        }
+        	}
 	}
 
-	public static void printList(List<Integer> list){
-		for (int i = 0; i < list.size(); i++){
-			System.out.print(list.get(i));
-        }
-	}
 }

@@ -14,22 +14,28 @@ public class Demo{
 		
 		InsertionSorting.sort(l1);
 		System.out.println("After sorting : " + l1);
-
-		//BubbleSort
-		BubbleSort bubble=new BubbleSort();
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(5);
-        list.add(6);
-        list.add(1);
-        list.add(3);
-        bubble.sort(list);
-        bubble.printList(list);
         
-        List<Integer> l2 = veryRandom2.getList();
+        	List<Integer> l2 = veryRandom2.getList();
 		System.out.println("Before sorting : " + l2);
 		
 		MergeSorting.sort(l2);
 		System.out.println("After sorting : " + l2);
+
+		//BucketSort
+		SwapSortGenerator random = new SwapSortGenerator(1.0, 100);
+		List<Integer> list1 = random.getList();
+
+		System.out.println("Before bucket sort : " + list1);
+		BucketSort.sort(list1);
+		System.out.println("After bucket sort  : " + list1);
+
+		//BubbleSort
+		SwapSortGenerator random1 = new SwapSortGenerator(1.0, 100);
+		List<Integer> list2 = random1.getList();
+
+		System.out.println("Before bubble sort : " + list2);
+		BubbleSort.sort(list2);
+		System.out.println("After bubble sort  : " + list2);
 
 	}
 
