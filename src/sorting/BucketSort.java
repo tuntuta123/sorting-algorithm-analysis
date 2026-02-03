@@ -1,8 +1,17 @@
 package sorting;
 import java.util.*;
 
+/**
+ * This algorithm distributes elements into several buckets, sorts each bucket 
+ * individually, and then merges them back together.
+ */
+
 public class BucketSort {
 
+    /**
+     * Helper method to sort individual buckets.
+     * @param bucket The list of integers.
+     */
     private static void insertionSort(List<Integer> bucket) {
         for (int i = 1; i < bucket.size(); i++) {
             int key = bucket.get(i);
@@ -25,6 +34,11 @@ public class BucketSort {
         }
     }
 
+
+    /**
+     * Sort method that executes the Bucket Sort logic.
+     * @param list The unsorted list of integers that will be sorted.
+     */
     public static void sort(List<Integer> list) {
         if (list.size()<= 1) {
 			return;
