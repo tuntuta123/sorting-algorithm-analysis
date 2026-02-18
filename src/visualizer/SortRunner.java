@@ -30,7 +30,7 @@ public class SortRunner extends SwingWorker<Void, Void> {
                 MergeSorting.sort(data);
                 break;
             case "Quick Sort":
-                //QuickSort.sort(data, 0, data.size() - 1);
+                QuickSort.sort(data);
                 break;
             case "Bucket Sort":
                 BucketSort.sort(data);

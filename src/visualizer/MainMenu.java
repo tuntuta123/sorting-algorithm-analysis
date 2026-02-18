@@ -5,98 +5,123 @@ import java.awt.*;
 
 public class MainMenu extends JFrame {
 
-    private JList<String> algoList;
-    private JList<String> genList;
+    private JComboBox<String> algoComboBox;
+    private JTextField entropyField;
 
     private final String[] algorithms = {
-        "Bubble Sort",
-        "Insertion Sort",
-        "Merge Sort",
-        "Quick Sort",
-        "Bucket Sort"
-    };
-
-    private final String[] generators = {
-        "Sorted",
-        "10% swapped",
-        "50% swapped",
-        "100% swapped",
-        "Entropy 0.0 (sorted)",
-        "Entropy 0.25",
-        "Entropy 0.5",
-        "Entropy 0.75",
-        "Entropy 1.0 (random)"
+            "Bubble Sort",
+            "Insertion Sort",
+            "Merge Sort",
+            "Quick Sort",
+            "Bucket Sort"
     };
 
     public MainMenu() {
         setTitle("Sorting Visualizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(550, 420);
+        setSize(600, 420);
         setLocationRelativeTo(null);
         setResizable(false);
+
         buildUI();
         setVisible(true);
     }
 
     private void buildUI() {
-        setLayout(new BorderLayout(8, 8));
+
+        Color background = new Color(34, 40, 49);
+        Color panelColor = new Color(57, 62, 70);
+        Color accent = new Color(0, 173, 181);
+
+        getContentPane().setBackground(background);
+        setLayout(new BorderLayout(10, 10));
 
         JLabel title = new JLabel("Sorting Algorithm Visualizer", SwingConstants.CENTER);
-        title.setFont(new Font("SansSerif", Font.BOLD, 20));
-        title.setBorder(BorderFactory.createEmptyBorder(12, 0, 8, 0));
+        title.setFont(new Font("SansSerif", Font.BOLD, 22));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         add(title, BorderLayout.NORTH);
 
-        JPanel center = new JPanel(new GridLayout(1, 2, 15, 0));
-        center.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBackground(panelColor);
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 
-        algoList = new JList<>(algorithms);
-        algoList.setSelectedIndex(0);
-        algoList.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        JPanel algoPanel = new JPanel(new BorderLayout(4, 4));
-        algoPanel.add(new JLabel("Algorithm:"), BorderLayout.NORTH);
-        algoPanel.add(new JScrollPane(algoList), BorderLayout.CENTER);
+        JLabel algoLabel = new JLabel("Choose Algorithm:");
+        algoLabel.setForeground(Color.WHITE);
+        algoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        genList = new JList<>(generators);
-        genList.setSelectedIndex(3);
-        genList.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        JPanel genPanel = new JPanel(new BorderLayout(4, 4));
-        genPanel.add(new JLabel("Input data:"), BorderLayout.NORTH);
-        genPanel.add(new JScrollPane(genList), BorderLayout.CENTER);
+        algoComboBox = new JComboBox<>(algorithms);
+        algoComboBox.setMaximumSize(new Dimension(250, 35));
+        algoComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        center.add(algoPanel);
-        center.add(genPanel);
-        add(center, BorderLayout.CENTER);
+        JLabel entropyLabel = new JLabel("Enter Entropy (0.0 - 1.0):");
+        entropyLabel.setForeground(Color.WHITE);
+        entropyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 10));
+        entropyField = new JTextField();
+        entropyField.setMaximumSize(new Dimension(250, 35));
+        entropyField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        centerPanel.add(algoLabel);
+        centerPanel.add(Box.createVerticalStrut(10));
+        centerPanel.add(algoComboBox);
+        centerPanel.add(Box.createVerticalStrut(30));
+        centerPanel.add(entropyLabel);
+        centerPanel.add(Box.createVerticalStrut(10));
+        centerPanel.add(entropyField);
+
+        add(centerPanel, BorderLayout.CENTER);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(background);
 
         JButton startBtn = new JButton("Visualize");
+        startBtn.setPreferredSize(new Dimension(150, 40));
+        startBtn.setBackground(accent);
+        startBtn.setForeground(Color.WHITE);
+        startBtn.setFocusPainted(false);
         startBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
-        startBtn.setPreferredSize(new Dimension(140, 36));
         startBtn.addActionListener(e -> openVisualizer());
 
         JButton exitBtn = new JButton("Exit");
-        exitBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        exitBtn.setPreferredSize(new Dimension(90, 36));
+        exitBtn.setPreferredSize(new Dimension(100, 40));
         exitBtn.addActionListener(e -> System.exit(0));
 
-        bottom.add(startBtn);
-        bottom.add(exitBtn);
-        add(bottom, BorderLayout.SOUTH);
+        bottomPanel.add(startBtn);
+        bottomPanel.add(exitBtn);
+
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     private void openVisualizer() {
-        String algo = algoList.getSelectedValue();
-        String gen = genList.getSelectedValue();
 
-        if (algo == null || gen == null) {
-            JOptionPane.showMessageDialog(this, "Please select both an algorithm and a generator.");
+        String algo = (String) algoComboBox.getSelectedItem();
+        String entropyText = entropyField.getText();
+
+        if (entropyText.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter an entropy value between 0.0 and 1.0.");
             return;
         }
 
-        new VisualizerWindow(algo, gen);
+        double entropy;
+
+        try {
+            entropy = Double.parseDouble(entropyText);
+            if (entropy < 0.0 || entropy > 1.0)
+                throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Entropy must be a valid number between 0.0 and 1.0.");
+            return;
+        }
+
+        new VisualizerWindow(algo, "Entropy " + entropy);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);
     }
 }
+

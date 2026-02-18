@@ -50,7 +50,7 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
     private void buildUI() {
         setLayout(new BorderLayout(6, 6));
 
-        JLabel titleLabel = new JLabel(algorithmName + "  |  " + generatorName, SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Visualizer of " + algorithmName, SwingConstants.CENTER);
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(8, 0, 4, 0));
         add(titleLabel, BorderLayout.NORTH);
