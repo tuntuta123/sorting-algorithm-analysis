@@ -46,5 +46,10 @@ public class SortingListener {
             listener.onSwap(i, j, val1, val2);
         }
     }
+    
+    public static void clearListeners() {
+		listeners.clear();
+	}
+
 }
 

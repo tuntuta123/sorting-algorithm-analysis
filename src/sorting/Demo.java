@@ -15,7 +15,7 @@ public class Demo{
 		InsertionSorting.sort(l1);
 		System.out.println("After sorting : " + l1);
         
-        	List<Integer> l2 = veryRandom2.getList();
+        List<Integer> l2 = veryRandom2.getList();
 		System.out.println("Before sorting : " + l2);
 		
 		MergeSorting.sort(l2);
