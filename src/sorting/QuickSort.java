@@ -5,14 +5,19 @@ import java.util.*;
 public class QuickSort{
 	
 	
+	
+	public static void sort(List<Integer> list) {
+		if (list == null || list.size() <= 1) return;
+		quickSort(list, 0, list.size() - 1);
+    	}
+	
 	//items to the left are smaller
 	//compare j with pivot, if j<pivot then i++ and switch with k
-	
-	static void sort(List<Integer> list, int low, int high){
+	static void quickSort(List<Integer> list, int low, int high){
 		if (low < high){
 			int pivotIndex = partition(list, low, high);
-			sort(list,low,pivotIndex-1);
-			sort(list,pivotIndex+1, high);
+			quickSort(list,low,pivotIndex-1);
+			quickSort(list,pivotIndex+1, high);
 		}
 	}
 	
