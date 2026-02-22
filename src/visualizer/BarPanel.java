@@ -18,12 +18,22 @@ public class BarPanel extends JPanel {
         SwingUtilities.invokeLater(this::repaint);
     }
 
+
+    public void setLiveData(List<Integer> liveData) {
+        this.data = liveData; 
+    }
+
+
+    public void highlight(int i1, int i2) {
+        this.hi1 = i1;
+        this.hi2 = i2;
+        SwingUtilities.invokeLater(this::repaint);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (data == null || data.isEmpty()){
-        	return;
-        }
+        if (data == null || data.isEmpty()) return;
 
         int w = getWidth();
         int h = getHeight();
@@ -31,9 +41,7 @@ public class BarPanel extends JPanel {
 
         int n = data.size();
         int maxVal = Collections.max(data);
-        if (maxVal == 0){
-        	maxVal = 1;
-        }
+        if (maxVal == 0) maxVal = 1;
 
         int availW = w - 2 * pad;
         int availH = h - 2 * pad;
@@ -50,7 +58,7 @@ public class BarPanel extends JPanel {
             if (i == hi1 || i == hi2) {
                 g.setColor(Color.RED);
             } else if (sorted) {
-                g.setColor(new Color(60, 179, 113)); 
+                g.setColor(new Color(60, 179, 113));
             } else {
                 g.setColor(new Color(70, 130, 180));
             }
@@ -61,9 +69,7 @@ public class BarPanel extends JPanel {
 
     private boolean isSorted() {
         for (int i = 1; i < data.size(); i++) {
-            if (data.get(i - 1) > data.get(i)){
-            	return false;
-            }
+            if (data.get(i - 1) > data.get(i)) return false;
         }
         return true;
     }

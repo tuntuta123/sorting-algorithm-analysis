@@ -8,7 +8,9 @@ import java.util.*;
  */
 public class SortingListener {
 
-    private static List<Listener> listeners = new ArrayList<>();
+    //private static List<Listener> listeners = new ArrayList<>();
+    private static final ThreadLocal<List<Listener>> listeners =
+            ThreadLocal.withInitial(ArrayList::new); // for the simulation of 2 algos
 
 	/**
      * Adds a listener to the list of listeners.
@@ -16,7 +18,7 @@ public class SortingListener {
      * @param listener The listener to be added.
      */
     public static void addListener(Listener listener) {
-        listeners.add(listener);
+        listeners.get().add(listener);
     }
 
 	/**
@@ -28,7 +30,7 @@ public class SortingListener {
      * @param val2 Value of the second element.
      */
     public static void notifyComparison(int i1, int i2, int val1, int val2) {
-        for (Listener listener : listeners) {
+        for (Listener listener : listeners.get()) {
             listener.onComparison(i1, i2, val1, val2);
         }
     }
@@ -42,14 +44,14 @@ public class SortingListener {
      * @param val2 Value of the second element before swap.
      */
     public static void notifySwap(int i, int j, int val1, int val2) {
-        for (Listener listener : listeners) {
+        for (Listener listener : listeners.get()) {
             listener.onSwap(i, j, val1, val2);
         }
     }
     
     public static void clearListeners() {
-		listeners.clear();
-	}
+        listeners.get().clear();
+    }
 
 }
 

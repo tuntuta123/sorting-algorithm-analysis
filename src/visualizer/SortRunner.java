@@ -1,44 +1,16 @@
 package visualizer;
 
-import javax.swing.SwingWorker;
 import java.util.List;
-import sorting.*;
 
-public class SortRunner extends SwingWorker<Void, Void> {
+public class SortRunner extends AbstractSortRunner {
 
-    private List<Integer> data;
-    private String algorithm;
-    private VisualizerWindow window;
+    private final VisualizerWindow window;
 
-    public SortRunner(List<Integer> data, String algorithm, VisualizerWindow window) {
-        this.data = data;
-        this.algorithm = algorithm;
+    public SortRunner(List<Integer> data, String algorithm,
+                      VisualizerWindow window, VisualizationListener listener) {
+        super(data, algorithm, listener);
         this.window = window;
         window.setCurrentData(data);
-    }
-
-    @Override
-    protected Void doInBackground() throws Exception {
-        switch (algorithm) {
-            case "Bubble Sort":
-                BubbleSort.sort(data);
-                break;
-            case "Insertion Sort":
-                InsertionSorting.sort(data);
-                break;
-            case "Merge Sort":
-                MergeSorting.sort(data);
-                break;
-            case "Quick Sort":
-                QuickSort.sort(data);
-                break;
-            case "Bucket Sort":
-                BucketSort.sort(data);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown algorithm: " + algorithm);
-        }
-        return null;
     }
 
     @Override

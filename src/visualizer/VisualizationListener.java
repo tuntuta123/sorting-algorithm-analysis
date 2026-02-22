@@ -4,38 +4,56 @@ import sorting.Listener;
 import javax.swing.*;
 
 public class VisualizationListener implements Listener {
-    
-    private VisualizerWindow frame;
-    private JSlider speedSlider;
+
+    private final VisualizerWindow frame;   // for 1
+    private final BarPanel barPanel;        //for 2
+    private final JSlider speedSlider;
     private volatile boolean paused = false;
     private final Object pauseLock = new Object();
-    
+
     public VisualizationListener(VisualizerWindow frame, JSlider speedSlider) {
         this.frame = frame;
+        this.barPanel = null;
         this.speedSlider = speedSlider;
     }
-    
+
+    public VisualizationListener(BarPanel barPanel, JSlider speedSlider) {
+        this.barPanel = barPanel;
+        this.frame = null;
+        this.speedSlider = speedSlider;
+    }
+
     @Override
     public void onComparison(int i1, int i2, int v1, int v2) {
+        highlight(i1, i2);
         checkPauseAndDelay();
     }
-    
+
     @Override
     public void onSwap(int i1, int i2, int v1, int v2) {
+        highlight(i1, i2);
         checkPauseAndDelay();
     }
-    
+
+    private void highlight(int i1, int i2) {
+        if (frame != null) {
+            frame.highlightBars(i1, i2);
+        } else if (barPanel != null) {
+            barPanel.highlight(i1, i2);
+        }
+    }
+
     public void pause() {
         paused = true;
     }
-    
+
     public void resume() {
         synchronized (pauseLock) {
             paused = false;
             pauseLock.notifyAll();
         }
     }
-    
+
     private void checkPauseAndDelay() {
         synchronized (pauseLock) {
             while (paused) {
@@ -47,11 +65,9 @@ public class VisualizationListener implements Listener {
                 }
             }
         }
-        
         try {
             int speed = speedSlider.getValue();
-            int delay = 101 - speed;
-            Thread.sleep(delay);
+            Thread.sleep(101 - speed);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

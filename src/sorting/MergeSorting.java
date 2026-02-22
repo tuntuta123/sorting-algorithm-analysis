@@ -8,13 +8,13 @@ import java.util.*;
  */
 public class MergeSorting {
 
-	/**
+    /**
      * Merges two sorted sublists into one sorted list.
-     * 
+     *
      * @param input The list to be sorted.
-     * @param i The starting index of the left sublist.
-     * @param m The ending index of the left sublist.
-     * @param j The ending index of the right sublist.
+     * @param i     The starting index of the left sublist.
+     * @param m     The ending index of the left sublist.
+     * @param j     The ending index of the right sublist.
      */
     public static void aux(List<Integer> input, int i, int m, int j) {
         List<Integer> left = new ArrayList<>(input.subList(i, m + 1));
@@ -27,8 +27,7 @@ public class MergeSorting {
         while (leftIn < left.size() && rightIn < right.size()) {
             int leftVal = left.get(leftIn);
             int rightVal = right.get(rightIn);
-
-			SortingListener.notifyComparison(leftIn, rightIn, leftVal, rightVal);
+            SortingListener.notifyComparison(i + leftIn, m + 1 + rightIn, leftVal, rightVal);
 
             if (leftVal <= rightVal) {
                 input.set(sortedIndex++, leftVal);
@@ -48,12 +47,12 @@ public class MergeSorting {
         }
     }
 
-	/**
+    /**
      * Recursively divides the list into sublists and merges them.
-     * 
+     *
      * @param input The list to be sorted.
-     * @param i The starting index of the current sublist.
-     * @param j The ending index of the current sublist.
+     * @param i     The starting index of the current sublist.
+     * @param j     The ending index of the current sublist.
      */
     public static void merge(List<Integer> input, int i, int j) {
         if (i >= j) {
@@ -65,13 +64,12 @@ public class MergeSorting {
         aux(input, i, m, j);
     }
 
-	/**
+    /**
      * Sorts the list using the Merge Sort algorithm.
-     * 
+     *
      * @param input The list of integers to be sorted.
      */
     public static void sort(List<Integer> input) {
         merge(input, 0, input.size() - 1);
     }
 }
-

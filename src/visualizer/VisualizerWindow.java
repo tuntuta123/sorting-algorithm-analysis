@@ -8,7 +8,7 @@ import java.util.List;
 import sorting.*;
 import generator.*;
 
-public class VisualizerWindow extends JFrame implements sorting.Listener {
+public class VisualizerWindow extends JFrame {
 
     private BarPanel barPanel;
     private JButton startBtn;
@@ -17,25 +17,23 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
     private JSlider speedSlider;
 
     private String algorithmName;
-    private String generatorName;
+    private double entropy; 
 
-    private List<Integer> originalData;
     private List<Integer> currentData;
 
     private int arraySize = 80;
 
     private boolean running = false;
     private boolean paused = false;
-    private volatile boolean shouldPause = false;
-    private final Object lock = new Object();
 
     private SortRunner sortRunner;
+    private VisualizationListener visListener; 
 
-    public VisualizerWindow(String algorithmName, String generatorName) {
+    public VisualizerWindow(String algorithmName, double entropy) {
         this.algorithmName = algorithmName;
-        this.generatorName = generatorName;
+        this.entropy = entropy;
 
-        setTitle(algorithmName + " — " + generatorName);
+        setTitle(algorithmName + " — Entropy " + entropy);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 650);
         setLocationRelativeTo(null);
@@ -43,7 +41,7 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
         buildUI();
         generateData();
 
-        SortingListener.addListener(this);
+
         setVisible(true);
     }
 
@@ -81,7 +79,7 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
         sizeSpinner.addChangeListener(e -> {
             arraySize = (int) sizeSpinner.getValue();
             if (!running) {
-            	generateData();
+                generateData();
             }
         });
 
@@ -102,64 +100,43 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
     }
 
     private void generateData() {
-        NumberGenerator gen;
 
-        if (generatorName.equals("Sorted")) {
-            gen = new SortedGenerator(arraySize);
-        } else if (generatorName.equals("10% swapped")) {
-            gen = new SwapSortGenerator(0.1, arraySize);
-        } else if (generatorName.equals("50% swapped")) {
-            gen = new SwapSortGenerator(0.5, arraySize);
-        } else if (generatorName.equals("100% swapped")) {
-            gen = new SwapSortGenerator(1.0, arraySize);
-        } else if (generatorName.equals("Entropy 0.0 (sorted)")) {
-            gen = new EntropyGenerator(0.0, arraySize);
-        } else if (generatorName.equals("Entropy 0.25")) {
-            gen = new EntropyGenerator(0.25, arraySize);
-        } else if (generatorName.equals("Entropy 0.5")) {
-            gen = new EntropyGenerator(0.5, arraySize);
-        } else if (generatorName.equals("Entropy 0.75")) {
-            gen = new EntropyGenerator(0.75, arraySize);
-        } else {
-            gen = new EntropyGenerator(1.0, arraySize);
-        }
+        NumberGenerator gen = new EntropyGenerator(entropy, arraySize);
 
-        originalData = new ArrayList<>(gen.getList());
-        currentData = new ArrayList<>(originalData);
+        currentData = new ArrayList<>(gen.getList());
         barPanel.update(currentData, -1, -1);
     }
 
     private void startSorting() {
         if (paused) {
-            synchronized (lock) {
-                paused = false;
-                shouldPause = false;
-                lock.notifyAll();
-            }
+            paused = false;
+            visListener.resume();
+            startBtn.setText("Start");
             startBtn.setEnabled(false);
             pauseBtn.setEnabled(true);
             return;
         }
 
         SortingListener.clearListeners();
-        SortingListener.addListener(this);
+        visListener = new VisualizationListener(this, speedSlider);
+        SortingListener.addListener(visListener);
 
         running = true;
-        shouldPause = false;
+        paused = false;
 
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(true);
         resetBtn.setEnabled(false);
 
         List<Integer> copy = new ArrayList<>(currentData);
-        sortRunner = new SortRunner(copy, algorithmName, this);
+        sortRunner = new SortRunner(copy, algorithmName, this, visListener);
         sortRunner.execute();
     }
 
     private void togglePause() {
         if (running && !paused) {
             paused = true;
-            shouldPause = true;
+            visListener.pause(); 
             startBtn.setText("Resume");
             startBtn.setEnabled(true);
             pauseBtn.setEnabled(false);
@@ -171,10 +148,14 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
             sortRunner.cancel(true);
             sortRunner = null;
         }
+        if (visListener != null && paused) {
+            visListener.resume();
+        }
+
         running = false;
         paused = false;
-        shouldPause = false;
-        synchronized (lock) { lock.notifyAll(); }
+
+        SortingListener.clearListeners();
 
         startBtn.setText("Start");
         startBtn.setEnabled(true);
@@ -186,10 +167,11 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
 
     public void onSortingDone() {
         running = false;
+        paused = false;
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
         resetBtn.setEnabled(true);
-        barPanel.update(currentData, -1, -1); 
+        barPanel.update(currentData, -1, -1);
     }
 
     public void setCurrentData(List<Integer> data) {
@@ -197,30 +179,7 @@ public class VisualizerWindow extends JFrame implements sorting.Listener {
         barPanel.update(data, -1, -1);
     }
 
-    @Override
-    public void onComparison(int i1, int i2, int v1, int v2) {
+    public void highlightBars(int i1, int i2) {
         barPanel.update(currentData, i1, i2);
-        delay();
-    }
-
-    @Override
-    public void onSwap(int i1, int i2, int v1, int v2) {
-        barPanel.update(currentData, i1, i2);
-        delay();
-    }
-
-    private void delay() {
-        synchronized (lock) {
-            while (shouldPause && !Thread.currentThread().isInterrupted()) {
-                try { lock.wait(); }
-                catch (InterruptedException e) { Thread.currentThread().interrupt(); return; }
-            }
-        }
-        try {
-            int speed = speedSlider.getValue();
-            Thread.sleep(101 - speed);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }
