@@ -16,32 +16,32 @@ public class VisualizerWindow extends JFrame {
     private JButton resetBtn;
     private JSlider speedSlider;
 
-    private String algorithmName;
-    private double entropy; 
+    private final String algorithmName;
+    private final String genType;
+    private final double entropy;
 
     private List<Integer> currentData;
-
     private int arraySize = 80;
 
     private boolean running = false;
     private boolean paused = false;
 
     private SortRunner sortRunner;
-    private VisualizationListener visListener; 
+    private VisualizationListener visListener;
 
-    public VisualizerWindow(String algorithmName, double entropy) {
+    public VisualizerWindow(String algorithmName, String genType, double entropy) {
         this.algorithmName = algorithmName;
+        this.genType = genType;
         this.entropy = entropy;
 
-        setTitle(algorithmName + " — Entropy " + entropy);
+        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        setTitle(algorithmName + " — " + genLabel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 650);
         setLocationRelativeTo(null);
 
         buildUI();
         generateData();
-
-
         setVisible(true);
     }
 
@@ -78,9 +78,7 @@ public class VisualizerWindow extends JFrame {
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
         sizeSpinner.addChangeListener(e -> {
             arraySize = (int) sizeSpinner.getValue();
-            if (!running) {
-                generateData();
-            }
+            if (!running) generateData();
         });
 
         JLabel speedLabel = new JLabel("Speed:");
@@ -100,8 +98,9 @@ public class VisualizerWindow extends JFrame {
     }
 
     private void generateData() {
-
-        NumberGenerator gen = new EntropyGenerator(entropy, arraySize);
+        NumberGenerator gen = "Random".equals(genType)
+                ? new RandomGenerator(arraySize)
+                : new EntropyGenerator(entropy, arraySize);
 
         currentData = new ArrayList<>(gen.getList());
         barPanel.update(currentData, -1, -1);
@@ -128,15 +127,14 @@ public class VisualizerWindow extends JFrame {
         pauseBtn.setEnabled(true);
         resetBtn.setEnabled(false);
 
-        List<Integer> copy = new ArrayList<>(currentData);
-        sortRunner = new SortRunner(copy, algorithmName, this, visListener);
+        sortRunner = new SortRunner(currentData, algorithmName, this, visListener);
         sortRunner.execute();
     }
 
     private void togglePause() {
         if (running && !paused) {
             paused = true;
-            visListener.pause(); 
+            visListener.pause();
             startBtn.setText("Resume");
             startBtn.setEnabled(true);
             pauseBtn.setEnabled(false);
@@ -148,13 +146,10 @@ public class VisualizerWindow extends JFrame {
             sortRunner.cancel(true);
             sortRunner = null;
         }
-        if (visListener != null && paused) {
-            visListener.resume();
-        }
+        if (visListener != null && paused) visListener.resume();
 
         running = false;
         paused = false;
-
         SortingListener.clearListeners();
 
         startBtn.setText("Start");

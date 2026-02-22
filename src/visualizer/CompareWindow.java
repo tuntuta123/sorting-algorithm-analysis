@@ -21,9 +21,9 @@ public class CompareWindow extends JFrame {
 
     private final String algo1;
     private final String algo2;
+    private final String genType;
     private final double entropy;
 
-    private List<Integer> originalData;
     private List<Integer> currentData1;
     private List<Integer> currentData2;
 
@@ -40,12 +40,14 @@ public class CompareWindow extends JFrame {
 
     private int doneCount = 0;
 
-    public CompareWindow(String algo1, String algo2, double entropy) {
+    public CompareWindow(String algo1, String algo2, String genType, double entropy) {
         this.algo1 = algo1;
         this.algo2 = algo2;
+        this.genType = genType;
         this.entropy = entropy;
 
-        setTitle(algo1 + " vs " + algo2 + " — Entropy " + entropy);
+        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        setTitle(algo1 + " vs " + algo2 + " — " + genLabel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1400, 650);
         setLocationRelativeTo(null);
@@ -100,8 +102,7 @@ public class CompareWindow extends JFrame {
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
         sizeSpinner.addChangeListener(e -> {
             arraySize = (int) sizeSpinner.getValue();
-            if (!running) 
-            	generateData();
+            if (!running) generateData();
         });
 
         JLabel speedLabel = new JLabel("Speed:");
@@ -121,11 +122,13 @@ public class CompareWindow extends JFrame {
     }
 
     private void generateData() {
-        NumberGenerator gen = new EntropyGenerator(entropy, arraySize);
-        originalData = new ArrayList<>(gen.getList());
+        NumberGenerator gen = "Random".equals(genType)
+                ? new RandomGenerator(arraySize)
+                : new EntropyGenerator(entropy, arraySize);
 
-        currentData1 = new ArrayList<>(originalData);
-        currentData2 = new ArrayList<>(originalData);
+        List<Integer> original = gen.getList();
+        currentData1 = new ArrayList<>(original);
+        currentData2 = new ArrayList<>(original);
 
         barPanel1.update(currentData1, -1, -1);
         barPanel2.update(currentData2, -1, -1);
@@ -168,10 +171,8 @@ public class CompareWindow extends JFrame {
     private void togglePause() {
         if (running && !paused) {
             paused = true;
-            if (visListener1 != null) 
-            	visListener1.pause();
-            if (visListener2 != null) 
-            	visListener2.pause();
+            if (visListener1 != null) visListener1.pause();
+            if (visListener2 != null) visListener2.pause();
             startBtn.setText("Resume");
             startBtn.setEnabled(true);
             pauseBtn.setEnabled(false);
@@ -179,17 +180,12 @@ public class CompareWindow extends JFrame {
     }
 
     private void reset() {
-        if (sortRunner1 != null) 
-        	{ sortRunner1.cancel(true); sortRunner1 = null; }
-        if (sortRunner2 != null) 
-        
-        	{ sortRunner2.cancel(true); sortRunner2 = null; }
+        if (sortRunner1 != null) { sortRunner1.cancel(true); sortRunner1 = null; }
+        if (sortRunner2 != null) { sortRunner2.cancel(true); sortRunner2 = null; }
 
         if (paused) {
-            if (visListener1 != null) 
-            	visListener1.resume();
-            if (visListener2 != null) 
-            	visListener2.resume();
+            if (visListener1 != null) visListener1.resume();
+            if (visListener2 != null) visListener2.resume();
         }
 
         running = false;
@@ -218,13 +214,5 @@ public class CompareWindow extends JFrame {
                 barPanel2.update(currentData2, -1, -1);
             });
         }
-    }
-
-    public void setCurrentData1(List<Integer> data) {
-        this.currentData1 = data;
-    }
-
-    public void setCurrentData2(List<Integer> data) {
-        this.currentData2 = data;
     }
 }
