@@ -1,7 +1,6 @@
 package visualizer;
 
 import javax.swing.*;
-import javax.swing.SwingWorker;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -17,6 +16,7 @@ public class CompareWindow extends JFrame {
     private JButton startBtn;
     private JButton pauseBtn;
     private JButton resetBtn;
+    private JButton statsBtn;
     private JSlider speedSlider;
 
     private final String algo1;
@@ -28,15 +28,15 @@ public class CompareWindow extends JFrame {
     private List<Integer> currentData2;
 
     private int arraySize = 80;
-
     private boolean running = false;
     private boolean paused = false;
 
     private SwingWorker<Void, Void> sortRunner1;
     private SwingWorker<Void, Void> sortRunner2;
-
     private VisualizationListener visListener1;
     private VisualizationListener visListener2;
+    private SortStats stats1;
+    private SortStats stats2;
 
     private int doneCount = 0;
 
@@ -51,6 +51,10 @@ public class CompareWindow extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1400, 650);
         setLocationRelativeTo(null);
+
+        String genLabel2 = genLabel;
+        stats1 = new SortStats(algo1, genLabel2);
+        stats2 = new SortStats(algo2, genLabel2);
 
         buildUI();
         generateData();
@@ -97,6 +101,14 @@ public class CompareWindow extends JFrame {
         resetBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
         resetBtn.addActionListener(e -> reset());
 
+        statsBtn = new JButton("View Performance");
+        statsBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        statsBtn.setBackground(new Color(0, 173, 181));
+        statsBtn.setForeground(Color.WHITE);
+        statsBtn.setFocusPainted(false);
+        statsBtn.setEnabled(false); 
+        statsBtn.addActionListener(e -> new StatsWindow(stats1, stats2));
+
         JLabel sizeLabel = new JLabel("Size:");
         JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
@@ -112,6 +124,7 @@ public class CompareWindow extends JFrame {
         controls.add(startBtn);
         controls.add(pauseBtn);
         controls.add(resetBtn);
+        controls.add(statsBtn);
         controls.add(Box.createHorizontalStrut(10));
         controls.add(sizeLabel);
         controls.add(sizeSpinner);
@@ -145,7 +158,9 @@ public class CompareWindow extends JFrame {
             return;
         }
 
-        SortingListener.clearListeners();
+        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        stats1 = new SortStats(algo1, genLabel);
+        stats2 = new SortStats(algo2, genLabel);
 
         visListener1 = new VisualizationListener(barPanel1, speedSlider);
         visListener2 = new VisualizationListener(barPanel2, speedSlider);
@@ -161,8 +176,8 @@ public class CompareWindow extends JFrame {
         barPanel1.setLiveData(currentData1);
         barPanel2.setLiveData(currentData2);
 
-        sortRunner1 = new CompareSortRunner(currentData1, algo1, barPanel1, visListener1, this);
-        sortRunner2 = new CompareSortRunner(currentData2, algo2, barPanel2, visListener2, this);
+        sortRunner1 = new CompareSortRunner(currentData1, algo1, barPanel1, visListener1, stats1, this);
+        sortRunner2 = new CompareSortRunner(currentData2, algo2, barPanel2, visListener2, stats2, this);
 
         sortRunner1.execute();
         sortRunner2.execute();
@@ -182,7 +197,6 @@ public class CompareWindow extends JFrame {
     private void reset() {
         if (sortRunner1 != null) { sortRunner1.cancel(true); sortRunner1 = null; }
         if (sortRunner2 != null) { sortRunner2.cancel(true); sortRunner2 = null; }
-
         if (paused) {
             if (visListener1 != null) visListener1.resume();
             if (visListener2 != null) visListener2.resume();
@@ -191,13 +205,13 @@ public class CompareWindow extends JFrame {
         running = false;
         paused = false;
         doneCount = 0;
-
         SortingListener.clearListeners();
 
         startBtn.setText("Start");
         startBtn.setEnabled(true);
         pauseBtn.setEnabled(false);
         resetBtn.setEnabled(true);
+        statsBtn.setEnabled(false);
 
         generateData();
     }
@@ -210,6 +224,7 @@ public class CompareWindow extends JFrame {
                 startBtn.setEnabled(false);
                 pauseBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
+                statsBtn.setEnabled(true); 
                 barPanel1.update(currentData1, -1, -1);
                 barPanel2.update(currentData2, -1, -1);
             });

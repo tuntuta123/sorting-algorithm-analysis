@@ -14,6 +14,7 @@ public class VisualizerWindow extends JFrame {
     private JButton startBtn;
     private JButton pauseBtn;
     private JButton resetBtn;
+    private JButton statsBtn;
     private JSlider speedSlider;
 
     private final String algorithmName;
@@ -28,6 +29,7 @@ public class VisualizerWindow extends JFrame {
 
     private SortRunner sortRunner;
     private VisualizationListener visListener;
+    private SortStats stats;
 
     public VisualizerWindow(String algorithmName, String genType, double entropy) {
         this.algorithmName = algorithmName;
@@ -39,6 +41,8 @@ public class VisualizerWindow extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 650);
         setLocationRelativeTo(null);
+
+        stats = new SortStats(algorithmName, genLabel);
 
         buildUI();
         generateData();
@@ -73,6 +77,14 @@ public class VisualizerWindow extends JFrame {
         resetBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
         resetBtn.addActionListener(e -> reset());
 
+        statsBtn = new JButton("View Performance");
+        statsBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        statsBtn.setBackground(new Color(0, 173, 181));
+        statsBtn.setForeground(Color.WHITE);
+        statsBtn.setFocusPainted(false);
+        statsBtn.setEnabled(false); 
+        statsBtn.addActionListener(e -> new StatsWindow(stats));
+
         JLabel sizeLabel = new JLabel("Size:");
         JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
@@ -88,6 +100,7 @@ public class VisualizerWindow extends JFrame {
         controls.add(startBtn);
         controls.add(pauseBtn);
         controls.add(resetBtn);
+        controls.add(statsBtn);
         controls.add(Box.createHorizontalStrut(10));
         controls.add(sizeLabel);
         controls.add(sizeSpinner);
@@ -101,7 +114,6 @@ public class VisualizerWindow extends JFrame {
         NumberGenerator gen = "Random".equals(genType)
                 ? new RandomGenerator(arraySize)
                 : new EntropyGenerator(entropy, arraySize);
-
         currentData = new ArrayList<>(gen.getList());
         barPanel.update(currentData, -1, -1);
     }
@@ -116,9 +128,11 @@ public class VisualizerWindow extends JFrame {
             return;
         }
 
+        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        stats = new SortStats(algorithmName, genLabel);
+
         SortingListener.clearListeners();
         visListener = new VisualizationListener(this, speedSlider);
-        SortingListener.addListener(visListener);
 
         running = true;
         paused = false;
@@ -127,7 +141,7 @@ public class VisualizerWindow extends JFrame {
         pauseBtn.setEnabled(true);
         resetBtn.setEnabled(false);
 
-        sortRunner = new SortRunner(currentData, algorithmName, this, visListener);
+        sortRunner = new SortRunner(currentData, algorithmName, this, visListener, stats);
         sortRunner.execute();
     }
 
@@ -156,6 +170,7 @@ public class VisualizerWindow extends JFrame {
         startBtn.setEnabled(true);
         pauseBtn.setEnabled(false);
         resetBtn.setEnabled(true);
+        statsBtn.setEnabled(false);
 
         generateData();
     }
@@ -166,6 +181,7 @@ public class VisualizerWindow extends JFrame {
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
         resetBtn.setEnabled(true);
+        statsBtn.setEnabled(true);
         barPanel.update(currentData, -1, -1);
     }
 

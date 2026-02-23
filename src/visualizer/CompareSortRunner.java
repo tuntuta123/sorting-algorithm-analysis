@@ -2,16 +2,15 @@ package visualizer;
 
 import java.util.List;
 
-
 public class CompareSortRunner extends AbstractSortRunner {
 
     private final BarPanel barPanel;
     private final CompareWindow window;
 
     public CompareSortRunner(List<Integer> data, String algorithm,
-                             BarPanel barPanel, VisualizationListener listener,
-                             CompareWindow window) {
-        super(data, algorithm, listener);
+                             BarPanel barPanel, VisualizationListener visListener,
+                             SortStats stats, CompareWindow window) {
+        super(data, algorithm, visListener, stats);
         this.barPanel = barPanel;
         this.window = window;
     }
