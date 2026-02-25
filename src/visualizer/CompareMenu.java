@@ -1,9 +1,10 @@
 package visualizer;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 
-public class CompareMenu extends JFrame {
+public class CompareMenu extends AbstractMenu {
 
     private JComboBox<String> algoComboBox1;
     private JComboBox<String> algoComboBox2;
@@ -11,95 +12,72 @@ public class CompareMenu extends JFrame {
     private JTextField entropyField;
     private JLabel entropyLabel;
 
-    private final String[] algorithms = {
-            "Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Bucket Sort"
-    };
-
-    private final String[] generators = { "Random", "Entropy" };
-
     public CompareMenu() {
-        setTitle("Compare Two Algorithms");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 560);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        super("Compare Two Algorithms", 600, 560);
         buildUI();
         setVisible(true);
     }
 
-    private void buildUI() {
-        Color background = new Color(34, 40, 49);
-        Color panelColor = new Color(57, 62, 70);
-        Color accent = new Color(0, 173, 181);
-
-        getContentPane().setBackground(background);
+    @Override
+    public void buildUI() {
+        getContentPane().setBackground(BG);
         setLayout(new BorderLayout(10, 10));
 
-        JLabel title = new JLabel("Compare Two Sorting Algorithms", SwingConstants.CENTER);
-        title.setFont(new Font("SansSerif", Font.BOLD, 22));
-        title.setForeground(Color.WHITE);
-        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        add(title, BorderLayout.NORTH);
+        add(makeTitle("Compare Two Sorting Algorithms"), BorderLayout.NORTH);
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(panelColor);
+        centerPanel.setBackground(PANEL_BG);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(25, 80, 25, 80));
 
-        JLabel algo1Label = new JLabel("Choose Algorithm 1:");
-        algo1Label.setForeground(Color.WHITE);
-        algo1Label.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        algoComboBox1 = new JComboBox<>(algorithms);
-        algoComboBox1.setMaximumSize(new Dimension(250, 35));
-        algoComboBox1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        algoComboBox1 = makeComboBox(ALGORITHMS);
         algoComboBox1.setSelectedIndex(0);
 
-        JLabel algo2Label = new JLabel("Choose Algorithm 2:");
-        algo2Label.setForeground(Color.WHITE);
-        algo2Label.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        algoComboBox2 = new JComboBox<>(algorithms);
-        algoComboBox2.setMaximumSize(new Dimension(250, 35));
-        algoComboBox2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        algoComboBox2 = makeComboBox(ALGORITHMS);
         algoComboBox2.setSelectedIndex(1);
 
-        algoComboBox1.addActionListener(e -> enforceDifferentAlgos());
-        algoComboBox2.addActionListener(e -> enforceDifferentAlgos());
+        algoComboBox2.setRenderer(new BasicComboBoxRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                    int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                String blocked = (String) algoComboBox1.getSelectedItem();
+                if (value != null && value.equals(blocked)) {
+                    setForeground(new Color(120, 120, 120));
+                    setFont(getFont().deriveFont(Font.ITALIC));
+                    setText(value + " (already selected)");
+                } else if (!isSelected) {
+                    setForeground(Color.BLACK);
+                }
+                return this;
+            }
+        });
 
-        JLabel genLabel = new JLabel("Choose Generator:");
-        genLabel.setForeground(Color.WHITE);
-        genLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        algoComboBox1.addActionListener(e -> {
+            algoComboBox2.repaint();
+            skipBlockedItem();
+        });
 
-        generatorComboBox = new JComboBox<>(generators);
-        generatorComboBox.setMaximumSize(new Dimension(250, 35));
-        generatorComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        algoComboBox2.addActionListener(e -> skipBlockedItem());
 
-        entropyLabel = new JLabel("Enter Entropy (0.0 - 1.0):");
-        entropyLabel.setForeground(Color.WHITE);
-        entropyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        entropyLabel.setVisible(false);
+        generatorComboBox = makeComboBox(GENERATORS);
 
+        entropyLabel = makeFieldLabel("Enter Entropy (0.0 - 1.0):");
         entropyField = new JTextField();
         entropyField.setMaximumSize(new Dimension(250, 35));
         entropyField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        entropyField.setVisible(false);
 
-        generatorComboBox.addActionListener(e -> {
-            boolean isEntropy = "Entropy".equals(generatorComboBox.getSelectedItem());
-            entropyLabel.setVisible(isEntropy);
-            entropyField.setVisible(isEntropy);
-        });
+        wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
-        centerPanel.add(algo1Label);
+        centerPanel.add(makeFieldLabel("Choose Algorithm 1:"));
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(algoComboBox1);
         centerPanel.add(Box.createVerticalStrut(16));
-        centerPanel.add(algo2Label);
+        centerPanel.add(makeFieldLabel("Choose Algorithm 2:"));
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(algoComboBox2);
         centerPanel.add(Box.createVerticalStrut(16));
-        centerPanel.add(genLabel);
+        centerPanel.add(makeFieldLabel("Choose Generator:"));
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(generatorComboBox);
         centerPanel.add(Box.createVerticalStrut(16));
@@ -110,20 +88,12 @@ public class CompareMenu extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setBackground(background);
+        bottomPanel.setBackground(BG);
 
-        JButton startBtn = new JButton("Compare");
-        startBtn.setPreferredSize(new Dimension(150, 40));
-        startBtn.setBackground(accent);
-        startBtn.setForeground(Color.WHITE);
-        startBtn.setFocusPainted(false);
-        startBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
-        startBtn.addActionListener(e -> openCompare());
+        JButton startBtn = makeAccentButton("Compare", 150, 40);
+        startBtn.addActionListener(e -> open());
 
-        JButton backBtn = new JButton("Return to Main Menu");
-        backBtn.setPreferredSize(new Dimension(200, 40));
-        backBtn.setFocusPainted(false);
-        backBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        JButton backBtn = makeNavButton("Return to Main Menu", 200, 40);
         backBtn.addActionListener(e -> { new MainMenu(); dispose(); });
 
         bottomPanel.add(startBtn);
@@ -131,25 +101,24 @@ public class CompareMenu extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    private void enforceDifferentAlgos() {
+    private void skipBlockedItem() {
         String sel1 = (String) algoComboBox1.getSelectedItem();
         String sel2 = (String) algoComboBox2.getSelectedItem();
         if (sel1 != null && sel1.equals(sel2)) {
-            algoComboBox2.removeActionListener(algoComboBox2.getActionListeners()[0]);
-            int current = algoComboBox2.getSelectedIndex();
             int n = algoComboBox2.getItemCount();
+            int cur = algoComboBox2.getSelectedIndex();
             for (int i = 1; i < n; i++) {
-                int next = (current + i) % n;
+                int next = (cur + i) % n;
                 if (!algoComboBox2.getItemAt(next).equals(sel1)) {
                     algoComboBox2.setSelectedIndex(next);
                     break;
                 }
             }
-            algoComboBox2.addActionListener(e -> enforceDifferentAlgos());
         }
     }
 
-    private void openCompare() {
+    @Override
+    public void open() {
         String algo1 = (String) algoComboBox1.getSelectedItem();
         String algo2 = (String) algoComboBox2.getSelectedItem();
         String genType = (String) generatorComboBox.getSelectedItem();
@@ -161,18 +130,9 @@ public class CompareMenu extends JFrame {
         }
 
         if ("Entropy".equals(genType)) {
-            String entropyText = entropyField.getText().trim();
-            if (entropyText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please enter an entropy value between 0.0 and 1.0.");
-                return;
-            }
-            try {
-                entropy = Double.parseDouble(entropyText);
-                if (entropy < 0.0 || entropy > 1.0) throw new NumberFormatException();
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Entropy must be a valid number between 0.0 and 1.0.");
-                return;
-            }
+            entropy = parseEntropy(entropyField.getText());
+            if (entropy < 0) 
+            	return; 
         }
 
         new CompareWindow(algo1, algo2, genType, entropy);

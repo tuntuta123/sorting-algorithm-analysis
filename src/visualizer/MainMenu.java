@@ -3,25 +3,17 @@ package visualizer;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JFrame {
+public class MainMenu extends AbstractMenu {
 
     public MainMenu() {
-        setTitle("Sorting Algorithms Analyzer");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 420);
-        setLocationRelativeTo(null);
-        setResizable(false);
-
+        super("Sorting Algorithms Analyzer", 600, 420);
         buildUI();
         setVisible(true);
     }
 
-    private void buildUI() {
-
-        Color background = new Color(34, 40, 49);
-        Color accent = new Color(0, 173, 181);
-
-        getContentPane().setBackground(background);
+    @Override
+    public void buildUI() {
+        getContentPane().setBackground(BG);
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel(
@@ -35,39 +27,31 @@ public class MainMenu extends JFrame {
         add(title, BorderLayout.NORTH);
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(background);
+        centerPanel.setBackground(BG);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 150, 40, 150));
 
-        JButton singleAlgoBtn = new JButton("Visualize and analyze 1 algorithm");
-        JButton compareBtn    = new JButton("Compare and visualize 2 algorithms");
-        JButton exitBtn       = new JButton("Exit");
+        JButton singleAlgoBtn = makeAccentButton("Visualize and analyze 1 algorithm", 300, 45);
+        JButton compareBtn    = makeAccentButton("Compare and visualize 2 algorithms", 300, 45);
+        JButton exitBtn       = makeAccentButton("Exit", 300, 45);
 
-        JButton[] buttons = {singleAlgoBtn, compareBtn, exitBtn};
-        for (JButton btn : buttons) {
+        for (JButton btn : new JButton[]{singleAlgoBtn, compareBtn, exitBtn}) {
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.setMaximumSize(new Dimension(300, 45));
-            btn.setBackground(accent);
-            btn.setForeground(Color.WHITE);
-            btn.setFocusPainted(false);
-            btn.setFont(new Font("SansSerif", Font.BOLD, 14));
             centerPanel.add(btn);
             centerPanel.add(Box.createVerticalStrut(20));
         }
 
         add(centerPanel, BorderLayout.CENTER);
 
-        singleAlgoBtn.addActionListener(e -> {
-            new SingleAlgoMenu();
-            dispose();
-        });
-
-        compareBtn.addActionListener(e -> {
-            new CompareMenu();
-            dispose();
-        });
-
+        singleAlgoBtn.addActionListener(e -> { new SingleAlgoMenu(); dispose(); });
+        compareBtn.addActionListener(e -> { new CompareMenu(); dispose(); });
         exitBtn.addActionListener(e -> System.exit(0));
+    }
+
+    @Override
+    public void open() {
+        setVisible(true);
     }
 
     public static void main(String[] args) {

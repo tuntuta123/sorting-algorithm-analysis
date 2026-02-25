@@ -4,32 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
 import sorting.*;
-import generator.*;
 
-public class CompareWindow extends JFrame {
+public class CompareWindow extends AbstractVisualizer {
 
     private BarPanel barPanel1;
     private BarPanel barPanel2;
 
-    private JButton startBtn;
-    private JButton pauseBtn;
-    private JButton resetBtn;
-    private JButton statsBtn;
-    private JSlider speedSlider;
-
     private final String algo1;
     private final String algo2;
-    private final String genType;
-    private final double entropy;
 
     private List<Integer> currentData1;
     private List<Integer> currentData2;
-
-    private int arraySize = 80;
-    private boolean running = false;
-    private boolean paused = false;
 
     private SwingWorker<Void, Void> sortRunner1;
     private SwingWorker<Void, Void> sortRunner2;
@@ -37,25 +23,15 @@ public class CompareWindow extends JFrame {
     private VisualizationListener visListener2;
     private SortStats stats1;
     private SortStats stats2;
-
     private int doneCount = 0;
 
     public CompareWindow(String algo1, String algo2, String genType, double entropy) {
+        super(algo1 + " vs " + algo2 + " — " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
+              genType, entropy, 1400, 650);
         this.algo1 = algo1;
         this.algo2 = algo2;
-        this.genType = genType;
-        this.entropy = entropy;
-
-        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
-        setTitle(algo1 + " vs " + algo2 + " — " + genLabel);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1400, 650);
-        setLocationRelativeTo(null);
-
-        String genLabel2 = genLabel;
-        stats1 = new SortStats(algo1, genLabel2);
-        stats2 = new SortStats(algo2, genLabel2);
-
+        stats1 = new SortStats(algo1, genLabel());
+        stats2 = new SortStats(algo2, genLabel());
         buildUI();
         generateData();
         setVisible(true);
@@ -86,68 +62,20 @@ public class CompareWindow extends JFrame {
         barsPanel.add(barPanel2);
         add(barsPanel, BorderLayout.CENTER);
 
-        JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 8));
-
-        startBtn = new JButton("Start");
-        startBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        startBtn.addActionListener(e -> startSorting());
-
-        pauseBtn = new JButton("Pause");
-        pauseBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        pauseBtn.setEnabled(false);
-        pauseBtn.addActionListener(e -> togglePause());
-
-        resetBtn = new JButton("Reset");
-        resetBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        resetBtn.addActionListener(e -> reset());
-
-        statsBtn = new JButton("View Performance");
-        statsBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        statsBtn.setBackground(new Color(0, 173, 181));
-        statsBtn.setForeground(Color.WHITE);
-        statsBtn.setFocusPainted(false);
-        statsBtn.setEnabled(false); 
-        statsBtn.addActionListener(e -> new StatsWindow(stats1, stats2));
-
-        JLabel sizeLabel = new JLabel("Size:");
-        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
-        sizeSpinner.setPreferredSize(new Dimension(65, 28));
-        sizeSpinner.addChangeListener(e -> {
-            arraySize = (int) sizeSpinner.getValue();
-            if (!running) generateData();
-        });
-
-        JLabel speedLabel = new JLabel("Speed:");
-        speedSlider = new JSlider(1, 100, 50);
-        speedSlider.setPreferredSize(new Dimension(160, 30));
-
-        controls.add(startBtn);
-        controls.add(pauseBtn);
-        controls.add(resetBtn);
-        controls.add(statsBtn);
-        controls.add(Box.createHorizontalStrut(10));
-        controls.add(sizeLabel);
-        controls.add(sizeSpinner);
-        controls.add(speedLabel);
-        controls.add(speedSlider);
-
-        add(controls, BorderLayout.SOUTH);
+        add(buildControlPanel(), BorderLayout.SOUTH);
     }
 
-    private void generateData() {
-        NumberGenerator gen = "Random".equals(genType)
-                ? new RandomGenerator(arraySize)
-                : new EntropyGenerator(entropy, arraySize);
-
-        List<Integer> original = gen.getList();
+    @Override
+    public void generateData() {
+        List<Integer> original = buildGenerator().getList();
         currentData1 = new ArrayList<>(original);
         currentData2 = new ArrayList<>(original);
-
         barPanel1.update(currentData1, -1, -1);
         barPanel2.update(currentData2, -1, -1);
     }
 
-    private void startSorting() {
+    @Override
+    public void startSorting() {
         if (paused) {
             paused = false;
             if (visListener1 != null) visListener1.resume();
@@ -158,9 +86,8 @@ public class CompareWindow extends JFrame {
             return;
         }
 
-        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
-        stats1 = new SortStats(algo1, genLabel);
-        stats2 = new SortStats(algo2, genLabel);
+        stats1 = new SortStats(algo1, genLabel());
+        stats2 = new SortStats(algo2, genLabel());
 
         visListener1 = new VisualizationListener(barPanel1, speedSlider);
         visListener2 = new VisualizationListener(barPanel2, speedSlider);
@@ -168,7 +95,6 @@ public class CompareWindow extends JFrame {
         running = true;
         paused = false;
         doneCount = 0;
-
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(true);
         resetBtn.setEnabled(false);
@@ -178,12 +104,12 @@ public class CompareWindow extends JFrame {
 
         sortRunner1 = new CompareSortRunner(currentData1, algo1, barPanel1, visListener1, stats1, this);
         sortRunner2 = new CompareSortRunner(currentData2, algo2, barPanel2, visListener2, stats2, this);
-
         sortRunner1.execute();
         sortRunner2.execute();
     }
 
-    private void togglePause() {
+    @Override
+    public void togglePause() {
         if (running && !paused) {
             paused = true;
             if (visListener1 != null) visListener1.pause();
@@ -194,26 +120,25 @@ public class CompareWindow extends JFrame {
         }
     }
 
-    private void reset() {
+    @Override
+    public void reset() {
         if (sortRunner1 != null) { sortRunner1.cancel(true); sortRunner1 = null; }
         if (sortRunner2 != null) { sortRunner2.cancel(true); sortRunner2 = null; }
         if (paused) {
             if (visListener1 != null) visListener1.resume();
             if (visListener2 != null) visListener2.resume();
         }
-
         running = false;
         paused = false;
         doneCount = 0;
         SortingListener.clearListeners();
-
-        startBtn.setText("Start");
-        startBtn.setEnabled(true);
-        pauseBtn.setEnabled(false);
-        resetBtn.setEnabled(true);
-        statsBtn.setEnabled(false);
-
+        resetButtons();
         generateData();
+    }
+
+    @Override
+    protected void openStatsWindow() {
+        new StatsWindow(stats1, stats2);
     }
 
     public synchronized void onOneSortDone() {
@@ -221,10 +146,7 @@ public class CompareWindow extends JFrame {
         if (doneCount >= 2) {
             running = false;
             SwingUtilities.invokeLater(() -> {
-                startBtn.setEnabled(false);
-                pauseBtn.setEnabled(false);
-                resetBtn.setEnabled(true);
-                statsBtn.setEnabled(true); 
+                doneButtons();
                 barPanel1.update(currentData1, -1, -1);
                 barPanel2.update(currentData2, -1, -1);
             });

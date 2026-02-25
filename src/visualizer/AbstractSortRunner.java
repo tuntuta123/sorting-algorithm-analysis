@@ -33,7 +33,7 @@ public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
         switch (algorithm) {
             case "Bubble Sort":    
             	BubbleSort.sort(data);       
-            break;
+            	break;
             case "Insertion Sort": 
             	InsertionSorting.sort(data); 
             	break;

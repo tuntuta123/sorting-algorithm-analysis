@@ -4,46 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
 import sorting.*;
-import generator.*;
 
-public class VisualizerWindow extends JFrame {
+public class VisualizerWindow extends AbstractVisualizer {
 
     private BarPanel barPanel;
-    private JButton startBtn;
-    private JButton pauseBtn;
-    private JButton resetBtn;
-    private JButton statsBtn;
-    private JSlider speedSlider;
-
     private final String algorithmName;
-    private final String genType;
-    private final double entropy;
-
     private List<Integer> currentData;
-    private int arraySize = 80;
-
-    private boolean running = false;
-    private boolean paused = false;
 
     private SortRunner sortRunner;
     private VisualizationListener visListener;
     private SortStats stats;
 
     public VisualizerWindow(String algorithmName, String genType, double entropy) {
+        super(algorithmName + " — " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
+              genType, entropy, 1000, 650);
         this.algorithmName = algorithmName;
-        this.genType = genType;
-        this.entropy = entropy;
-
-        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
-        setTitle(algorithmName + " — " + genLabel);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1000, 650);
-        setLocationRelativeTo(null);
-
-        stats = new SortStats(algorithmName, genLabel);
-
+        stats = new SortStats(algorithmName, genLabel());
         buildUI();
         generateData();
         setVisible(true);
@@ -62,63 +39,17 @@ public class VisualizerWindow extends JFrame {
         barPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(barPanel, BorderLayout.CENTER);
 
-        JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 8));
-
-        startBtn = new JButton("Start");
-        startBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        startBtn.addActionListener(e -> startSorting());
-
-        pauseBtn = new JButton("Pause");
-        pauseBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        pauseBtn.setEnabled(false);
-        pauseBtn.addActionListener(e -> togglePause());
-
-        resetBtn = new JButton("Reset");
-        resetBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        resetBtn.addActionListener(e -> reset());
-
-        statsBtn = new JButton("View Performance");
-        statsBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        statsBtn.setBackground(new Color(0, 173, 181));
-        statsBtn.setForeground(Color.WHITE);
-        statsBtn.setFocusPainted(false);
-        statsBtn.setEnabled(false); 
-        statsBtn.addActionListener(e -> new StatsWindow(stats));
-
-        JLabel sizeLabel = new JLabel("Size:");
-        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
-        sizeSpinner.setPreferredSize(new Dimension(65, 28));
-        sizeSpinner.addChangeListener(e -> {
-            arraySize = (int) sizeSpinner.getValue();
-            if (!running) generateData();
-        });
-
-        JLabel speedLabel = new JLabel("Speed:");
-        speedSlider = new JSlider(1, 100, 50);
-        speedSlider.setPreferredSize(new Dimension(160, 30));
-
-        controls.add(startBtn);
-        controls.add(pauseBtn);
-        controls.add(resetBtn);
-        controls.add(statsBtn);
-        controls.add(Box.createHorizontalStrut(10));
-        controls.add(sizeLabel);
-        controls.add(sizeSpinner);
-        controls.add(speedLabel);
-        controls.add(speedSlider);
-
-        add(controls, BorderLayout.SOUTH);
+        add(buildControlPanel(), BorderLayout.SOUTH);
     }
 
-    private void generateData() {
-        NumberGenerator gen = "Random".equals(genType)
-                ? new RandomGenerator(arraySize)
-                : new EntropyGenerator(entropy, arraySize);
-        currentData = new ArrayList<>(gen.getList());
+    @Override
+    public void generateData() {
+        currentData = new ArrayList<>(buildGenerator().getList());
         barPanel.update(currentData, -1, -1);
     }
 
-    private void startSorting() {
+    @Override
+    public void startSorting() {
         if (paused) {
             paused = false;
             visListener.resume();
@@ -128,15 +59,12 @@ public class VisualizerWindow extends JFrame {
             return;
         }
 
-        String genLabel = "Random".equals(genType) ? "Random" : "Entropy " + entropy;
-        stats = new SortStats(algorithmName, genLabel);
-
+        stats = new SortStats(algorithmName, genLabel());
         SortingListener.clearListeners();
         visListener = new VisualizationListener(this, speedSlider);
 
         running = true;
         paused = false;
-
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(true);
         resetBtn.setEnabled(false);
@@ -145,7 +73,8 @@ public class VisualizerWindow extends JFrame {
         sortRunner.execute();
     }
 
-    private void togglePause() {
+    @Override
+    public void togglePause() {
         if (running && !paused) {
             paused = true;
             visListener.pause();
@@ -155,33 +84,26 @@ public class VisualizerWindow extends JFrame {
         }
     }
 
-    private void reset() {
-        if (sortRunner != null) {
-            sortRunner.cancel(true);
-            sortRunner = null;
-        }
+    @Override
+    public void reset() {
+        if (sortRunner != null) { sortRunner.cancel(true); sortRunner = null; }
         if (visListener != null && paused) visListener.resume();
-
         running = false;
         paused = false;
         SortingListener.clearListeners();
-
-        startBtn.setText("Start");
-        startBtn.setEnabled(true);
-        pauseBtn.setEnabled(false);
-        resetBtn.setEnabled(true);
-        statsBtn.setEnabled(false);
-
+        resetButtons();
         generateData();
+    }
+
+    @Override
+    protected void openStatsWindow() {
+        new StatsWindow(stats);
     }
 
     public void onSortingDone() {
         running = false;
         paused = false;
-        startBtn.setEnabled(false);
-        pauseBtn.setEnabled(false);
-        resetBtn.setEnabled(true);
-        statsBtn.setEnabled(true);
+        doneButtons();
         barPanel.update(currentData, -1, -1);
     }
 
