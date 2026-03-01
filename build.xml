@@ -27,7 +27,7 @@
 
         <jar destfile="dist/${jar.file}" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="visualizer.MainMenu"/>
+                <attribute name="Main-Class" value="view.menu.MainMenu"/>
             </manifest>
         </jar>
 
@@ -36,7 +36,7 @@
 
     <!-- RUN APPLICATION -->
     <target name="run" depends="jar">
-        <java fork="true" classname="visualizer.MainMenu">
+        <java fork="true" classname="view.menu.MainMenu">
             <classpath>
                 <pathelement path="dist/${jar.file}"/>
             </classpath>

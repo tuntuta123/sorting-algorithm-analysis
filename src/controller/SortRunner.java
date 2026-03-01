@@ -1,23 +1,24 @@
-package visualizer;
+package controller;
 
+import model.SortStats;
 import java.util.List;
 
 public class SortRunner extends AbstractSortRunner {
 
-    private final VisualizerWindow window;
+    private final VisualizerController controller;
 
     public SortRunner(List<Integer> data, String algorithm,
-                      VisualizerWindow window, VisualizationListener visListener,
+                      VisualizerController controller,
+                      VisualizationListener visListener,
                       SortStats stats) {
         super(data, algorithm, visListener, stats);
-        this.window = window;
-        window.setCurrentData(data);
+        this.controller = controller;
     }
 
     @Override
     protected void done() {
         if (!isCancelled()) {
-            window.onSortingDone();
+            controller.onSortingDone();
         }
     }
 }

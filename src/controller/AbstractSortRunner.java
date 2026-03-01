@@ -1,8 +1,9 @@
-package visualizer;
+package controller;
 
+import model.SortStats;
+import sorting.*;
 import javax.swing.SwingWorker;
 import java.util.List;
-import sorting.*;
 
 public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
 
@@ -13,8 +14,8 @@ public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
     protected final SortStats stats;
 
     public AbstractSortRunner(List<Integer> data, String algorithm,
-                               VisualizationListener visListener,
-                               SortStats stats) {
+                              VisualizationListener visListener,
+                              SortStats stats) {
         this.data = data;
         this.algorithm = algorithm;
         this.visListener = visListener;

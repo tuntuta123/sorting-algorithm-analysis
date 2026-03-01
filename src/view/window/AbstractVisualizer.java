@@ -1,10 +1,8 @@
-package visualizer;
+package view.window;
 
+import view.menu.MainMenu;
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-import generator.*;
-
 
 public abstract class AbstractVisualizer extends JFrame implements VisualizerInterface {
 
@@ -14,20 +12,13 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
     protected JButton statsBtn;
     protected JSlider speedSlider;
 
-    protected final String genType;
-    protected final double entropy;
-    protected int arraySize = 80;
-    protected boolean running = false;
-    protected boolean paused = false;
-
-    public AbstractVisualizer(String title, String genType, double entropy, int width, int height) {
-        this.genType = genType;
-        this.entropy = entropy;
+    public AbstractVisualizer(String title, int width, int height) {
         setTitle(title);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(width, height);
         setLocationRelativeTo(null);
     }
+
 
     protected JPanel buildControlPanel() {
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 8));
@@ -55,18 +46,12 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
 
         JButton backBtn = new JButton("Back to Menu");
         backBtn.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        backBtn.addActionListener(e -> {
-            dispose();
-            new MainMenu();
-        });
+        backBtn.addActionListener(e -> { dispose(); new MainMenu(); });
 
         JLabel sizeLabel = new JLabel("Size:");
         JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
-        sizeSpinner.addChangeListener(e -> {
-            arraySize = (int) sizeSpinner.getValue();
-            if (!running) generateData();
-        });
+        sizeSpinner.addChangeListener(e -> onSizeChanged((int) sizeSpinner.getValue()));
 
         JLabel speedLabel = new JLabel("Speed:");
         speedSlider = new JSlider(1, 100, 50);
@@ -86,18 +71,30 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
         return controls;
     }
 
-    protected NumberGenerator buildGenerator() {
-        return "Random".equals(genType)
-                ? new RandomGenerator(arraySize)
-                : new EntropyGenerator(entropy, arraySize);
-    }
-
-    protected String genLabel() {
-        return "Random".equals(genType) ? "Random" : "Entropy " + entropy;
-    }
     protected abstract void openStatsWindow();
 
-    protected void resetButtons() {
+    protected abstract void onSizeChanged(int newSize);
+
+    public void onSortingStarted() {
+        startBtn.setEnabled(false);
+        pauseBtn.setEnabled(true);
+        resetBtn.setEnabled(false);
+        statsBtn.setEnabled(false);
+    }
+
+    public void onPaused() {
+        startBtn.setText("Resume");
+        startBtn.setEnabled(true);
+        pauseBtn.setEnabled(false);
+    }
+
+    public void onResumed() {
+        startBtn.setText("Start");
+        startBtn.setEnabled(false);
+        pauseBtn.setEnabled(true);
+    }
+
+    public void onReset() {
         startBtn.setText("Start");
         startBtn.setEnabled(true);
         pauseBtn.setEnabled(false);
@@ -105,10 +102,7 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
         statsBtn.setEnabled(false);
     }
 
-    protected void doneButtons() {
-        startBtn.setEnabled(false);
-        pauseBtn.setEnabled(false);
-        resetBtn.setEnabled(true);
-        statsBtn.setEnabled(true);
+    public JSlider getSpeedSlider() { 
+    	return speedSlider; 
     }
 }

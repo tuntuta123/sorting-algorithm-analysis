@@ -1,5 +1,6 @@
-package visualizer;
+package view.menu;
 
+import view.window.VisualizerWindow;
 import javax.swing.*;
 import java.awt.*;
 
@@ -75,7 +76,7 @@ public class SingleAlgoMenu extends AbstractMenu {
         if ("Entropy".equals(genType)) {
             entropy = parseEntropy(entropyField.getText());
             if (entropy < 0) 
-            	return; 
+            	return;
         }
 
         new VisualizerWindow(algo, genType, entropy);

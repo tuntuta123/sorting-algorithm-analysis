@@ -1,5 +1,6 @@
-package visualizer;
+package view.menu;
 
+import view.window.CompareWindow;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
@@ -53,11 +54,7 @@ public class CompareMenu extends AbstractMenu {
             }
         });
 
-        algoComboBox1.addActionListener(e -> {
-            algoComboBox2.repaint();
-            skipBlockedItem();
-        });
-
+        algoComboBox1.addActionListener(e -> { algoComboBox2.repaint(); skipBlockedItem(); });
         algoComboBox2.addActionListener(e -> skipBlockedItem());
 
         generatorComboBox = makeComboBox(GENERATORS);
@@ -131,8 +128,7 @@ public class CompareMenu extends AbstractMenu {
 
         if ("Entropy".equals(genType)) {
             entropy = parseEntropy(entropyField.getText());
-            if (entropy < 0) 
-            	return; 
+            if (entropy < 0) return;
         }
 
         new CompareWindow(algo1, algo2, genType, entropy);

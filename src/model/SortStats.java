@@ -1,5 +1,4 @@
-package visualizer;
-
+package model;
 
 public class SortStats {
 
@@ -26,7 +25,7 @@ public class SortStats {
     public void incrementComparisons() { 
     	comparisons++; 
     }
-    public void incrementSwaps()       { 
+    public void incrementSwaps(){ 
     	swaps++; 
     }
 
@@ -34,24 +33,27 @@ public class SortStats {
         endTime = System.currentTimeMillis();
     }
 
-    public long getComparisons()  { 
+    public long getComparisons(){ 
     	return comparisons; 
     }
-    public long getSwaps()        {
+    public long getSwaps(){ 
     	return swaps; 
     }
-    public String getAlgorithmName()   { 
+    public String getAlgorithmName(){ 
     	return algorithmName; 
     }
-    public String getGeneratorLabel()  { 
+    public String getGeneratorLabel(){ 
     	return generatorLabel; 
     }
 
     public long getElapsedMs() {
-        if (startTime < 0) return 0;
+        if (startTime < 0) 
+        	return 0;
         long end = endTime >= 0 ? endTime : System.currentTimeMillis();
         return end - startTime;
     }
 
-    public boolean isFinished() { return endTime >= 0; }
+    public boolean isFinished() { 
+    	return endTime >= 0; 
+    }
 }

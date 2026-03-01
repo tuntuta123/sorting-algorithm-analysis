@@ -1,9 +1,9 @@
-package visualizer;
+package view.components;
 
+import model.SortStats;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-
 
 public class StatsWindow extends JFrame {
 
@@ -12,7 +12,6 @@ public class StatsWindow extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
-
         buildUI(stats);
         setVisible(true);
     }
@@ -64,9 +63,9 @@ public class StatsWindow extends JFrame {
             card.add(Box.createVerticalStrut(16));
             card.add(makeRow("Comparisons", String.format("%,d", s.getComparisons()), panelColor, textColor, valueColor));
             card.add(Box.createVerticalStrut(10));
-            card.add(makeRow("Swaps",        String.format("%,d", s.getSwaps()),       panelColor, textColor, valueColor));
+            card.add(makeRow("Swaps",       String.format("%,d", s.getSwaps()),       panelColor, textColor, valueColor));
             card.add(Box.createVerticalStrut(10));
-            card.add(makeRow("Time",          s.getElapsedMs() + " ms",               panelColor, textColor, valueColor));
+            card.add(makeRow("Time",        s.getElapsedMs() + " ms",                panelColor, textColor, valueColor));
 
             contentPanel.add(card);
         }
@@ -92,15 +91,12 @@ public class StatsWindow extends JFrame {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(bg);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
-
         JLabel label = new JLabel(labelText + ":");
         label.setFont(new Font("SansSerif", Font.PLAIN, 13));
         label.setForeground(fg);
-
         JLabel valueLabel = new JLabel(value, SwingConstants.RIGHT);
         valueLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
         valueLabel.setForeground(valueColor);
-
         row.add(label, BorderLayout.WEST);
         row.add(valueLabel, BorderLayout.EAST);
         return row;

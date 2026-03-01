@@ -1,13 +1,12 @@
-package visualizer;
+package view.menu;
 
 import javax.swing.*;
 import java.awt.*;
 
-
 public abstract class AbstractMenu extends JFrame implements MenuInterface {
 
     protected static final Color BG = new Color(34, 40, 49);
-    protected static final Color PANEL_BG  = new Color(57, 62, 70);
+    protected static final Color PANEL_BG = new Color(57, 62, 70);
     protected static final Color ACCENT = new Color(0, 173, 181);
 
     protected static final String[] ALGORITHMS = {
@@ -71,7 +70,8 @@ public abstract class AbstractMenu extends JFrame implements MenuInterface {
         }
         try {
             double entropy = Double.parseDouble(text.trim());
-            if (entropy < 0.0 || entropy > 1.0) throw new NumberFormatException();
+            if (entropy < 0.0 || entropy > 1.0) 
+            	throw new NumberFormatException();
             return entropy;
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Entropy must be a valid number between 0.0 and 1.0.");
@@ -79,9 +79,10 @@ public abstract class AbstractMenu extends JFrame implements MenuInterface {
         }
     }
 
+
     protected void wireEntropyVisibility(JComboBox<String> generatorCombo,
-                                         JLabel entropyLabel,
-                                         JTextField entropyField) {
+                                          JLabel entropyLabel,
+                                          JTextField entropyField) {
         generatorCombo.addActionListener(e -> {
             boolean isEntropy = "Entropy".equals(generatorCombo.getSelectedItem());
             entropyLabel.setVisible(isEntropy);

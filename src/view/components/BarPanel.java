@@ -1,4 +1,4 @@
-package visualizer;
+package view.components;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +18,9 @@ public class BarPanel extends JPanel {
         SwingUtilities.invokeLater(this::repaint);
     }
 
-
     public void setLiveData(List<Integer> liveData) {
-        this.data = liveData; 
+        this.data = liveData;
     }
-
 
     public void highlight(int i1, int i2) {
         this.hi1 = i1;
@@ -33,7 +31,8 @@ public class BarPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (data == null || data.isEmpty()) return;
+        if (data == null || data.isEmpty()) 
+        	return;
 
         int w = getWidth();
         int h = getHeight();
@@ -69,7 +68,8 @@ public class BarPanel extends JPanel {
 
     private boolean isSorted() {
         for (int i = 1; i < data.size(); i++) {
-            if (data.get(i - 1) > data.get(i)) return false;
+            if (data.get(i - 1) > data.get(i)) 
+            	return false;
         }
         return true;
     }

@@ -1,4 +1,4 @@
-package visualizer;
+package view.menu;
 
 public interface MenuInterface {
 

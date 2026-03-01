@@ -1,6 +1,7 @@
-package visualizer;
+package controller;
 
 import sorting.Listener;
+import model.SortStats;
 
 public class StatsListener implements Listener {
 

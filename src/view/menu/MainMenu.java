@@ -1,4 +1,4 @@
-package visualizer;
+package view.menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,8 +50,8 @@ public class MainMenu extends AbstractMenu {
     }
 
     @Override
-    public void open() {
-        setVisible(true);
+    public void open() { 
+    	setVisible(true); 
     }
 
     public static void main(String[] args) {

@@ -1,12 +1,14 @@
-package visualizer;
+package controller;
 
 import sorting.Listener;
-import javax.swing.*;
+import view.window.VisualizerWindow;
+import view.components.BarPanel;
+import javax.swing.JSlider;
 
 public class VisualizationListener implements Listener {
 
-    private final VisualizerWindow frame;   // for 1
-    private final BarPanel barPanel;        //for 2
+    private final VisualizerWindow frame; 
+    private final BarPanel barPanel;       
     private final JSlider speedSlider;
     private volatile boolean paused = false;
     private final Object pauseLock = new Object();

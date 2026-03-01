@@ -1,4 +1,4 @@
-package visualizer;
+package view.window;
 
 import java.util.List;
 
