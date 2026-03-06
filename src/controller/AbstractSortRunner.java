@@ -47,6 +47,18 @@ public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
             case "Bucket Sort":    
             	BucketSort.sort(data);       
             	break;
+            case "Pancake Sort":    
+            	PancakeSort.sort(data);       
+            	break;
+            case "Cocktail Shaker Sort":    
+            	CocktailShakerSort.sort(data);       
+            	break;
+            case "Purge Sort":    
+            	PurgeSort.sort(data);       
+            	break;
+            case "Bogo Sort":    
+            	BogoSort.sort(data);       
+            	break;
             default: 
             	throw new IllegalArgumentException("Unknown algorithm: " + algorithm);
         }

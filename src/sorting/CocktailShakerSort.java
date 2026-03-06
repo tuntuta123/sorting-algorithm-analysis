@@ -10,7 +10,9 @@ public class CocktailShakerSort {
 		while(swapped == true){
 			swapped = false;
 			for(int k = i; k < j - 1; k++){
+				SortingListener.notifyComparison(k,k+1,list.get(k),list.get(k+1));
 				if(list.get(k) > list.get(k+1)){
+					SortingListener.notifySwap(k,k+1,list.get(k),list.get(k+1));
 					swap(list, k, k+1);
 					swapped = true;
 				}
@@ -20,7 +22,9 @@ public class CocktailShakerSort {
 			swapped = false;
 			j--;
 			for(int k=j-1; k>=i;k--){
+				SortingListener.notifyComparison(k,k+1,list.get(k),list.get(k+1));
 				if(list.get(k) > list.get(k+1)){
+					SortingListener.notifySwap(k,k+1,list.get(k),list.get(k+1));
 					swap(list, k, k+1);
 					swapped = true;
 				}
