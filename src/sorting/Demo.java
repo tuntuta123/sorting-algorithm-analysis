@@ -43,6 +43,13 @@ public class Demo{
 		System.out.println("Before Pancake sort : " + list3);
 		PancakeSort.sort(list3);
 		System.out.println("After Pancake sort : " + list3);
+		
+		SwapSortGenerator random3 = new SwapSortGenerator(1.0, 20);
+		List<Integer> list4 = random3.getList();
+		
+		System.out.println("Before CocktailShakerSort : " + list4);
+		CocktailShakerSort.sort(list4);
+		System.out.println("After CocktailShakerSort : " + list4);
 
 	}
 
