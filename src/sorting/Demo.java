@@ -33,9 +33,9 @@ public class Demo{
 		SwapSortGenerator random1 = new SwapSortGenerator(1.0, 100);
 		List<Integer> list2 = random1.getList();
 
-		System.out.println("Before quick sort : " + list2);
-		QuickSort.sort(list2);
-		System.out.println("After quick sort  : " + list2);
+		System.out.println("Before Sta- PurgeSort : " + list2);
+		PurgeSort.sort(list2);
+		System.out.println("After PurgeSort  : " + list2);
 
 	}
 

@@ -118,7 +118,7 @@ public class EntropyGenerator extends AbstractGenerator {
         	return bestD;
     	}
 
-    	private double shannon(double p) {
+    	protected double shannon(double p) {
         	double q = 1.0 - p;
         	double h = 0.0;
 
