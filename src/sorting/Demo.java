@@ -33,9 +33,16 @@ public class Demo{
 		SwapSortGenerator random1 = new SwapSortGenerator(1.0, 10);
 		List<Integer> list2 = random1.getList();
 
-		System.out.println("Before Bogosrorot : " + list2);
+		System.out.println("Before Bogosort : " + list2);
 		BogoSort.sort(list2);
-		System.out.println("After Bogosrorot : " + list2);
+		System.out.println("After Bogosort : " + list2);
+		
+		SwapSortGenerator random2 = new SwapSortGenerator(1.0, 10);
+		List<Integer> list3 = random2.getList();
+		
+		System.out.println("Before Pancake sort : " + list3);
+		PancakeSort.sort(list3);
+		System.out.println("After Pancake sort : " + list3);
 
 	}
 
