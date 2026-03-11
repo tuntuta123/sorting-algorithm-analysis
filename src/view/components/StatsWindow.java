@@ -1,9 +1,12 @@
 package view.components;
 
+import view.components.StatsBarGraphPanel;
 import model.SortStats;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+
+import java.awt.event.*;
 
 public class StatsWindow extends JFrame {
 
@@ -70,7 +73,19 @@ public class StatsWindow extends JFrame {
             contentPanel.add(card);
         }
 
-        add(contentPanel, BorderLayout.CENTER);
+	JPanel bottomContainer = new JPanel(new BorderLayout());
+	bottomContainer.setBackground(background);
+
+	JPanel graphsPanel = new JPanel();
+	graphsPanel.setLayout(new GridLayout(3,1,10,10));
+	graphsPanel.setBackground(background);
+
+	RealtimeGraphPanel comparisonsGraph = new RealtimeGraphPanel("comparisons", stats);
+	RealtimeGraphPanel swapsGraph = new RealtimeGraphPanel("swaps", stats);
+	graphsPanel.add(comparisonsGraph);
+	graphsPanel.add(swapsGraph);
+	graphsPanel.add(new StatsBarGraphPanel("time", stats));
+	bottomContainer.add(graphsPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(background);
@@ -82,9 +97,34 @@ public class StatsWindow extends JFrame {
         closeBtn.setPreferredSize(new Dimension(100, 35));
         closeBtn.addActionListener(e -> dispose());
         bottomPanel.add(closeBtn);
-        add(bottomPanel, BorderLayout.SOUTH);
+        bottomContainer.add(bottomPanel, BorderLayout.SOUTH);
+        
+	JPanel mainPanel = new JPanel();
+	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	mainPanel.setBackground(background);
+	mainPanel.add(contentPanel);
+	mainPanel.add(Box.createVerticalStrut(20));
+	mainPanel.add(bottomContainer);
+	add(mainPanel, BorderLayout.CENTER);
 
-        setSize(stats.length == 1 ? 360 : 680, 340);
+
+
+	setSize(stats.length == 1 ? 1000 : 1500, 1000);
+
+	addWindowListener(new WindowAdapter() {
+	    @Override
+	    public void windowClosing(WindowEvent e) {
+		comparisonsGraph.stopTimer();
+		swapsGraph.stopTimer();
+	    }
+
+	    @Override
+	    public void windowClosed(WindowEvent e) {
+		comparisonsGraph.stopTimer();
+		swapsGraph.stopTimer();
+	    }
+	});
+
     }
 
     private JPanel makeRow(String labelText, String value, Color bg, Color fg, Color valueColor) {

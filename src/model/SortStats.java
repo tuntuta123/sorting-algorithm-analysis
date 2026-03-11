@@ -1,9 +1,15 @@
 package model;
+import java.util.*;
 
 public class SortStats {
 
     private final String algorithmName;
     private final String generatorLabel;
+
+	private List<Long> comparisonTimes = new ArrayList<>();
+	private List<Long> comparisonValues = new ArrayList<>();
+	private List<Long> swapTimes = new ArrayList<>();
+	private List<Long> swapValues = new ArrayList<>();
 
     private volatile long comparisons = 0;
     private volatile long swaps = 0;
@@ -24,10 +30,34 @@ public class SortStats {
 
     public void incrementComparisons() { 
     	comparisons++; 
+		long t = System.currentTimeMillis() - startTime;
+
+		comparisonTimes.add(t);
+		comparisonValues.add(comparisons);
     }
     public void incrementSwaps(){ 
     	swaps++; 
+		long t = System.currentTimeMillis() - startTime;
+
+		swapTimes.add(t);
+		swapValues.add(swaps);
     }
+
+	public List<Long> getComparisonTimes() {
+		return comparisonTimes;
+	}
+
+	public List<Long> getComparisonValues() {
+		return comparisonValues;
+	}
+
+	public List<Long> getSwapTimes() {
+		return swapTimes;
+	}
+
+	public List<Long> getSwapValues() {
+		return swapValues;
+	}
 
     public void stop() {
         endTime = System.currentTimeMillis();
