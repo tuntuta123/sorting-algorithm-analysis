@@ -15,7 +15,7 @@ public class VisualizerController {
     private final double entropy;
 
     private List<Integer> currentData;
-    private int arraySize = 80;
+    private int arraySize;
 
     private boolean running = false;
     private boolean paused = false;
@@ -25,12 +25,13 @@ public class VisualizerController {
     private SortStats stats;
 
     public VisualizerController(VisualizerWindow view, String algorithmName,
-                                 String genType, double entropy) {
+                                 String genType, double entropy, int initialSize) {
         this.view = view;
         this.algorithmName = algorithmName;
         this.genType = genType;
         this.entropy = entropy;
         this.stats = new SortStats(algorithmName, genLabel());
+        this.arraySize = initialSize;
     }
 
     public void generateData() {

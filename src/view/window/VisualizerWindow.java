@@ -14,12 +14,12 @@ public class VisualizerWindow extends AbstractVisualizer {
     private VisualizerController controller;
     private final String algorithmName;
 
-    public VisualizerWindow(String algorithmName, String genType, double entropy) {
+    public VisualizerWindow(String algorithmName, String genType, double entropy, int initialSize) {
         super(algorithmName + " - " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
-              1000, 650);
+              1000, 650, initialSize);
         this.algorithmName = algorithmName;
         buildUI();
-        this.controller = new VisualizerController(this, algorithmName, genType, entropy);
+        this.controller = new VisualizerController(this, algorithmName, genType, entropy, initialSize);
         controller.generateData();
         setVisible(true);
     }

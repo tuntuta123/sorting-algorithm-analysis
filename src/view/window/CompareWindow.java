@@ -17,13 +17,13 @@ public class CompareWindow extends AbstractVisualizer {
     private final String algo1;
     private final String algo2;
 
-    public CompareWindow(String algo1, String algo2, String genType, double entropy) {
+    public CompareWindow(String algo1, String algo2, String genType, double entropy, int initialSize) {
         super(algo1 + " vs " + algo2 + " - " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
-              1400, 650);
+              1400, 650, initialSize);
         this.algo1 = algo1;
         this.algo2 = algo2;
         buildUI();
-        this.controller = new CompareController(this, algo1, algo2, genType, entropy);
+        this.controller = new CompareController(this, algo1, algo2, genType, entropy, initialSize);
         controller.generateData();
         setVisible(true);
     }

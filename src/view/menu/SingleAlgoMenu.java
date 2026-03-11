@@ -10,6 +10,8 @@ public class SingleAlgoMenu extends AbstractMenu {
     private JComboBox<String> generatorComboBox;
     private JTextField entropyField;
     private JLabel entropyLabel;
+    private JLabel sizeLabel;
+    private JSpinner sizeSpinner;
 
     public SingleAlgoMenu() {
         super("Sorting Visualizer", 600, 480);
@@ -39,6 +41,11 @@ public class SingleAlgoMenu extends AbstractMenu {
 
         wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
+	sizeLabel = makeFieldLabel("Choose size of the list:");
+	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 10, 300, 10));
+        sizeSpinner.setMaximumSize(new Dimension(250, 35));
+        sizeSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         centerPanel.add(makeFieldLabel("Choose Algorithm:"));
         centerPanel.add(Box.createVerticalStrut(10));
         centerPanel.add(algoComboBox);
@@ -50,6 +57,10 @@ public class SingleAlgoMenu extends AbstractMenu {
         centerPanel.add(entropyLabel);
         centerPanel.add(Box.createVerticalStrut(10));
         centerPanel.add(entropyField);
+        centerPanel.add(Box.createVerticalStrut(20));
+        centerPanel.add(sizeLabel);
+        centerPanel.add(Box.createVerticalStrut(8));
+        centerPanel.add(sizeSpinner);
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -79,7 +90,7 @@ public class SingleAlgoMenu extends AbstractMenu {
             	return;
         }
 
-        new VisualizerWindow(algo, genType, entropy);
+        new VisualizerWindow(algo, genType, entropy, (int)  sizeSpinner.getValue());
         dispose();
     }
 }

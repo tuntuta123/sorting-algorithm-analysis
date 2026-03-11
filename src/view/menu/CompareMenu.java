@@ -12,6 +12,8 @@ public class CompareMenu extends AbstractMenu {
     private JComboBox<String> generatorComboBox;
     private JTextField entropyField;
     private JLabel entropyLabel;
+    private JLabel sizeLabel;
+    private JSpinner sizeSpinner;
 
     public CompareMenu() {
         super("Compare Two Algorithms", 600, 560);
@@ -66,6 +68,11 @@ public class CompareMenu extends AbstractMenu {
 
         wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
+	sizeLabel = makeFieldLabel("Choose size of the list:");
+	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 10, 300, 10));
+        sizeSpinner.setMaximumSize(new Dimension(250, 35));
+        sizeSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
+	
         centerPanel.add(makeFieldLabel("Choose Algorithm 1:"));
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(algoComboBox1);
@@ -81,6 +88,10 @@ public class CompareMenu extends AbstractMenu {
         centerPanel.add(entropyLabel);
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(entropyField);
+        centerPanel.add(Box.createVerticalStrut(8));
+        centerPanel.add(sizeLabel);
+        centerPanel.add(Box.createVerticalStrut(8));
+        centerPanel.add(sizeSpinner);
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -131,7 +142,7 @@ public class CompareMenu extends AbstractMenu {
             if (entropy < 0) return;
         }
 
-        new CompareWindow(algo1, algo2, genType, entropy);
+        new CompareWindow(algo1, algo2, genType, entropy, (int) sizeSpinner.getValue());
         dispose();
     }
 }

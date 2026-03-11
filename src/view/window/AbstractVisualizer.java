@@ -7,16 +7,18 @@ import java.awt.*;
 public abstract class AbstractVisualizer extends JFrame implements VisualizerInterface {
 
     protected JButton startBtn;
+    protected int initialSize;
     protected JButton pauseBtn;
     protected JButton resetBtn;
     protected JButton statsBtn;
     protected JSlider speedSlider;
 
-    public AbstractVisualizer(String title, int width, int height) {
+    public AbstractVisualizer(String title, int width, int height, int initialSize) {
         setTitle(title);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(width, height);
         setLocationRelativeTo(null);
+        this.initialSize = initialSize;
     }
 
 
@@ -49,12 +51,12 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
         backBtn.addActionListener(e -> { dispose(); new MainMenu(); });
 
         JLabel sizeLabel = new JLabel("Size:");
-        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(80, 10, 300, 10));
+        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(initialSize, 10, 300, 10));
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
         sizeSpinner.addChangeListener(e -> onSizeChanged((int) sizeSpinner.getValue()));
 
         JLabel speedLabel = new JLabel("Speed:");
-        speedSlider = new JSlider(1, 100, 50);
+        speedSlider = new JSlider(1, 100, initialSize);
         speedSlider.setPreferredSize(new Dimension(160, 30));
 
         controls.add(startBtn);

@@ -18,7 +18,7 @@ public class CompareController {
 
     private List<Integer> currentData1;
     private List<Integer> currentData2;
-    private int arraySize = 80;
+    private int arraySize;
 
     private boolean running = false;
     private boolean paused = false;
@@ -32,7 +32,7 @@ public class CompareController {
     private SortStats stats2;
 
     public CompareController(CompareWindow view, String algo1, String algo2,
-                              String genType, double entropy) {
+                              String genType, double entropy, int initialSize) {
         this.view = view;
         this.algo1 = algo1;
         this.algo2 = algo2;
@@ -40,6 +40,7 @@ public class CompareController {
         this.entropy = entropy;
         this.stats1 = new SortStats(algo1, genLabel());
         this.stats2 = new SortStats(algo2, genLabel());
+        this.arraySize = initialSize;
     }
 
     public void generateData() {
