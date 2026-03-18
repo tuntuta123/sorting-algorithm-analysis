@@ -1,6 +1,7 @@
 package sorting;
-import java.util.*;
+
 import util.SortingListener;
+import java.util.*;
 
 public class CocktailShakerSort {
     public static void sort(List<Integer> list) {

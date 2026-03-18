@@ -1,6 +1,7 @@
 package sorting;
-import java.util.*;
+
 import util.SortingListener;
+import java.util.*;
 
 /**
  * This class implements the Insertion Sort algorithm.

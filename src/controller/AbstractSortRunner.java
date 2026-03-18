@@ -1,8 +1,8 @@
 package controller;
 
 import model.SortStats;
+import sorting.SortingAlgorithmFactory;
 import util.*;
-import sorting.*;
 import javax.swing.SwingWorker;
 import java.util.List;
 
@@ -32,40 +32,7 @@ public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
 
         stats.start();
 
-        switch (algorithm) {
-            case "Comb Sort":      
-            	CombSort.sort(data);         
-            	break;
-            case "Bubble Sort":    
-            	BubbleSort.sort(data);       
-            	break;
-            case "Insertion Sort": 
-            	InsertionSorting.sort(data); 
-            	break;
-            case "Merge Sort":     
-            	MergeSorting.sort(data);     
-            	break;
-            case "Quick Sort":     
-            	QuickSort.sort(data);        
-            	break;
-            case "Bucket Sort":    
-            	BucketSort.sort(data);       
-            	break;
-            case "Pancake Sort":    
-            	PancakeSort.sort(data);       
-            	break;
-            case "Cocktail Shaker Sort":    
-            	CocktailShakerSort.sort(data);       
-            	break;
-            case "Purge Sort":    
-            	PurgeSort.sort(data);       
-            	break;
-            case "Bogo Sort":    
-            	BogoSort.sort(data);       
-            	break;
-            default: 
-            	throw new IllegalArgumentException("Unknown algorithm: " + algorithm);
-        }
+        SortingAlgorithmFactory.get(algorithm).sort(data);
 
         stats.stop();
         return null;

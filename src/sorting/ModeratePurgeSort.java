@@ -1,6 +1,7 @@
 package sorting;
-import java.util.*;
+
 import util.SortingListener;
+import java.util.*;
 
 public class ModeratePurgeSort {
     public static void sort(List<Integer> list) {

@@ -1,7 +1,8 @@
 package sorting;
 
-import java.util.*;
 import util.SortingListener;
+
+import java.util.*;
 
 public class QuickSort{
 	
