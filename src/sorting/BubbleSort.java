@@ -1,5 +1,6 @@
 package sorting;
 import java.util.*;
+import util.SortingListener;
 
 /**
  * Goes through the list, compares adjacent elements, 

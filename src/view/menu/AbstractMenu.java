@@ -13,7 +13,7 @@ public abstract class AbstractMenu extends JFrame implements MenuInterface {
             "Comb Sort", "Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Bucket Sort", "Pancake Sort", "Cocktail Shaker Sort", "Purge Sort", "Bogo Sort"
     };
 
-    protected static final String[] GENERATORS = { "Random", "Entropy" };
+    protected static final String[] GENERATORS = { "Random", "Entropy", "Reverse Entropy" };
 
     public AbstractMenu(String title, int width, int height) {
         setTitle(title);
@@ -84,12 +84,14 @@ public abstract class AbstractMenu extends JFrame implements MenuInterface {
                                           JLabel entropyLabel,
                                           JTextField entropyField) {
         generatorCombo.addActionListener(e -> {
-            boolean isEntropy = "Entropy".equals(generatorCombo.getSelectedItem());
-            entropyLabel.setVisible(isEntropy);
-            entropyField.setVisible(isEntropy);
+            boolean needsEntropy = "Entropy".equals(generatorCombo.getSelectedItem())
+                                || "Reverse Entropy".equals(generatorCombo.getSelectedItem());
+            entropyLabel.setVisible(needsEntropy);
+            entropyField.setVisible(needsEntropy);
         });
-        boolean isEntropy = "Entropy".equals(generatorCombo.getSelectedItem());
-        entropyLabel.setVisible(isEntropy);
-        entropyField.setVisible(isEntropy);
+        boolean needsEntropy = "Entropy".equals(generatorCombo.getSelectedItem())
+                            || "Reverse Entropy".equals(generatorCombo.getSelectedItem());
+        entropyLabel.setVisible(needsEntropy);
+        entropyField.setVisible(needsEntropy);
     }
 }

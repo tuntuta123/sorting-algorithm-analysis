@@ -1,7 +1,7 @@
 package controller;
 
 import model.SortStats;
-import sorting.SortingListener;
+import util.SortingListener;
 import view.window.VisualizerWindow;
 import generator.*;
 import java.util.ArrayList;
@@ -107,12 +107,18 @@ public class VisualizerController {
     }
 
     private NumberGenerator buildGenerator() {
-        return "Random".equals(genType)
-                ? new RandomGenerator(arraySize)
-                : new EntropyGenerator(entropy, arraySize);
+        switch (genType) {
+            case "Reverse Entropy": return new ReverseEntropyGenerator(entropy, arraySize);
+            case "Entropy":         return new EntropyGenerator(entropy, arraySize);
+            default:                return new RandomGenerator(arraySize);
+        }
     }
 
     private String genLabel() {
-        return "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        switch (genType) {
+            case "Reverse Entropy": return "Reverse Entropy " + entropy;
+            case "Entropy":         return "Entropy " + entropy;
+            default:                return "Random";
+        }
     }
 }

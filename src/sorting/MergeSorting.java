@@ -1,6 +1,7 @@
 package sorting;
 
 import java.util.*;
+import util.SortingListener;
 
 /**
  * This class implements the Merge Sort algorithm.

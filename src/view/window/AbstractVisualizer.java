@@ -51,7 +51,7 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
         backBtn.addActionListener(e -> { dispose(); new MainMenu(); });
 
         JLabel sizeLabel = new JLabel("Size:");
-        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(initialSize, 10, 300, 10));
+        JSpinner sizeSpinner = new JSpinner(new SpinnerNumberModel(initialSize, 5, 300, 10));
         sizeSpinner.setPreferredSize(new Dimension(65, 28));
         sizeSpinner.addChangeListener(e -> onSizeChanged((int) sizeSpinner.getValue()));
 
@@ -80,7 +80,7 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
     public void onSortingStarted() {
         startBtn.setEnabled(false);
         pauseBtn.setEnabled(true);
-        resetBtn.setEnabled(false);
+        resetBtn.setEnabled(true);
         statsBtn.setEnabled(false);
     }
 

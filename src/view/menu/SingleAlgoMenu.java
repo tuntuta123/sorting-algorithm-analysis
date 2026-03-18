@@ -42,7 +42,7 @@ public class SingleAlgoMenu extends AbstractMenu {
         wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
 	sizeLabel = makeFieldLabel("Choose size of the list:");
-	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 10, 300, 10));
+	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 5, 300, 10));
         sizeSpinner.setMaximumSize(new Dimension(250, 35));
         sizeSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -84,7 +84,7 @@ public class SingleAlgoMenu extends AbstractMenu {
         String genType = (String) generatorComboBox.getSelectedItem();
         double entropy = 0.0;
 
-        if ("Entropy".equals(genType)) {
+        if ("Entropy".equals(genType) || "Reverse Entropy".equals(genType)) {
             entropy = parseEntropy(entropyField.getText());
             if (entropy < 0) 
             	return;

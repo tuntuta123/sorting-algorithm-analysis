@@ -1,4 +1,4 @@
-package sorting;
+package util;
 
 /**
  * This interface is for listening to events during the sorting process.

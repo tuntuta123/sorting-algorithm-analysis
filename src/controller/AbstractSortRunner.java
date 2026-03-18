@@ -1,6 +1,7 @@
 package controller;
 
 import model.SortStats;
+import util.*;
 import sorting.*;
 import javax.swing.SwingWorker;
 import java.util.List;

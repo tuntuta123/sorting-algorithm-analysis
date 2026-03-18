@@ -1,6 +1,6 @@
 package controller;
 
-import sorting.Listener;
+import util.Listener;
 import view.window.VisualizerWindow;
 import view.components.BarPanel;
 import javax.swing.JSlider;

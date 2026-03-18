@@ -1,6 +1,7 @@
 package sorting;
 
 import java.util.*;
+import util.SortingListener;
 
 public class BogoSort{
 	

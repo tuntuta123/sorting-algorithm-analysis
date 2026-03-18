@@ -1,4 +1,4 @@
-package sorting;
+package util;
 
 import java.util.*;
 

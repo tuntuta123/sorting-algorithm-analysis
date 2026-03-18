@@ -3,7 +3,7 @@ package benchmark;
 import generator.EntropyGenerator;
 import model.SortStats;
 import sorting.*;
-
+import util.*;
 import export.CsvExporter;
 
 import java.util.*;
