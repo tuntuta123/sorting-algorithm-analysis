@@ -11,7 +11,7 @@ public class PurgeSort{
 				max = list.get(i);
 			}
 			else{
-				SortingListener.notifySwap(i, i, list.get(i), max);
+				//SortingListener.notifySwap(i, i, list.get(i), max);
 				list.remove(i);
 				i--;
 			}

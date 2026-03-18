@@ -22,11 +22,17 @@ public class SortStats {
     }
 
     public void start() {
-        comparisons = 0;
-        swaps = 0;
-        startTime = System.currentTimeMillis();
-        endTime = -1;
-    }
+	    comparisons = 0;
+	    swaps = 0;
+
+	    comparisonTimes.clear();
+	    comparisonValues.clear();
+	    swapTimes.clear();
+	    swapValues.clear();
+
+	    startTime = System.currentTimeMillis();
+	    endTime = -1;
+	}
 
     public void incrementComparisons() { 
     	comparisons++; 
