@@ -32,6 +32,9 @@ public abstract class AbstractSortRunner extends SwingWorker<Void, Void> {
         stats.start();
 
         switch (algorithm) {
+            case "Comb Sort":      
+            	CombSort.sort(data);         
+            	break;
             case "Bubble Sort":    
             	BubbleSort.sort(data);       
             	break;

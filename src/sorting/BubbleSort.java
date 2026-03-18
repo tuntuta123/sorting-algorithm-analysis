@@ -19,12 +19,14 @@ public class BubbleSort{
 		for (int i = 0; i < list.size()-1; i++) {
 			bool=false;
 			for (int j = 0; j < list.size()-i-1; j++) {
-                		SortingListener.notifyComparison(j,j + 1,list.get(j),list.get(j + 1));
-				if (list.get(j)>list.get(j+1)){
-                    			SortingListener.notifySwap(j,j + 1,list.get(j),list.get(j + 1));
-					var=list.get(j);
-					list.set(j,list.get(j+1));
-					list.set(j+1, var);
+				int vj  = list.get(j);     SortingListener.notifyAccess(j,     vj);
+				int vj1 = list.get(j + 1); SortingListener.notifyAccess(j + 1, vj1);
+                		SortingListener.notifyComparison(j, j + 1, vj, vj1);
+				if (vj > vj1){
+                    			SortingListener.notifySwap(j, j + 1, vj, vj1);
+					var = vj;
+					list.set(j,     vj1); SortingListener.notifyAccess(j,     vj1);
+					list.set(j + 1, var); SortingListener.notifyAccess(j + 1, var);
 					bool=true;
 				}
 			}

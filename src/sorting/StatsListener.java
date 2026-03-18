@@ -19,4 +19,9 @@ public class StatsListener implements Listener {
     	public void onSwap(int i, int j, int val1, int val2) {
         	stats.incrementSwaps();
     	}
+    	
+    	@Override
+    	public void onAccess(int index, int value) {
+        	stats.incrementAccesses();
+    	}
 }

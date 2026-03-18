@@ -4,14 +4,15 @@ import java.util.*;
 
 public class PurgeSort{
 	public static void sort(List<Integer> list){
-		int max = list.get(0);
+		int max = list.get(0); SortingListener.notifyAccess(0, max);
 		for (int i = 0 ; i<list.size() ; i++){
-			SortingListener.notifyComparison(i, i, list.get(i), max);
-			if (list.get(i)>=max){
-				max = list.get(i);
+			int vi = list.get(i); SortingListener.notifyAccess(i, vi);
+			SortingListener.notifyComparison(i, i, vi, max);
+			if (vi>=max){
+				max = vi;
 			}
 			else{
-				//SortingListener.notifySwap(i, i, list.get(i), max);
+				SortingListener.notifyAccess(i, vi);
 				list.remove(i);
 				i--;
 			}

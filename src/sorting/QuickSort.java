@@ -4,8 +4,6 @@ import java.util.*;
 
 public class QuickSort{
 	
-	
-	
 	public static void sort(List<Integer> list) {
 		if (list == null || list.size() <= 1) return;
 		quickSort(list, 0, list.size() - 1);
@@ -22,17 +20,18 @@ public class QuickSort{
 	}
 	
 	static int partition(List<Integer> list, int low, int high){
-		int pivot = list.get(high);
+		int pivot = list.get(high); SortingListener.notifyAccess(high, pivot);
 		int i = low - 1;
 		
 		for (int j = low ; j <= high -1 ; j++){
 			// comparison event: list[j] vs pivot
-            		SortingListener.notifyComparison(j, high, list.get(j), pivot);
-			if (list.get(j) < pivot){
+			int vj = list.get(j); SortingListener.notifyAccess(j, vj);
+            		SortingListener.notifyComparison(j, high, vj, pivot);
+			if (vj < pivot){
 				i++;
 				
 				// swap event (swap öncesi!)
-                		SortingListener.notifySwap(i, j, list.get(i), list.get(j));
+                		SortingListener.notifySwap(i, j, list.get(i), vj);
 				swap(list,i,j);
 			}
 		}
@@ -43,8 +42,9 @@ public class QuickSort{
 	}
 	
 	static void swap(List<Integer> list, int first, int second) {
-    		int temp = list.get(first);
-    		list.set(first, list.get(second));
-    		list.set(second, temp);
+    		int vf = list.get(first);  SortingListener.notifyAccess(first,  vf);
+    		int vs = list.get(second); SortingListener.notifyAccess(second, vs);
+    		list.set(first,  vs);      SortingListener.notifyAccess(first,  vs);
+    		list.set(second, vf);      SortingListener.notifyAccess(second, vf);
 	}
 }

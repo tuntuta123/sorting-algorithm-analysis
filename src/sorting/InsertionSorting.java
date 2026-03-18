@@ -18,10 +18,13 @@ public class InsertionSorting {
         for (i = 1; i < length; i++) {
             j = i;
             // Move the current element to its correct position
-            while (j > 0 && input.get(j) < input.get(j - 1)) {
-                SortingListener.notifyComparison(j, j - 1, input.get(j), input.get(j - 1)); 
+            while (j > 0) {
+                int vj  = input.get(j);     SortingListener.notifyAccess(j,     vj);
+                int vj1 = input.get(j - 1); SortingListener.notifyAccess(j - 1, vj1);
+                if (vj >= vj1) break;
+                SortingListener.notifyComparison(j, j - 1, vj, vj1);
                 swap(input, j, j - 1);
-                SortingListener.notifySwap(j, j - 1, input.get(j), input.get(j - 1)); 
+                SortingListener.notifySwap(j, j - 1, vj, vj1);
                 j--;
             }
         }
@@ -35,9 +38,9 @@ public class InsertionSorting {
      * @param j The index of the second element.
      */
     private static void swap(List<Integer> list, int i, int j) {
-        int temp = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, temp);
+        int vi = list.get(i); SortingListener.notifyAccess(i, vi);
+        int vj = list.get(j); SortingListener.notifyAccess(j, vj);
+        list.set(i, vj);      SortingListener.notifyAccess(i, vj);
+        list.set(j, vi);      SortingListener.notifyAccess(j, vi);
     }
 }
-

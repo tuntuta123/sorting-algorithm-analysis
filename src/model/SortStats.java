@@ -13,6 +13,8 @@ public class SortStats {
 
     private volatile long comparisons = 0;
     private volatile long swaps = 0;
+    private volatile long accesses = 0;
+
     private volatile long startTime = -1;
     private volatile long endTime = -1;
 
@@ -24,7 +26,7 @@ public class SortStats {
     public void start() {
 	    comparisons = 0;
 	    swaps = 0;
-
+	    accesses = 0;
 	    comparisonTimes.clear();
 	    comparisonValues.clear();
 	    swapTimes.clear();
@@ -47,6 +49,9 @@ public class SortStats {
 
 		swapTimes.add(t);
 		swapValues.add(swaps);
+    }
+    public void incrementAccesses(){ 
+    	accesses++; 
     }
 
 	public List<Long> getComparisonTimes() {
@@ -74,6 +79,9 @@ public class SortStats {
     }
     public long getSwaps(){ 
     	return swaps; 
+    }
+    public long getAccesses(){ 
+    	return accesses; 
     }
     public String getAlgorithmName(){ 
     	return algorithmName; 

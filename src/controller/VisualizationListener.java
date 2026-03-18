@@ -37,6 +37,11 @@ public class VisualizationListener implements Listener {
         checkPauseAndDelay();
     }
 
+    @Override
+    public void onAccess(int index, int value) {
+
+    }
+
     private void highlight(int i1, int i2) {
         if (frame != null) {
             frame.highlightBars(i1, i2);

@@ -14,23 +14,24 @@ public class BucketSort {
      */
     private static void insertionSort(List<Integer> bucket) {
         for (int i = 1; i < bucket.size(); i++) {
-            int key = bucket.get(i);
+            int key = bucket.get(i); SortingListener.notifyAccess(i, key);
             int j = i - 1;
 
             while (j >= 0) {
-				SortingListener.notifyComparison(j, i, bucket.get(j), key);
+				int vj = bucket.get(j); SortingListener.notifyAccess(j, vj);
+				SortingListener.notifyComparison(j, i, vj, key);
 
-                if (bucket.get(j) <= key){
+                if (vj <= key){
                 	break;
                 }
 
-                SortingListener.notifySwap(j + 1, j, bucket.get(j + 1), bucket.get(j));
-                bucket.set(j + 1, bucket.get(j));
+                SortingListener.notifySwap(j + 1, j, bucket.get(j + 1), vj);
+                bucket.set(j + 1, vj); SortingListener.notifyAccess(j + 1, vj);
                 j--;
             }
 
             SortingListener.notifySwap(j + 1, j + 1, bucket.get(j + 1), key);
-            bucket.set(j + 1, key);
+            bucket.set(j + 1, key); SortingListener.notifyAccess(j + 1, key);
         }
     }
 
@@ -43,10 +44,10 @@ public class BucketSort {
         if (list.size()<= 1) {
 			return;
 		}
-        int min =list.get(0);
-        int max =list.get(0);
+        int min = list.get(0); SortingListener.notifyAccess(0, min);
+        int max = list.get(0); SortingListener.notifyAccess(0, max);
         for (int i = 1; i< list.size(); i++) {
-            int v = list.get(i);
+            int v = list.get(i); SortingListener.notifyAccess(i, v);
             if (v < min){ 
             	min = v;
             }
@@ -66,7 +67,7 @@ public class BucketSort {
         double range = (double)(max - min + 1);
 
         for (int i = 0; i < list.size(); i++) {
-            int v = list.get(i);
+            int v = list.get(i); SortingListener.notifyAccess(i, v);
             int bi = (int) (list.size() * (v - min) / range);
             if (bi == list.size()){
 				bi = list.size() - 1;
@@ -83,11 +84,11 @@ public class BucketSort {
         int index = 0;
         for (int i = 0; i < list.size(); i++) {
             for (int v : buckets.get(i)) {
-                SortingListener.notifySwap(index, index, list.get(index), v);
-                list.set(index, v);
+                int old = list.get(index); SortingListener.notifyAccess(index, old);
+                SortingListener.notifySwap(index, index, old, v);
+                list.set(index, v);        SortingListener.notifyAccess(index, v);
                 index++;
             }
         }
     }
 }
-

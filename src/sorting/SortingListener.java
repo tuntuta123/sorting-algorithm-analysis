@@ -48,6 +48,16 @@ public class SortingListener {
             listener.onSwap(i, j, val1, val2);
         }
     }
+
+    /**
+     * Notifies all listeners when a single element is accessed (get or set).
+     */
+    public static void notifyAccess(int index, int value) {
+        for (Listener listener : listeners.get()) {
+            listener.onAccess(index, value);
+        }
+    }
+
     
     public static void clearListeners() {
         listeners.get().clear();
