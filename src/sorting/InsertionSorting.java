@@ -21,10 +21,13 @@ public class InsertionSorting {
             j = i;
             // Move the current element to its correct position
             while (j > 0) {
-                int vj  = input.get(j);     SortingListener.notifyAccess(j,     vj);
-                int vj1 = input.get(j - 1); SortingListener.notifyAccess(j - 1, vj1);
-                if (vj >= vj1) break;
+                int vj  = input.get(j);     
+                SortingListener.notifyAccess(j,     vj);
+                int vj1 = input.get(j - 1);
+                SortingListener.notifyAccess(j - 1, vj1);
                 SortingListener.notifyComparison(j, j - 1, vj, vj1);
+                if (vj >= vj1) 
+                	break;
                 swap(input, j, j - 1);
                 SortingListener.notifySwap(j, j - 1, vj, vj1);
                 j--;
