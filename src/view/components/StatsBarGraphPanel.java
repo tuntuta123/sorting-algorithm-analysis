@@ -57,7 +57,8 @@ public class StatsBarGraphPanel extends JPanel {
             g2.fillRect(margin, y, barWidth, barHeight);
             g2.setColor(Color.WHITE);
             g2.drawString(stats[i].getAlgorithmName(), margin, y - 5);
-            g2.drawString(String.valueOf(value), margin + barWidth + 10, y + 18);
+            String valueLabel = metric.equals("time") ? value + " ms" : String.valueOf(value);
+            g2.drawString(valueLabel, margin + barWidth + 10, y + 18);
         }
     }
 }
