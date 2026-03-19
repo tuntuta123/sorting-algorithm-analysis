@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="algotris" default="run" basedir=".">
-
-    <property name="src.dir" value="src"/>
-    <!--<property name="test.dir" value="src/blackjack/test"/>-->
+    <property name="src.dir"   value="src"/>
     <property name="build.dir" value="build"/>
-    <!--<property name="test.build.dir" value="test-build"/>-->
-    <property name="jar.file" value="algotris.jar"/>
-
+    <property name="jar.file"  value="algotris.jar"/>
+    <property name="junit.jar" value="lib/junit-platform-console-standalone-1.10.2.jar"/>
 
     <target name="clean">
         <delete dir="${build.dir}"/>
-        <delete dir="${test.build.dir}"/>
     </target>
 
+    <!-- Compiles everything: main sources + test sources, with JUnit on classpath -->
     <target name="compile" depends="clean">
         <mkdir dir="${build.dir}"/>
         <javac
             srcdir="${src.dir}"
             destdir="${build.dir}"
             includeantruntime="false">
+            <classpath>
+                <pathelement path="${junit.jar}"/>
+            </classpath>
         </javac>
     </target>
 
     <target name="jar" depends="compile">
         <mkdir dir="dist"/>
-
         <jar destfile="dist/${jar.file}" basedir="${build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="view.menu.MainMenu"/>
             </manifest>
         </jar>
-
         <echo>algotris.jar created.</echo>
     </target>
 
@@ -43,69 +41,17 @@
         </java>
     </target>
 
-    <!-- COMPILE & RUN TESTS -->
-    <!--<target name="test" depends="compile">
-
-        <mkdir dir="${test.build.dir}"/>
-
-        <javac
-            srcdir="${test.dir}"
-            destdir="${test.build.dir}"
-            includeantruntime="false">
-
+    <!-- RUN TESTS -->
+    <target name="test" depends="compile">
+        <java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement path="${build.dir}"/>
-                <pathelement path="${cartes.jar}"/>
-                <pathelement path="dist/junit-4.13.2.jar"/>
-                <pathelement path="dist/hamcrest-core-1.3.jar"/>
+                <pathelement path="${junit.jar}"/>
             </classpath>
-
-        </javac>
-
-        
-        <java classname="org.junit.runner.JUnitCore" fork="true">
-            <classpath>
-                <pathelement path="${test.build.dir}"/>
-                <pathelement path="${build.dir}"/>
-                <pathelement path="${cartes.jar}"/>
-                <pathelement path="dist/junit-4.13.2.jar"/>
-                <pathelement path="dist/hamcrest-core-1.3.jar"/>
-            </classpath>
-
-            <arg value="test.model.DealerHandTest"/>
-            <arg value="test.model.PlayerTest"/>
-            <arg value="test.model.DeckTest"/>
-            <arg value="test.model.GameTest"/>
-            <arg value="test.model.PayoutStateTest"/>
-            <arg value="test.model.DealerTurnStateTest"/>
+            <arg value="--scan-classpath"/>
+            <arg value="--classpath=${build.dir}"/>
+            <arg value="--details=verbose"/>
         </java>
-
     </target>
-    
-    <target name="javadoc" depends="compile">
-        <mkdir dir="doc"/>
-
-        <javadoc
-            sourcepath="${src.dir}"
-            destdir="doc"
-            use="true"
-            packagenames="blackjack,blackjack.model.*,blackjack.controller.*,blackjack.view.*">
-
-            <fileset dir="${src.dir}">
-                <include name="blackjack/**"/>
-                <exclude name="blackjack/test/**"/>
-                <exclude name="**/test/**"/>
-            </fileset>
-
-            <classpath>
-                <pathelement path="${cartes.jar}"/>
-            </classpath>
-
-        </javadoc>
-
-        <echo>Javadoc generated in /doc</echo>
-    </target>
-    -->
 
 </project>
-
