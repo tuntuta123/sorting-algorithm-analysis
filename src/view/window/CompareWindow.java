@@ -3,6 +3,7 @@ package view.window;
 import controller.CompareController;
 import model.SortStats;
 import view.components.BarPanel;
+import view.components.LiveStatsPanel;
 import view.components.StatsWindow;
 import javax.swing.*;
 import java.awt.*;
@@ -12,19 +13,22 @@ public class CompareWindow extends AbstractVisualizer {
 
     private BarPanel barPanel1;
     private BarPanel barPanel2;
+    private LiveStatsPanel liveStatsPanel1;
+    private LiveStatsPanel liveStatsPanel2;
     private CompareController controller;
 
     private final String algo1;
     private final String algo2;
 
     public CompareWindow(String algo1, String algo2, String genType, double entropy, int initialSize) {
-        super(algo1 + " vs " + algo2 + " - " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
-              1400, 650, initialSize);
+        super(algo1 + " vs " + algo2 + " - " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy), 1500, 800,
+              initialSize);
         this.algo1 = algo1;
         this.algo2 = algo2;
         buildUI();
         this.controller = new CompareController(this, algo1, algo2, genType, entropy, initialSize);
         controller.generateData();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 
@@ -53,7 +57,28 @@ public class CompareWindow extends AbstractVisualizer {
         barsPanel.add(barPanel2);
         add(barsPanel, BorderLayout.CENTER);
 
-        add(buildControlPanel(), BorderLayout.SOUTH);
+        liveStatsPanel1 = new LiveStatsPanel();
+        liveStatsPanel2 = new LiveStatsPanel();
+        JPanel liveStatsRow = new JPanel(new GridLayout(1, 2, 6, 0));
+        liveStatsRow.add(liveStatsPanel1);
+        liveStatsRow.add(liveStatsPanel2);
+
+        JPanel southPanel = new JPanel(new BorderLayout());
+        southPanel.add(liveStatsRow, BorderLayout.NORTH);
+        southPanel.add(buildControlPanel(), BorderLayout.SOUTH);
+        add(southPanel, BorderLayout.SOUTH);
+    }
+
+    public void startLiveStats(SortStats stats1, SortStats stats2) {
+        liveStatsPanel1.start(stats1);
+        liveStatsPanel2.start(stats2);
+    }
+
+    @Override
+    public void reset() {
+        liveStatsPanel1.reset();
+        liveStatsPanel2.reset();
+        controller.reset();
     }
 
     @Override
@@ -70,10 +95,6 @@ public class CompareWindow extends AbstractVisualizer {
     public void togglePause(){ 
     	controller.pause(); }
 
-    @Override
-    public void reset()  { 
-    	controller.reset(); 
-    }
 
     @Override
     protected void openStatsWindow() {
@@ -93,6 +114,8 @@ public class CompareWindow extends AbstractVisualizer {
     public void onBothSortsDone(List<Integer> data1, List<Integer> data2,
                                  SortStats stats1, SortStats stats2) {
         SwingUtilities.invokeLater(() -> {
+            liveStatsPanel1.stop();
+            liveStatsPanel2.stop();
             startBtn.setEnabled(false);
             pauseBtn.setEnabled(false);
             resetBtn.setEnabled(true);

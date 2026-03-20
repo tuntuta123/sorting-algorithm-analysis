@@ -56,6 +56,7 @@ public class VisualizerController {
         running = true;
         paused = false;
         view.onSortingStarted();
+        view.startLiveStats(stats);
 
         sortRunner = new SortRunner(currentData, algorithmName, this, visListener, stats);
         sortRunner.execute();
@@ -107,18 +108,12 @@ public class VisualizerController {
     }
 
     private NumberGenerator buildGenerator() {
-        switch (genType) {
-            case "Reverse Entropy": return new ReverseEntropyGenerator(entropy, arraySize);
-            case "Entropy":         return new EntropyGenerator(entropy, arraySize);
-            default:                return new RandomGenerator(arraySize);
-        }
+        return "Random".equals(genType)
+                ? new RandomGenerator(arraySize)
+                : new EntropyGenerator(entropy, arraySize);
     }
 
     private String genLabel() {
-        switch (genType) {
-            case "Reverse Entropy": return "Reverse Entropy " + entropy;
-            case "Entropy":         return "Entropy " + entropy;
-            default:                return "Random";
-        }
+        return "Random".equals(genType) ? "Random" : "Entropy " + entropy;
     }
 }

@@ -9,7 +9,6 @@
         <delete dir="${build.dir}"/>
     </target>
 
-    <!-- Compiles everything: main sources + test sources, with JUnit on classpath -->
     <target name="compile" depends="clean">
         <mkdir dir="${build.dir}"/>
         <javac

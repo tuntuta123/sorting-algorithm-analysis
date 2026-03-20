@@ -3,6 +3,7 @@ package view.window;
 import controller.VisualizerController;
 import model.SortStats;
 import view.components.BarPanel;
+import view.components.LiveStatsPanel;
 import view.components.StatsWindow;
 import javax.swing.*;
 import java.awt.*;
@@ -11,16 +12,18 @@ import java.util.List;
 public class VisualizerWindow extends AbstractVisualizer {
 
     private BarPanel barPanel;
+    private LiveStatsPanel liveStatsPanel;
     private VisualizerController controller;
     private final String algorithmName;
 
     public VisualizerWindow(String algorithmName, String genType, double entropy, int initialSize) {
         super(algorithmName + " - " + ("Random".equals(genType) ? "Random" : "Entropy " + entropy),
-              1000, 650, initialSize);
+              1500, 800, initialSize);
         this.algorithmName = algorithmName;
         buildUI();
         this.controller = new VisualizerController(this, algorithmName, genType, entropy, initialSize);
         controller.generateData();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 
@@ -37,7 +40,22 @@ public class VisualizerWindow extends AbstractVisualizer {
         barPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(barPanel, BorderLayout.CENTER);
 
-        add(buildControlPanel(), BorderLayout.SOUTH);
+        liveStatsPanel = new LiveStatsPanel();
+
+        JPanel southPanel = new JPanel(new BorderLayout());
+        southPanel.add(liveStatsPanel, BorderLayout.NORTH);
+        southPanel.add(buildControlPanel(), BorderLayout.SOUTH);
+        add(southPanel, BorderLayout.SOUTH);
+    }
+
+    public void startLiveStats(SortStats stats) {
+        liveStatsPanel.start(stats);
+    }
+
+    @Override
+    public void reset() {
+        liveStatsPanel.reset();
+        controller.reset();
     }
 
     @Override
@@ -54,12 +72,6 @@ public class VisualizerWindow extends AbstractVisualizer {
     public void togglePause(){ 
     	controller.pause(); 
     }
-
-    @Override
-    public void reset(){ 
-    	controller.reset(); 
-    }
-
     @Override
     protected void openStatsWindow(){ 
     	new StatsWindow(controller.getStats()); 
@@ -84,6 +96,7 @@ public class VisualizerWindow extends AbstractVisualizer {
     }
 
     public void onSortingDone(List<Integer> data, SortStats stats) {
+        liveStatsPanel.stop();
         doneButtons();
         barPanel.update(data, -1, -1);
     }

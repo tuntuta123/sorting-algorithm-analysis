@@ -1,7 +1,7 @@
 package controller;
 
 import model.SortStats;
-import util.*;
+import util.SortingListener;
 import view.window.CompareWindow;
 import view.components.BarPanel;
 import generator.*;
@@ -74,6 +74,7 @@ public class CompareController {
         paused = false;
         doneCount = 0;
         view.onSortingStarted();
+        view.startLiveStats(stats1, stats2);
 
         bp1.setLiveData(currentData1);
         bp2.setLiveData(currentData2);
@@ -140,18 +141,12 @@ public class CompareController {
     }
 
     private NumberGenerator buildGenerator() {
-        switch (genType) {
-            case "Reverse Entropy": return new ReverseEntropyGenerator(entropy, arraySize);
-            case "Entropy":         return new EntropyGenerator(entropy, arraySize);
-            default:                return new RandomGenerator(arraySize);
-        }
+        return "Random".equals(genType)
+                ? new RandomGenerator(arraySize)
+                : new EntropyGenerator(entropy, arraySize);
     }
 
     private String genLabel() {
-        switch (genType) {
-            case "Reverse Entropy": return "Reverse Entropy " + entropy;
-            case "Entropy":         return "Entropy " + entropy;
-            default:                return "Random";
-        }
+        return "Random".equals(genType) ? "Random" : "Entropy " + entropy;
     }
 }
