@@ -1,7 +1,6 @@
 package sorting;
 
 import util.SortingListener;
-
 import java.util.*;
 
 /**
@@ -19,42 +18,47 @@ public class MergeSorting {
      * @param j     The ending index of the right sublist.
      */
     public static void aux(List<Integer> input, int i, int m, int j) {
-        List<Integer> left = new ArrayList<>(input.subList(i, m + 1));
+        List<Integer> left  = new ArrayList<>(input.subList(i, m + 1));
         List<Integer> right = new ArrayList<>(input.subList(m + 1, j + 1));
-
-        for (int k = 0; k < left.size();  k++) SortingListener.notifyAccess(i + k,     left.get(k));
-        for (int k = 0; k < right.size(); k++) SortingListener.notifyAccess(m + 1 + k, right.get(k));
-
         int leftIn = 0;
         int rightIn = 0;
         int sortedIndex = i;
 
         while (leftIn < left.size() && rightIn < right.size()) {
-            int leftVal = left.get(leftIn);
-            int rightVal = right.get(rightIn);
+            int leftVal  = left.get(leftIn);   
+            SortingListener.notifyAccess(i + leftIn,     leftVal);
+            int rightVal = right.get(rightIn); 
+            SortingListener.notifyAccess(m + 1 + rightIn, rightVal);
             SortingListener.notifyComparison(i + leftIn, m + 1 + rightIn, leftVal, rightVal);
-
             if (leftVal <= rightVal) {
-                input.set(sortedIndex, leftVal); SortingListener.notifyAccess(sortedIndex, leftVal);
+                input.set(sortedIndex, leftVal); 
+                SortingListener.notifyAccess(sortedIndex, leftVal);
                 sortedIndex++;
                 leftIn++;
             } else {
-                input.set(sortedIndex, rightVal); SortingListener.notifyAccess(sortedIndex, rightVal);
+                input.set(sortedIndex, rightVal);
+                SortingListener.notifyAccess(sortedIndex, rightVal);
                 sortedIndex++;
                 rightIn++;
             }
         }
 
         while (leftIn < left.size()) {
-            int v = left.get(leftIn++);
-            input.set(sortedIndex, v); SortingListener.notifyAccess(sortedIndex, v);
+            int v = left.get(leftIn); 
+            SortingListener.notifyAccess(i + leftIn, v);
+            input.set(sortedIndex, v); 
+            SortingListener.notifyAccess(sortedIndex, v);
             sortedIndex++;
+            leftIn++;
         }
 
         while (rightIn < right.size()) {
-            int v = right.get(rightIn++);
-            input.set(sortedIndex, v); SortingListener.notifyAccess(sortedIndex, v);
+            int v = right.get(rightIn); 
+            SortingListener.notifyAccess(m + 1 + rightIn, v);
+            input.set(sortedIndex, v); 
+            SortingListener.notifyAccess(sortedIndex, v);
             sortedIndex++;
+            rightIn++;
         }
     }
 
@@ -84,3 +88,4 @@ public class MergeSorting {
         merge(input, 0, input.size() - 1);
     }
 }
+
