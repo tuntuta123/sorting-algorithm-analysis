@@ -3,7 +3,7 @@ package sorting;
 import util.SortingListener;
 import java.util.*;
 
-public class BogoSort {
+public class BogoSort{
 
     public static void sort(List<Integer> list) {
         while (!sorted(list)) {

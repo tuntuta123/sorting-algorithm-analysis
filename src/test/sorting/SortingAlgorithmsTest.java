@@ -240,30 +240,4 @@ public class SortingAlgorithmsTest {
     	assertTrue(isSorted(l)); 
     }
 
-    @Test void purgeSort_alreadySorted() { 
-    	List<Integer> l = sorted();   
-    	PurgeSort.sort(l); 
-    	assertTrue(isSorted(l)); 
-    }
-    @Test void purgeSort_reverseSorted() { 
-    	List<Integer> l = reversed(); 
-    	PurgeSort.sort(l); 
-    	assertTrue(isSorted(l)); 
-    }
-    @Test void purgeSort_shuffled(){ 
-    	List<Integer> l = shuffled(); 
-    	PurgeSort.sort(l); 
-    	assertTrue(isSorted(l)); 
-    }
-    @Test void purgeSort_singleElement() { 
-    	List<Integer> l = single();   
-    	PurgeSort.sort(l); 
-    	assertTrue(isSorted(l)); 
-    }
-    @Test void purgeSort_emptyList(){ 
-    	List<Integer> l = empty();    
-    	PurgeSort.sort(l); 
-    	assertTrue(isSorted(l)); 
-    }
-
 }

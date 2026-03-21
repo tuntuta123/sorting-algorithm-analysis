@@ -16,7 +16,6 @@ public class SortingAlgorithmFactory {
         registry.put("Comb Sort", list -> CombSort.sort(list));
         registry.put("Pancake Sort",list -> PancakeSort.sort(list));
         registry.put("Cocktail Shaker Sort",list -> CocktailShakerSort.sort(list));
-        registry.put("Purge Sort",list -> PurgeSort.sort(list));
         registry.put("Bogo Sort",list -> BogoSort.sort(list));
     }
 
