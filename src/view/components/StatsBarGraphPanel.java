@@ -25,6 +25,8 @@ public class StatsBarGraphPanel extends JPanel {
                 return s.getComparisons();
             case "swaps":
                 return s.getSwaps();
+            case "accesses":
+            	return s.getAccesses();
         }
         return 0;
     }
@@ -33,6 +35,7 @@ public class StatsBarGraphPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        
         int width = getWidth();
         int height = getHeight();
         int margin = 40;
@@ -43,22 +46,34 @@ public class StatsBarGraphPanel extends JPanel {
         }
 
         if(max == 0) max = 1;
-        int barHeight = 25;
-        int spacing = 40;
-        Color[] colors = {Color.RED, Color.BLUE};
+
+
+        int availH  = height - 2 * margin;
+        int spacing = availH / stats.length;
+        int barHeight = (int) (spacing * 0.6);
+        
+        //int spacing = 100;
+
+        Color[] colors = {new Color(220, 80, 80), new Color(80, 140, 220)};
         g2.setColor(Color.WHITE);
+	g2.setFont(new Font("SansSerif", Font.BOLD, 12));
         g2.drawString(metric.toUpperCase(), margin, 20);
 
         for(int i=0;i<stats.length;i++) {
             long value = getValue(stats[i]);
             int barWidth = (int)((double)value/max*(width - 200));
-            int y = margin + i*spacing;
+            int y = margin + i * spacing + (spacing - barHeight) / 2;
+            //int y = margin + i*spacing;
+            
             g2.setColor(colors[i % colors.length]);
             g2.fillRect(margin, y, barWidth, barHeight);
+            
             g2.setColor(Color.WHITE);
-            g2.drawString(stats[i].getAlgorithmName(), margin, y - 5);
+	    g2.setFont(new Font("SansSerif", Font.PLAIN, 11));
+            g2.drawString(stats[i].getAlgorithmName(), margin, y - 4);
+            
             String valueLabel = metric.equals("time") ? value + " ms" : String.valueOf(value);
-            g2.drawString(valueLabel, margin + barWidth + 10, y + 18);
+            g2.drawString(valueLabel, margin + barWidth + 10, y + barHeight / 2 + 4);
         }
     }
 }

@@ -1,5 +1,4 @@
 package view.components;
-
 import view.components.StatsBarGraphPanel;
 import model.SortStats;
 import javax.swing.*;
@@ -78,7 +77,7 @@ public class StatsWindow extends JFrame {
 	bottomContainer.setBackground(background);
 
 	JPanel graphsPanel = new JPanel();
-	graphsPanel.setLayout(new GridLayout(3,1,10,10));
+	graphsPanel.setLayout(new GridLayout(2,1,10,10));
 	graphsPanel.setBackground(background);
 
 	RealtimeGraphPanel comparisonsGraph = new RealtimeGraphPanel("comparisons", stats);
@@ -86,6 +85,7 @@ public class StatsWindow extends JFrame {
 	graphsPanel.add(comparisonsGraph);
 	graphsPanel.add(swapsGraph);
 	graphsPanel.add(new StatsBarGraphPanel("time", stats));
+	graphsPanel.add(new StatsBarGraphPanel("accesses", stats));
 	bottomContainer.add(graphsPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
