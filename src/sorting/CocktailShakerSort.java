@@ -3,8 +3,21 @@ package sorting;
 import util.SortingListener;
 import java.util.*;
 
+/**
+ * Cocktail Shaker Sort is a two-way version of Bubble Sort.
+ * Instead of only going left to right, it alternates directions each pass,
+ * first bubbling the biggest element to the end, then the smallest to the front.
+ * This helps it deal with small elements stuck at the end faster than regular Bubble Sort.
+ */
 public class CocktailShakerSort {
 
+	/**
+     * Sorts the list by doing alternating left-to-right and right-to-left passes.
+     * Each pass shrinks the unsorted region from both ends.
+     * Stops early if a full pass happens with no swaps, meaning the list is already sorted.
+     *
+     * @param list the list to sort
+     */
     public static void sort(List<Integer> list) {
         boolean swapped = true;
         int i = 0;

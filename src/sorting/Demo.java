@@ -3,54 +3,56 @@ package sorting;
 import generator.*;
 import java.util.*;
 
-public class Demo{
+/**
+ * Demo class to test that all sorting algorithms work correctly.
+ * Uses the factory to get each algorithm and runs them on the same generated list
+ * so the results are easy to compare.
+ */
+public class Demo {
 
-	public static void main(String[] args){
-		SwapSortGenerator veryRandom = new SwapSortGenerator(1.0,10);
-		SwapSortGenerator veryRandom2 = new SwapSortGenerator(1.0,10);
-		
-		List<Integer> l1 = veryRandom.getList();
-		System.out.println("Before sorting : " + l1);
-		
-		InsertionSorting.sort(l1);
-		System.out.println("After sorting : " + l1);
-        
-        List<Integer> l2 = veryRandom2.getList();
-		System.out.println("Before sorting : " + l2);
-		
-		MergeSorting.sort(l2);
-		System.out.println("After sorting : " + l2);
+    public static void main(String[] args) {
 
-		//BucketSort
-		SwapSortGenerator random = new SwapSortGenerator(1.0, 10);
-		List<Integer> list1 = random.getList();
+        List<String> algorithms = List.of(
+            "Bubble Sort",
+            "Insertion Sort",
+            "Merge Sort",
+            "Quick Sort",
+            "Bucket Sort",
+            "Comb Sort",
+            "Pancake Sort",
+            "Cocktail Shaker Sort",
+            "Bogo Sort"
+        );
 
-		System.out.println("Before bucket sort : " + list1);
-		BucketSort.sort(list1);
-		System.out.println("After bucket sort  : " + list1);
+        System.out.println("=== Sorting Algorithm Demo ===\n");
 
-		//BubbleSort
-		SwapSortGenerator random1 = new SwapSortGenerator(1.0, 10);
-		List<Integer> list2 = random1.getList();
+        for (String name : algorithms) {
+            // Give each algorithm its own freshly generated list
+            List<Integer> list = new EntropyGenerator(1, 10).getList();
 
-		System.out.println("Before Bogosort : " + list2);
-		BogoSort.sort(list2);
-		System.out.println("After Bogosort : " + list2);
-		
-		SwapSortGenerator random2 = new SwapSortGenerator(1.0, 10);
-		List<Integer> list3 = random2.getList();
-		
-		System.out.println("Before Pancake sort : " + list3);
-		PancakeSort.sort(list3);
-		System.out.println("After Pancake sort : " + list3);
-		
-		SwapSortGenerator random3 = new SwapSortGenerator(1.0, 20);
-		List<Integer> list4 = random3.getList();
-		
-		System.out.println("Before CocktailShakerSort : " + list4);
-		CocktailShakerSort.sort(list4);
-		System.out.println("After CocktailShakerSort : " + list4);
+            System.out.println("Algorithm : " + name);
+            System.out.println("Before    : " + list);
 
-	}
+            SortingAlgorithm algo = SortingAlgorithmFactory.get(name);
+            algo.sort(list);
 
+            System.out.println("After     : " + list);
+            System.out.println("Sorted?   : " + isSorted(list));
+            System.out.println();
+        }
+    }
+
+    /**
+     * Helper function to verify the list is actually sorted after the algorithm runs.
+     *
+     * @param list the list to check
+     * @return true if sorted in ascending order, false otherwise
+     */
+    private static boolean isSorted(List<Integer> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i) > list.get(i + 1)) 
+            	return false;
+        }
+        return true;
+    }
 }

@@ -148,12 +148,6 @@ public class BenchmarkRunner {
             		case "QuickSort":
                 		QuickSort.sort(data);
                 	break;
-            		case "PurgeSort":
-                		PurgeSort.sort(data);
-                	break;
-            		case "ModeratePurgeSort":
-                		ModeratePurgeSort.sort(data);
-                	break;
             		case "PancakeSort":
                 		PancakeSort.sort(data);
                 	break;
