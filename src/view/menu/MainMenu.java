@@ -3,14 +3,26 @@ package view.menu;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class shows the main menu screen .
+ * Gives the user three options, to visualize a single algorithm,
+ * to compare two algorithms, or to exit the application.
+ */
 public class MainMenu extends AbstractMenu {
 
+    /**
+     * Creates and displays the main menu window.
+     */
     public MainMenu() {
         super("Sorting Algorithms Analyzer", 600, 420);
         buildUI();
         setVisible(true);
     }
 
+    /**
+     * Builds and arranges the welcome message and the three main action buttons.
+     * Each button navigates to a different screen or exits the app.
+     */
     @Override
     public void buildUI() {
         getContentPane().setBackground(BG);
@@ -49,11 +61,19 @@ public class MainMenu extends AbstractMenu {
         exitBtn.addActionListener(e -> System.exit(0));
     }
 
+    /**
+     * Makes the main menu window visible.
+     */
     @Override
     public void open() { 
     	setVisible(true); 
     }
 
+    /**
+     * Entry point of the application. Launches the main menu.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainMenu::new);
     }

@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * A class that has a panel that draws a real-time line graph of sorting statistics over time.
+ * The graph repaints itself every 40ms using a timer.
+ */
 public class RealtimeGraphPanel extends JPanel {
 
     private SortStats[] stats;
@@ -23,6 +27,13 @@ public class RealtimeGraphPanel extends JPanel {
     private static final int Y_TICKS = 5;
     private static final int X_TICKS = 5;
 
+    /**
+     * Creates the graph panel for the given metric and stats objects.
+     * Starts the repaint timer.
+     *
+     * @param metric The metric to display.
+     * @param stats  SortStats objects to plot on the graph.
+     */
     public RealtimeGraphPanel(String metric, SortStats... stats) {
         this.metric = metric;
         this.stats  = stats;
@@ -32,10 +43,20 @@ public class RealtimeGraphPanel extends JPanel {
         repaintTimer.start();
     }
 
+
+    /**
+     * Stops the repaint timer.
+     */
     public void stopTimer() {
         if (repaintTimer != null) repaintTimer.stop();
     }
 
+
+    /**
+     * Draws the full graph including the grid, axes, labels, data lines, and legend.
+     *
+     * @param g The Graphics object used to draw on the panel.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -55,7 +76,7 @@ public class RealtimeGraphPanel extends JPanel {
             List<Long> t = getTimes(st);
             List<Long> v = getValues(st);
             if (t != null && !t.isEmpty()) maxTime = Math.max(maxTime, t.get(t.size() - 1));
-            if (v != null && !v.isEmpty()) maxVal  = Math.max(maxVal,  v.get(v.size() - 1));
+            if (v != null && !v.isEmpty()) maxVal  = Math.max(maxVal, v.get(v.size() - 1));
         }
 
         g2.setStroke(new BasicStroke(0.5f));
@@ -71,8 +92,8 @@ public class RealtimeGraphPanel extends JPanel {
 
         g2.setStroke(new BasicStroke(1.5f));
         g2.setColor(AXIS_COLOR);
-        g2.drawLine(plotX, plotY,          plotX,          plotY + plotH); // Y axis
-        g2.drawLine(plotX, plotY + plotH,  plotX + plotW,  plotY + plotH); // X axis
+        g2.drawLine(plotX, plotY, plotX, plotY + plotH); 
+        g2.drawLine(plotX, plotY + plotH,  plotX + plotW,  plotY + plotH); 
 
         g2.setFont(new Font("SansSerif", Font.PLAIN, 10));
         g2.setColor(AXIS_COLOR);
@@ -144,6 +165,12 @@ public class RealtimeGraphPanel extends JPanel {
         }
     }
 
+    /**
+     * Returns the list of timestamps for the given statistics based on the current metric.
+     *
+     * @param st The statistics to read from.
+     * @return A list of timestamps in milliseconds matching the current metric.
+     */
     private List<Long> getTimes(SortStats st) {
         switch (metric) {
             case "comparisons": 
@@ -155,6 +182,12 @@ public class RealtimeGraphPanel extends JPanel {
         }
     }
 
+    /**
+     * Returns the list of recorded values for the given stats object based on the current metric.
+     *
+     * @param st The statistics to read from.
+     * @return A list of values matching the current metric.
+     */
     private List<Long> getValues(SortStats st) {
         switch (metric) {
             case "comparisons": 
@@ -166,6 +199,11 @@ public class RealtimeGraphPanel extends JPanel {
         }
     }
 
+    /**
+     * Returns the Y-axis label to display based on the current metric.
+     *
+     * @return A string like "Comparisons" or "Swaps".
+     */
     private String yAxisLabel() {
         switch (metric) {
             case "comparisons": 
@@ -177,6 +215,12 @@ public class RealtimeGraphPanel extends JPanel {
         }
     }
 
+    /**
+     * Formats a large number into a shorter readable string.
+     *
+     * @param val The number to format.
+     * @return A formatted string or just the number as a string.
+     */
     private String formatNumber(long val) {
         if (val >= 1_000_000) 
         	return String.format("%.1fM", val / 1_000_000.0);

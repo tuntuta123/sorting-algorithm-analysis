@@ -1,14 +1,24 @@
 package view.components;
+
 import view.components.StatsBarGraphPanel;
 import model.SortStats;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-
 import java.awt.event.*;
 
+/**
+ * A class that shows the performance statistics of one or two sorting algorithms.
+ * It displays stat cards with comparisons, swaps, accesses, and time,
+ * along with real-time line graphs and bar graphs for visual comparison.
+ */
 public class StatsWindow extends JFrame {
 
+    /**
+     * Creates and displays the statistics window for the given objects.
+     *
+     * @param stats SortStats objects to display results for.
+     */
     public StatsWindow(SortStats... stats) {
         setTitle("Performance Statistics");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -18,6 +28,12 @@ public class StatsWindow extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Builds and arranges all the UI components inside the window.
+     * This includes the stat cards, the graphs, and the close button.
+     *
+     * @param stats The array of SortStats objects to display.
+     */
     private void buildUI(SortStats[] stats) {
         Color background = new Color(34, 40, 49);
         Color panelColor = new Color(57, 62, 70);
@@ -128,6 +144,17 @@ public class StatsWindow extends JFrame {
 
     }
 
+    /**
+     * Creates a row with a label on the left and a value on the right.
+     * Used inside the stat cards to display each metric neatly.
+     *
+     * @param labelText  The name of the metric.
+     * @param value      The value to display on the right side.
+     * @param bg         The background color of the row.
+     * @param fg         The color of the label text.
+     * @param valueColor The color of the value text.
+     * @return A JPanel containing the label and value side by side.
+     */
     private JPanel makeRow(String labelText, String value, Color bg, Color fg, Color valueColor) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(bg);
@@ -143,6 +170,11 @@ public class StatsWindow extends JFrame {
         return row;
     }
 
+    /**
+     * Creates a thin horizontal separator line used between sections in the stat cards.
+     *
+     * @return A styled JSeparator with a fixed height of 1px.
+     */
     private JSeparator makeSeparator() {
         JSeparator sep = new JSeparator();
         sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));

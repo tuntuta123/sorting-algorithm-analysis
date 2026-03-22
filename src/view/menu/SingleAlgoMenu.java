@@ -4,6 +4,11 @@ import view.window.VisualizerWindow;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class shows a menu screen where the user sets up a single algorithm visualization.
+ * Lets the user pick an algorithm, a data generator type, an optional entropy value,
+ * and the size of the list before launching the visualizer window.
+ */
 public class SingleAlgoMenu extends AbstractMenu {
 
     private JComboBox<String> algoComboBox;
@@ -13,12 +18,20 @@ public class SingleAlgoMenu extends AbstractMenu {
     private JLabel sizeLabel;
     private JSpinner sizeSpinner;
 
+    /**
+     * Creates and displays the single algorithm menu window.
+     */
     public SingleAlgoMenu() {
         super("Sorting Visualizer", 600, 480);
         buildUI();
         setVisible(true);
     }
 
+
+    /**
+     * Builds and arranges all the form fields, dropdowns, and buttons for the menu.
+     * Also connects the entropy field visibility to the selected generator type.
+     */
     @Override
     public void buildUI() {
         getContentPane().setBackground(BG);
@@ -78,6 +91,10 @@ public class SingleAlgoMenu extends AbstractMenu {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Validates the form inputs and opens the visualizer window if everything is valid.
+     * Shows an error dialog if the entropy value is missing or out of range.
+     */
     @Override
     public void open() {
         String algo = (String) algoComboBox.getSelectedItem();

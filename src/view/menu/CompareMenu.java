@@ -5,6 +5,11 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 
+/**
+ * The menu screen where the user sets up a side-by-side comparison of two sorting algorithms.
+ * Lets the user pick two different algorithms, a data generator type, an optional entropy value,
+ * and the size of the list before launching the comparison window.
+ */
 public class CompareMenu extends AbstractMenu {
 
     private JComboBox<String> algoComboBox1;
@@ -15,12 +20,21 @@ public class CompareMenu extends AbstractMenu {
     private JLabel sizeLabel;
     private JSpinner sizeSpinner;
 
+
+    /**
+     * Creates and displays the compare menu window.
+     */
     public CompareMenu() {
         super("Compare Two Algorithms", 600, 560);
         buildUI();
         setVisible(true);
     }
 
+
+    /**
+     * Builds and arranges all the form fields, dropdowns, and buttons for the compare menu.
+     * Also sets up the entropy field visibility and the duplicate algorithm prevention logic.
+     */
     @Override
     public void buildUI() {
         getContentPane().setBackground(BG);
@@ -109,6 +123,10 @@ public class CompareMenu extends AbstractMenu {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Prevents the user from selecting the same algorithm in both dropdowns.
+     * If the second combo box matches the first, it automatically skips to the next available option.
+     */
     private void skipBlockedItem() {
         String sel1 = (String) algoComboBox1.getSelectedItem();
         String sel2 = (String) algoComboBox2.getSelectedItem();
@@ -125,6 +143,11 @@ public class CompareMenu extends AbstractMenu {
         }
     }
 
+
+    /**
+     * Validates the form inputs and opens the comparison window if everything is valid.
+     * Shows an error dialog if the same algorithm is selected twice or if the entropy value is invalid.
+     */
     @Override
     public void open() {
         String algo1 = (String) algoComboBox1.getSelectedItem();
