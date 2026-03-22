@@ -10,7 +10,7 @@ import java.util.*;
 
 public class BenchmarkRunner {
 
-    	public static void main(String[] args) {
+	public static void main(String[] args) {
 
         	List<BenchmarkConfig> configs = buildConfigs();
         	List<SortStats> results = new ArrayList<>();
@@ -28,7 +28,11 @@ public class BenchmarkRunner {
 
 				SortStats stats = new SortStats(
 				        	config.getAlgorithmName(),
-				        	buildGeneratorLabel(config, run)
+        					buildGeneratorLabel(config, run),
+        					config.getGeneratorType(),
+        					config.getSize(),
+        					config.getEntropy(),
+        					run
 				);
 
 				SortingListener.clearListeners();
@@ -50,9 +54,9 @@ public class BenchmarkRunner {
 
         	CsvExporter.exportSummary("results.csv", results);
         	System.out.println("benchmarks completed.");
-    }
+    	}
 
-    private static List<BenchmarkConfig> buildConfigs() {
+	private static List<BenchmarkConfig> buildConfigs() {
         	List<BenchmarkConfig> configs = new ArrayList<>();
 
         	int[] sizes = {100, 500/*, 1000*/};
@@ -105,19 +109,24 @@ public class BenchmarkRunner {
     	}
 
     	private static String buildGeneratorLabel(BenchmarkConfig config, int run) {
-		if (config.getGeneratorType().equals("random")) {
-		    	return "Random_n=" + config.getSize() + "_run=" + run;
-		} 
-		else if (config.getGeneratorType().equals("entropy")) {
-		    	return "Entropy_" + config.getEntropy() + "_n=" + config.getSize() + "_run=" + run;
-		} 
-		else if (config.getGeneratorType().equals("reverse_entropy")) {
-		    	return "ReverseEntropy_" + config.getEntropy() + "_n=" + config.getSize() + "_run=" + run;
-		} 
-		else {
-		    	return "Unknown_n=" + config.getSize() + "_run=" + run;
-		}
-    	}
+    		String type = config.getGeneratorType();
+    		int size = config.getSize();
+
+    		if (type.equals("random")) {
+        		return "random | n=" + size + " | run=" + run;
+    		}
+    		else if (type.equals("entropy")) {
+        		return String.format("entropy | h=%.2f | n=%d | run=%d",
+                	config.getEntropy(), size, run);
+    		}
+    		else if (type.equals("reverse_entropy")) {
+        		return String.format("reverse entropy | h=%.2f | n=%d | run=%d",
+                	config.getEntropy(), size, run);
+    		}
+    		else {
+        		return "unknown | n=" + size + " | run=" + run;
+    		}
+	}
 
     	private static void runAlgorithm(String algorithmName, List<Integer> data) {
         	switch (algorithmName) {
@@ -138,7 +147,12 @@ public class BenchmarkRunner {
                 	break;
             		case "QuickSort":
                 		QuickSort.sort(data);
-                	
+                	break;
+            		case "PurgeSort":
+                		PurgeSort.sort(data);
+                	break;
+            		case "ModeratePurgeSort":
+                		ModeratePurgeSort.sort(data);
                 	break;
             		case "PancakeSort":
                 		PancakeSort.sort(data);
