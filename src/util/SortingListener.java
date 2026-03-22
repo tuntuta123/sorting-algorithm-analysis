@@ -4,15 +4,15 @@ import java.util.*;
 
 /**
  * This class is used to manage listeners for sorting events.
- * It allows listeners to be added and notifies them when comparisons or swaps happen.
+ * It allows listeners to be added and notifies them when comparisons, swaps, or  
+ * accesses happen.
  */
 public class SortingListener {
 
-    //private static List<Listener> listeners = new ArrayList<>();
     private static final ThreadLocal<List<Listener>> listeners =
-            ThreadLocal.withInitial(ArrayList::new); // for the simulation of 2 algos
-
-	/**
+            ThreadLocal.withInitial(ArrayList::new); 
+    
+    /**
      * Adds a listener to the list of listeners.
      * 
      * @param listener The listener to be added.
@@ -21,7 +21,7 @@ public class SortingListener {
         listeners.get().add(listener);
     }
 
-	/**
+    /**
      * Notifies all listeners when two elements are compared.
      * 
      * @param i1 Index of the first element.
@@ -35,7 +35,7 @@ public class SortingListener {
         }
     }
 
-	/**
+    /**
      * Notifies all listeners when two elements are swapped.
      * 
      * @param i Index of the first element.
@@ -51,6 +51,9 @@ public class SortingListener {
 
     /**
      * Notifies all listeners when a single element is accessed (get or set).
+     *
+     * @param index The position of the accessed element
+     * @param value The value of the accessed element
      */
     public static void notifyAccess(int index, int value) {
         for (Listener listener : listeners.get()) {
@@ -58,7 +61,9 @@ public class SortingListener {
         }
     }
 
-    
+    /**
+     * Removes all listeners from the current thread's listener list.
+     */
     public static void clearListeners() {
         listeners.get().clear();
     }

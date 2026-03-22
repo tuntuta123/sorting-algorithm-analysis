@@ -2,7 +2,7 @@ package util;
 
 /**
  * This interface is for listening to events during the sorting process.
- * It provides methods that are called when two elements are compared, swapped, or accessed.
+ * It provides methods that are called when two elements are compared, swapped, and when an element is accessed.
  */
 public interface Listener {
 
@@ -27,7 +27,7 @@ public interface Listener {
     void onSwap(int i1, int i2, int v1, int v2);
 
     /**
-     * Called when a single element is accessed (read or written).
+     * Called when a single element is accessed (get or set).
      *
      * @param index Index of the accessed element.
      * @param value Value at that index.
