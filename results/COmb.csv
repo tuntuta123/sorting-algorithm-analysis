@@ -1,0 +1,109 @@
+algorithm,generatorLabel,generatorType,entropy,size,run,comparisons,swaps,accesses,timeMs
+"CombSort","random | n=100 | run=1","random",-1.00,100,1,1201,253,2908,8
+"CombSort","random | n=100 | run=2","random",-1.00,100,2,1399,253,3304,2
+"CombSort","random | n=100 | run=3","random",-1.00,100,3,1201,258,2918,1
+"CombSort","random | n=100 | run=4","random",-1.00,100,4,1201,256,2914,1
+"CombSort","entropy | h=0,00 | n=100 | run=1","entropy",0.00,100,1,1003,0,2006,1
+"CombSort","entropy | h=0,00 | n=100 | run=2","entropy",0.00,100,2,1003,0,2006,1
+"CombSort","entropy | h=0,00 | n=100 | run=3","entropy",0.00,100,3,1003,0,2006,0
+"CombSort","entropy | h=0,00 | n=100 | run=4","entropy",0.00,100,4,1003,0,2006,1
+"CombSort","reverse entropy | h=0,00 | n=100 | run=1","reverse_entropy",0.00,100,1,1102,122,2448,1
+"CombSort","reverse entropy | h=0,00 | n=100 | run=2","reverse_entropy",0.00,100,2,1102,122,2448,1
+"CombSort","reverse entropy | h=0,00 | n=100 | run=3","reverse_entropy",0.00,100,3,1102,122,2448,0
+"CombSort","reverse entropy | h=0,00 | n=100 | run=4","reverse_entropy",0.00,100,4,1102,122,2448,1
+"CombSort","entropy | h=0,25 | n=100 | run=1","entropy",0.25,100,1,1201,83,2568,1
+"CombSort","entropy | h=0,25 | n=100 | run=2","entropy",0.25,100,2,1201,69,2540,0
+"CombSort","entropy | h=0,25 | n=100 | run=3","entropy",0.25,100,3,1201,55,2512,0
+"CombSort","entropy | h=0,25 | n=100 | run=4","entropy",0.25,100,4,1201,47,2496,1
+"CombSort","reverse entropy | h=0,25 | n=100 | run=1","reverse_entropy",0.25,100,1,1102,147,2498,0
+"CombSort","reverse entropy | h=0,25 | n=100 | run=2","reverse_entropy",0.25,100,2,1102,163,2530,0
+"CombSort","reverse entropy | h=0,25 | n=100 | run=3","reverse_entropy",0.25,100,3,1201,173,2748,1
+"CombSort","reverse entropy | h=0,25 | n=100 | run=4","reverse_entropy",0.25,100,4,1201,147,2696,0
+"CombSort","entropy | h=0,50 | n=100 | run=1","entropy",0.50,100,1,1201,136,2674,0
+"CombSort","entropy | h=0,50 | n=100 | run=2","entropy",0.50,100,2,1201,144,2690,1
+"CombSort","entropy | h=0,50 | n=100 | run=3","entropy",0.50,100,3,1201,180,2762,1
+"CombSort","entropy | h=0,50 | n=100 | run=4","entropy",0.50,100,4,1201,138,2678,0
+"CombSort","reverse entropy | h=0,50 | n=100 | run=1","reverse_entropy",0.50,100,1,1102,202,2608,1
+"CombSort","reverse entropy | h=0,50 | n=100 | run=2","reverse_entropy",0.50,100,2,1201,184,2770,0
+"CombSort","reverse entropy | h=0,50 | n=100 | run=3","reverse_entropy",0.50,100,3,1300,232,3064,0
+"CombSort","reverse entropy | h=0,50 | n=100 | run=4","reverse_entropy",0.50,100,4,1201,216,2834,1
+"CombSort","entropy | h=0,75 | n=100 | run=1","entropy",0.75,100,1,1300,262,3124,1
+"CombSort","entropy | h=0,75 | n=100 | run=2","entropy",0.75,100,2,1201,240,2882,0
+"CombSort","entropy | h=0,75 | n=100 | run=3","entropy",0.75,100,3,1201,238,2878,1
+"CombSort","entropy | h=0,75 | n=100 | run=4","entropy",0.75,100,4,1201,222,2846,1
+"CombSort","reverse entropy | h=0,75 | n=100 | run=1","reverse_entropy",0.75,100,1,1201,242,2886,0
+"CombSort","reverse entropy | h=0,75 | n=100 | run=2","reverse_entropy",0.75,100,2,1300,258,3116,0
+"CombSort","reverse entropy | h=0,75 | n=100 | run=3","reverse_entropy",0.75,100,3,1201,258,2918,1
+"CombSort","reverse entropy | h=0,75 | n=100 | run=4","reverse_entropy",0.75,100,4,1201,240,2882,0
+"CombSort","random | n=500 | run=1","random",-1.00,500,1,9869,2011,23760,4
+"CombSort","random | n=500 | run=2","random",-1.00,500,2,10368,1919,24574,5
+"CombSort","random | n=500 | run=3","random",-1.00,500,3,9370,1984,22708,2
+"CombSort","random | n=500 | run=4","random",-1.00,500,4,9370,1894,22528,2
+"CombSort","entropy | h=0,00 | n=500 | run=1","entropy",0.00,500,1,8372,0,16744,1
+"CombSort","entropy | h=0,00 | n=500 | run=2","entropy",0.00,500,2,8372,0,16744,2
+"CombSort","entropy | h=0,00 | n=500 | run=3","entropy",0.00,500,3,8372,0,16744,1
+"CombSort","entropy | h=0,00 | n=500 | run=4","entropy",0.00,500,4,8372,0,16744,1
+"CombSort","reverse entropy | h=0,00 | n=500 | run=1","reverse_entropy",0.00,500,1,8871,730,19202,1
+"CombSort","reverse entropy | h=0,00 | n=500 | run=2","reverse_entropy",0.00,500,2,8871,730,19202,1
+"CombSort","reverse entropy | h=0,00 | n=500 | run=3","reverse_entropy",0.00,500,3,8871,730,19202,1
+"CombSort","reverse entropy | h=0,00 | n=500 | run=4","reverse_entropy",0.00,500,4,8871,730,19202,1
+"CombSort","entropy | h=0,25 | n=500 | run=1","entropy",0.25,500,1,9370,714,20168,1
+"CombSort","entropy | h=0,25 | n=500 | run=2","entropy",0.25,500,2,8871,860,19462,1
+"CombSort","entropy | h=0,25 | n=500 | run=3","entropy",0.25,500,3,8871,844,19430,2
+"CombSort","entropy | h=0,25 | n=500 | run=4","entropy",0.25,500,4,8871,668,19078,1
+"CombSort","reverse entropy | h=0,25 | n=500 | run=1","reverse_entropy",0.25,500,1,9370,1202,21144,1
+"CombSort","reverse entropy | h=0,25 | n=500 | run=2","reverse_entropy",0.25,500,2,8871,1156,20054,1
+"CombSort","reverse entropy | h=0,25 | n=500 | run=3","reverse_entropy",0.25,500,3,8871,1218,20178,2
+"CombSort","reverse entropy | h=0,25 | n=500 | run=4","reverse_entropy",0.25,500,4,8871,1172,20086,1
+"CombSort","entropy | h=0,50 | n=500 | run=1","entropy",0.50,500,1,8871,1134,20010,1
+"CombSort","entropy | h=0,50 | n=500 | run=2","entropy",0.50,500,2,9370,1240,21220,2
+"CombSort","entropy | h=0,50 | n=500 | run=3","entropy",0.50,500,3,9370,1154,21048,2
+"CombSort","entropy | h=0,50 | n=500 | run=4","entropy",0.50,500,4,9370,1140,21020,1
+"CombSort","reverse entropy | h=0,50 | n=500 | run=1","reverse_entropy",0.50,500,1,8871,1468,20678,1
+"CombSort","reverse entropy | h=0,50 | n=500 | run=2","reverse_entropy",0.50,500,2,8871,1406,20554,1
+"CombSort","reverse entropy | h=0,50 | n=500 | run=3","reverse_entropy",0.50,500,3,8871,1346,20434,2
+"CombSort","reverse entropy | h=0,50 | n=500 | run=4","reverse_entropy",0.50,500,4,9370,1448,21636,2
+"CombSort","entropy | h=0,75 | n=500 | run=1","entropy",0.75,500,1,9869,1798,23334,2
+"CombSort","entropy | h=0,75 | n=500 | run=2","entropy",0.75,500,2,9370,1780,22300,11
+"CombSort","entropy | h=0,75 | n=500 | run=3","entropy",0.75,500,3,8871,1828,21398,1
+"CombSort","entropy | h=0,75 | n=500 | run=4","entropy",0.75,500,4,9869,1820,23378,2
+"CombSort","reverse entropy | h=0,75 | n=500 | run=1","reverse_entropy",0.75,500,1,9370,1942,22624,2
+"CombSort","reverse entropy | h=0,75 | n=500 | run=2","reverse_entropy",0.75,500,2,9869,1894,23526,2
+"CombSort","reverse entropy | h=0,75 | n=500 | run=3","reverse_entropy",0.75,500,3,9370,1896,22532,2
+"CombSort","reverse entropy | h=0,75 | n=500 | run=4","reverse_entropy",0.75,500,4,9370,2002,22744,2
+"CombSort","random | n=1000 | run=1","random",-1.00,1000,1,22709,4494,54406,3
+"CombSort","random | n=1000 | run=2","random",-1.00,1000,2,21710,4416,52252,3
+"CombSort","random | n=1000 | run=3","random",-1.00,1000,3,23708,4515,56446,4
+"CombSort","random | n=1000 | run=4","random",-1.00,1000,4,22709,4430,54278,3
+"CombSort","entropy | h=0,00 | n=1000 | run=1","entropy",0.00,1000,1,18713,0,37426,2
+"CombSort","entropy | h=0,00 | n=1000 | run=2","entropy",0.00,1000,2,18713,0,37426,9
+"CombSort","entropy | h=0,00 | n=1000 | run=3","entropy",0.00,1000,3,18713,0,37426,2
+"CombSort","entropy | h=0,00 | n=1000 | run=4","entropy",0.00,1000,4,18713,0,37426,2
+"CombSort","reverse entropy | h=0,00 | n=1000 | run=1","reverse_entropy",0.00,1000,1,19712,1582,42588,2
+"CombSort","reverse entropy | h=0,00 | n=1000 | run=2","reverse_entropy",0.00,1000,2,19712,1582,42588,2
+"CombSort","reverse entropy | h=0,00 | n=1000 | run=3","reverse_entropy",0.00,1000,3,19712,1582,42588,2
+"CombSort","reverse entropy | h=0,00 | n=1000 | run=4","reverse_entropy",0.00,1000,4,19712,1582,42588,2
+"CombSort","entropy | h=0,25 | n=1000 | run=1","entropy",0.25,1000,1,21710,2377,48174,2
+"CombSort","entropy | h=0,25 | n=1000 | run=2","entropy",0.25,1000,2,21710,2127,47674,2
+"CombSort","entropy | h=0,25 | n=1000 | run=3","entropy",0.25,1000,3,21710,2019,47458,3
+"CombSort","entropy | h=0,25 | n=1000 | run=4","entropy",0.25,1000,4,21710,2313,48046,3
+"CombSort","reverse entropy | h=0,25 | n=1000 | run=1","reverse_entropy",0.25,1000,1,21710,3033,49486,2
+"CombSort","reverse entropy | h=0,25 | n=1000 | run=2","reverse_entropy",0.25,1000,2,21710,3015,49450,2
+"CombSort","reverse entropy | h=0,25 | n=1000 | run=3","reverse_entropy",0.25,1000,3,21710,3149,49718,2
+"CombSort","reverse entropy | h=0,25 | n=1000 | run=4","reverse_entropy",0.25,1000,4,21710,3107,49634,2
+"CombSort","entropy | h=0,50 | n=1000 | run=1","entropy",0.50,1000,1,21710,3131,49682,3
+"CombSort","entropy | h=0,50 | n=1000 | run=2","entropy",0.50,1000,2,21710,3053,49526,2
+"CombSort","entropy | h=0,50 | n=1000 | run=3","entropy",0.50,1000,3,23708,3153,53722,2
+"CombSort","entropy | h=0,50 | n=1000 | run=4","entropy",0.50,1000,4,21710,2993,49406,2
+"CombSort","reverse entropy | h=0,50 | n=1000 | run=1","reverse_entropy",0.50,1000,1,22709,3321,52060,3
+"CombSort","reverse entropy | h=0,50 | n=1000 | run=2","reverse_entropy",0.50,1000,2,21710,3551,50522,3
+"CombSort","reverse entropy | h=0,50 | n=1000 | run=3","reverse_entropy",0.50,1000,3,22709,3467,52352,17
+"CombSort","reverse entropy | h=0,50 | n=1000 | run=4","reverse_entropy",0.50,1000,4,21710,3593,50606,3
+"CombSort","entropy | h=0,75 | n=1000 | run=1","entropy",0.75,1000,1,22709,4336,54090,3
+"CombSort","entropy | h=0,75 | n=1000 | run=2","entropy",0.75,1000,2,22709,4224,53866,2
+"CombSort","entropy | h=0,75 | n=1000 | run=3","entropy",0.75,1000,3,23708,4424,56264,3
+"CombSort","entropy | h=0,75 | n=1000 | run=4","entropy",0.75,1000,4,21710,4354,52128,3
+"CombSort","reverse entropy | h=0,75 | n=1000 | run=1","reverse_entropy",0.75,1000,1,22709,4528,54474,3
+"CombSort","reverse entropy | h=0,75 | n=1000 | run=2","reverse_entropy",0.75,1000,2,22709,4586,54590,3
+"CombSort","reverse entropy | h=0,75 | n=1000 | run=3","reverse_entropy",0.75,1000,3,21710,4416,52252,3
+"CombSort","reverse entropy | h=0,75 | n=1000 | run=4","reverse_entropy",0.75,1000,4,22709,4454,54326,3

@@ -59,18 +59,18 @@ public class BenchmarkRunner {
 	private static List<BenchmarkConfig> buildConfigs() {
         	List<BenchmarkConfig> configs = new ArrayList<>();
 
-        	int[] sizes = {100, 500/*, 1000*/};
+        	int[] sizes = {100, 500, 1000};
         	double[] entropies = {0.0, 0.25, 0.50, 0.75};
-        	int repetitions = 1;
+        	int repetitions = 4;
 
         	String[] algorithms = {
-		        "BubbleSort",
-		        /*"CocktailShakerSort",*/
-		        /*"CombSort",*/
-		        "InsertionSorting",
-		        "MergeSorting",
-		        "QuickSort",
-		        /*"PancakeSort",*/
+		        //"BubbleSort",
+		        //"CocktailShakerSort",
+		        //"CombSort",
+		        //"InsertionSorting",
+		        //"MergeSorting",
+		        //"QuickSort",
+		        //"PancakeSort",
 		        "BucketSort"
         	};
 

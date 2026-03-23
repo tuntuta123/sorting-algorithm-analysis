@@ -1,0 +1,109 @@
+algorithm,generatorLabel,generatorType,entropy,size,run,comparisons,swaps,accesses,timeMs
+"BubbleSort","random | n=100 | run=1","random",-1.00,100,1,4779,2478,14514,10
+"BubbleSort","random | n=100 | run=2","random",-1.00,100,2,4797,2662,14918,3
+"BubbleSort","random | n=100 | run=3","random",-1.00,100,3,4797,2314,14222,3
+"BubbleSort","random | n=100 | run=4","random",-1.00,100,4,4940,2599,15078,3
+"BubbleSort","entropy | h=0,00 | n=100 | run=1","entropy",0.00,100,1,99,0,198,0
+"BubbleSort","entropy | h=0,00 | n=100 | run=2","entropy",0.00,100,2,99,0,198,0
+"BubbleSort","entropy | h=0,00 | n=100 | run=3","entropy",0.00,100,3,99,0,198,0
+"BubbleSort","entropy | h=0,00 | n=100 | run=4","entropy",0.00,100,4,99,0,198,0
+"BubbleSort","reverse entropy | h=0,00 | n=100 | run=1","reverse_entropy",0.00,100,1,4950,4950,19800,3
+"BubbleSort","reverse entropy | h=0,00 | n=100 | run=2","reverse_entropy",0.00,100,2,4950,4950,19800,3
+"BubbleSort","reverse entropy | h=0,00 | n=100 | run=3","reverse_entropy",0.00,100,3,4950,4950,19800,4
+"BubbleSort","reverse entropy | h=0,00 | n=100 | run=4","reverse_entropy",0.00,100,4,4950,4950,19800,3
+"BubbleSort","entropy | h=0,25 | n=100 | run=1","entropy",0.25,100,1,1710,51,3522,0
+"BubbleSort","entropy | h=0,25 | n=100 | run=2","entropy",0.25,100,2,2175,45,4440,0
+"BubbleSort","entropy | h=0,25 | n=100 | run=3","entropy",0.25,100,3,2394,101,4990,0
+"BubbleSort","entropy | h=0,25 | n=100 | run=4","entropy",0.25,100,4,3822,153,7950,1
+"BubbleSort","reverse entropy | h=0,25 | n=100 | run=1","reverse_entropy",0.25,100,1,4950,4781,19462,3
+"BubbleSort","reverse entropy | h=0,25 | n=100 | run=2","reverse_entropy",0.25,100,2,4950,4873,19646,3
+"BubbleSort","reverse entropy | h=0,25 | n=100 | run=3","reverse_entropy",0.25,100,3,4950,4817,19534,2
+"BubbleSort","reverse entropy | h=0,25 | n=100 | run=4","reverse_entropy",0.25,100,4,4950,4879,19658,2
+"BubbleSort","entropy | h=0,50 | n=100 | run=1","entropy",0.50,100,1,4895,390,10570,1
+"BubbleSort","entropy | h=0,50 | n=100 | run=2","entropy",0.50,100,2,4830,410,10480,1
+"BubbleSort","entropy | h=0,50 | n=100 | run=3","entropy",0.50,100,3,4544,272,9632,1
+"BubbleSort","entropy | h=0,50 | n=100 | run=4","entropy",0.50,100,4,4422,428,9700,1
+"BubbleSort","reverse entropy | h=0,50 | n=100 | run=1","reverse_entropy",0.50,100,1,4950,4510,18920,2
+"BubbleSort","reverse entropy | h=0,50 | n=100 | run=2","reverse_entropy",0.50,100,2,4950,4438,18776,1
+"BubbleSort","reverse entropy | h=0,50 | n=100 | run=3","reverse_entropy",0.50,100,3,4949,4644,19186,2
+"BubbleSort","reverse entropy | h=0,50 | n=100 | run=4","reverse_entropy",0.50,100,4,4950,4580,19060,1
+"BubbleSort","entropy | h=0,75 | n=100 | run=1","entropy",0.75,100,1,4949,2014,13926,1
+"BubbleSort","entropy | h=0,75 | n=100 | run=2","entropy",0.75,100,2,4779,2174,13906,1
+"BubbleSort","entropy | h=0,75 | n=100 | run=3","entropy",0.75,100,3,4895,2412,14614,1
+"BubbleSort","entropy | h=0,75 | n=100 | run=4","entropy",0.75,100,4,4814,2230,14088,1
+"BubbleSort","reverse entropy | h=0,75 | n=100 | run=1","reverse_entropy",0.75,100,1,4884,2758,15284,1
+"BubbleSort","reverse entropy | h=0,75 | n=100 | run=2","reverse_entropy",0.75,100,2,4872,2634,15012,1
+"BubbleSort","reverse entropy | h=0,75 | n=100 | run=3","reverse_entropy",0.75,100,3,4950,3060,16020,1
+"BubbleSort","reverse entropy | h=0,75 | n=100 | run=4","reverse_entropy",0.75,100,4,4944,2754,15396,1
+"BubbleSort","random | n=500 | run=1","random",-1.00,500,1,124645,62406,374102,52
+"BubbleSort","random | n=500 | run=2","random",-1.00,500,2,124474,61129,371206,24
+"BubbleSort","random | n=500 | run=3","random",-1.00,500,3,124659,62020,373358,32
+"BubbleSort","random | n=500 | run=4","random",-1.00,500,4,124630,63129,375518,21
+"BubbleSort","entropy | h=0,00 | n=500 | run=1","entropy",0.00,500,1,499,0,998,0
+"BubbleSort","entropy | h=0,00 | n=500 | run=2","entropy",0.00,500,2,499,0,998,0
+"BubbleSort","entropy | h=0,00 | n=500 | run=3","entropy",0.00,500,3,499,0,998,0
+"BubbleSort","entropy | h=0,00 | n=500 | run=4","entropy",0.00,500,4,499,0,998,0
+"BubbleSort","reverse entropy | h=0,00 | n=500 | run=1","reverse_entropy",0.00,500,1,124750,124750,499000,43
+"BubbleSort","reverse entropy | h=0,00 | n=500 | run=2","reverse_entropy",0.00,500,2,124750,124750,499000,25
+"BubbleSort","reverse entropy | h=0,00 | n=500 | run=3","reverse_entropy",0.00,500,3,124750,124750,499000,57
+"BubbleSort","reverse entropy | h=0,00 | n=500 | run=4","reverse_entropy",0.00,500,4,124750,124750,499000,32
+"BubbleSort","entropy | h=0,25 | n=500 | run=1","entropy",0.25,500,1,120834,3922,249512,15
+"BubbleSort","entropy | h=0,25 | n=500 | run=2","entropy",0.25,500,2,111709,3026,229470,13
+"BubbleSort","entropy | h=0,25 | n=500 | run=3","entropy",0.25,500,3,123930,2944,253748,15
+"BubbleSort","entropy | h=0,25 | n=500 | run=4","entropy",0.25,500,4,115297,2710,236014,15
+"BubbleSort","reverse entropy | h=0,25 | n=500 | run=1","reverse_entropy",0.25,500,1,124750,121482,492464,42
+"BubbleSort","reverse entropy | h=0,25 | n=500 | run=2","reverse_entropy",0.25,500,2,124750,122156,493812,23
+"BubbleSort","reverse entropy | h=0,25 | n=500 | run=3","reverse_entropy",0.25,500,3,124750,120294,490088,25
+"BubbleSort","reverse entropy | h=0,25 | n=500 | run=4","reverse_entropy",0.25,500,4,124750,121004,491508,24
+"BubbleSort","entropy | h=0,50 | n=500 | run=1","entropy",0.50,500,1,116365,7918,248566,12
+"BubbleSort","entropy | h=0,50 | n=500 | run=2","entropy",0.50,500,2,124315,9766,268162,17
+"BubbleSort","entropy | h=0,50 | n=500 | run=3","entropy",0.50,500,3,121669,9202,261742,35
+"BubbleSort","entropy | h=0,50 | n=500 | run=4","entropy",0.50,500,4,122670,8614,262568,19
+"BubbleSort","reverse entropy | h=0,50 | n=500 | run=1","reverse_entropy",0.50,500,1,124750,115190,479880,27
+"BubbleSort","reverse entropy | h=0,50 | n=500 | run=2","reverse_entropy",0.50,500,2,124750,114712,478924,26
+"BubbleSort","reverse entropy | h=0,50 | n=500 | run=3","reverse_entropy",0.50,500,3,124750,116898,483296,26
+"BubbleSort","reverse entropy | h=0,50 | n=500 | run=4","reverse_entropy",0.50,500,4,124750,117382,484264,50
+"BubbleSort","entropy | h=0,75 | n=500 | run=1","entropy",0.75,500,1,124659,54282,357882,24
+"BubbleSort","entropy | h=0,75 | n=500 | run=2","entropy",0.75,500,2,124695,53112,355614,24
+"BubbleSort","entropy | h=0,75 | n=500 | run=3","entropy",0.75,500,3,123889,53316,354410,23
+"BubbleSort","entropy | h=0,75 | n=500 | run=4","entropy",0.75,500,4,124084,53232,354632,22
+"BubbleSort","reverse entropy | h=0,75 | n=500 | run=1","reverse_entropy",0.75,500,1,124744,73344,396176,25
+"BubbleSort","reverse entropy | h=0,75 | n=500 | run=2","reverse_entropy",0.75,500,2,124254,72770,394048,26
+"BubbleSort","reverse entropy | h=0,75 | n=500 | run=3","reverse_entropy",0.75,500,3,124705,72052,393514,28
+"BubbleSort","reverse entropy | h=0,75 | n=500 | run=4","reverse_entropy",0.75,500,4,124684,68146,385660,25
+"BubbleSort","random | n=1000 | run=1","random",-1.00,1000,1,498324,248217,1493082,114
+"BubbleSort","random | n=1000 | run=2","random",-1.00,1000,2,499004,241539,1481086,85
+"BubbleSort","random | n=1000 | run=3","random",-1.00,1000,3,498225,248314,1493078,90
+"BubbleSort","random | n=1000 | run=4","random",-1.00,1000,4,498069,244045,1484228,134
+"BubbleSort","entropy | h=0,00 | n=1000 | run=1","entropy",0.00,1000,1,999,0,1998,0
+"BubbleSort","entropy | h=0,00 | n=1000 | run=2","entropy",0.00,1000,2,999,0,1998,0
+"BubbleSort","entropy | h=0,00 | n=1000 | run=3","entropy",0.00,1000,3,999,0,1998,0
+"BubbleSort","entropy | h=0,00 | n=1000 | run=4","entropy",0.00,1000,4,999,0,1998,0
+"BubbleSort","reverse entropy | h=0,00 | n=1000 | run=1","reverse_entropy",0.00,1000,1,499500,499500,1998000,111
+"BubbleSort","reverse entropy | h=0,00 | n=1000 | run=2","reverse_entropy",0.00,1000,2,499500,499500,1998000,112
+"BubbleSort","reverse entropy | h=0,00 | n=1000 | run=3","reverse_entropy",0.00,1000,3,499500,499500,1998000,172
+"BubbleSort","reverse entropy | h=0,00 | n=1000 | run=4","reverse_entropy",0.00,1000,4,499500,499500,1998000,150
+"BubbleSort","entropy | h=0,25 | n=1000 | run=1","entropy",0.25,1000,1,453747,16097,939688,61
+"BubbleSort","entropy | h=0,25 | n=1000 | run=2","entropy",0.25,1000,2,437019,11369,896776,55
+"BubbleSort","entropy | h=0,25 | n=1000 | run=3","entropy",0.25,1000,3,489770,13585,1006710,60
+"BubbleSort","entropy | h=0,25 | n=1000 | run=4","entropy",0.25,1000,4,496097,15431,1023056,61
+"BubbleSort","reverse entropy | h=0,25 | n=1000 | run=1","reverse_entropy",0.25,1000,1,499500,484843,1968686,191
+"BubbleSort","reverse entropy | h=0,25 | n=1000 | run=2","reverse_entropy",0.25,1000,2,499500,484741,1968482,107
+"BubbleSort","reverse entropy | h=0,25 | n=1000 | run=3","reverse_entropy",0.25,1000,3,499500,485791,1970582,111
+"BubbleSort","reverse entropy | h=0,25 | n=1000 | run=4","reverse_entropy",0.25,1000,4,499499,485567,1970132,115
+"BubbleSort","entropy | h=0,50 | n=1000 | run=1","entropy",0.50,1000,1,497484,38767,1072502,148
+"BubbleSort","entropy | h=0,50 | n=1000 | run=2","entropy",0.50,1000,2,496097,32053,1056300,58
+"BubbleSort","entropy | h=0,50 | n=1000 | run=3","entropy",0.50,1000,3,498069,38611,1073360,61
+"BubbleSort","entropy | h=0,50 | n=1000 | run=4","entropy",0.50,1000,4,490854,39827,1061362,53
+"BubbleSort","reverse entropy | h=0,50 | n=1000 | run=1","reverse_entropy",0.50,1000,1,499500,462555,1924110,131
+"BubbleSort","reverse entropy | h=0,50 | n=1000 | run=2","reverse_entropy",0.50,1000,2,499500,464957,1928914,137
+"BubbleSort","reverse entropy | h=0,50 | n=1000 | run=3","reverse_entropy",0.50,1000,3,499500,464755,1928510,129
+"BubbleSort","reverse entropy | h=0,50 | n=1000 | run=4","reverse_entropy",0.50,1000,4,499500,462599,1924198,120
+"BubbleSort","entropy | h=0,75 | n=1000 | run=1","entropy",0.75,1000,1,498939,201198,1400274,129
+"BubbleSort","entropy | h=0,75 | n=1000 | run=2","entropy",0.75,1000,2,499290,213318,1425216,72
+"BubbleSort","entropy | h=0,75 | n=1000 | run=3","entropy",0.75,1000,3,499094,205718,1409624,69
+"BubbleSort","entropy | h=0,75 | n=1000 | run=4","entropy",0.75,1000,4,499445,214240,1427370,98
+"BubbleSort","reverse entropy | h=0,75 | n=1000 | run=1","reverse_entropy",0.75,1000,1,499500,288652,1576304,113
+"BubbleSort","reverse entropy | h=0,75 | n=1000 | run=2","reverse_entropy",0.75,1000,2,499455,294826,1588562,113
+"BubbleSort","reverse entropy | h=0,75 | n=1000 | run=3","reverse_entropy",0.75,1000,3,499494,287830,1574648,123
+"BubbleSort","reverse entropy | h=0,75 | n=1000 | run=4","reverse_entropy",0.75,1000,4,499485,292864,1584698,181
