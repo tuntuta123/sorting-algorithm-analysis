@@ -1,54 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="algotris" default="run" basedir=".">
-    <property name="src.dir"   value="src"/>
-    <property name="build.dir" value="build"/>
-    <property name="jar.file"  value="algotris.jar"/>
-    <property name="junit.jar" value="lib/junit-platform-console-standalone-1.10.2.jar"/>
+    <!-- Define project properties -->
+    <property name="src.dir"   value="src"/> <!-- Source directory -->
+    <property name="build.dir" value="build"/> <!-- Build output directory -->
+    <property name="jar.file"  value="algotris.jar"/> <!-- Name of the output JAR file -->
+    <property name="junit.jar" value="lib/junit-platform-console-standalone-1.10.2.jar"/> <!-- JUnit jar for testing -->
+    <property name="javadoc.dir" value="docs/javadoc"/> <!-- Javadoc output directory -->
 
+    <!-- Clean target: Deletes the build directory to start fresh -->
     <target name="clean">
+        <!-- Delete the build directory and its contents -->
         <delete dir="${build.dir}"/>
+        <delete dir="${javadoc.dir}"/> <!-- Clean the Javadoc directory as well -->
     </target>
 
+    <!-- Compile target: Compiles the Java source files -->
     <target name="compile" depends="clean">
+        <!-- Create the build directory if it doesn't exist -->
         <mkdir dir="${build.dir}"/>
+        
+        <!-- Compile the Java source files from the src directory -->
         <javac
             srcdir="${src.dir}"
             destdir="${build.dir}"
             includeantruntime="false">
+            <!-- Add JUnit jar to the classpath for compilation -->
             <classpath>
                 <pathelement path="${junit.jar}"/>
             </classpath>
         </javac>
     </target>
 
+    <!-- Javadoc target: Generates Javadoc from the source code -->
+    <target name="javadoc" depends="compile">
+        <!-- Create the directory for Javadoc if it doesn't exist -->
+        <mkdir dir="${javadoc.dir}"/>
+        
+        <!-- Run Javadoc tool to generate the documentation -->
+        <javadoc
+            sourcepath="${src.dir}"
+            destdir="${javadoc.dir}"
+            classpath="${build.dir}:${junit.jar}" >
+            <!-- Optionally add additional Javadoc options here -->
+            <arg value="-d"/>
+            <arg value="${javadoc.dir}"/>
+            <arg value="-author"/>
+            <arg value="-version"/>
+        </javadoc>
+        
+        <!-- Echo message indicating Javadoc was generated -->
+        <echo>Javadoc generated in ${javadoc.dir}</echo>
+    </target>
+
+    <!-- Jar target: Creates a JAR file from the compiled classes -->
     <target name="jar" depends="compile">
+        <!-- Create the dist directory if it doesn't exist -->
         <mkdir dir="dist"/>
+        
+        <!-- Create the JAR file with the compiled classes -->
         <jar destfile="dist/${jar.file}" basedir="${build.dir}">
+            <!-- Define the main class in the manifest file -->
             <manifest>
                 <attribute name="Main-Class" value="view.menu.MainMenu"/>
             </manifest>
         </jar>
+        
+        <!-- Echo message indicating the JAR file was created -->
         <echo>algotris.jar created.</echo>
     </target>
 
-    <!-- RUN APPLICATION -->
+    <!-- Run target: Executes the main class of the application -->
     <target name="run" depends="jar">
+        <!-- Run the application with the specified classpath and main class -->
         <java fork="true" classname="view.menu.MainMenu">
             <classpath>
+                <!-- Add the JAR file to the classpath -->
                 <pathelement path="dist/${jar.file}"/>
             </classpath>
         </java>
     </target>
 
-    <!-- RUN TESTS -->
+    <!-- Test target: Runs the unit tests using JUnit -->
     <target name="test" depends="compile">
+        <!-- Run the JUnit ConsoleLauncher to run the tests -->
         <java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
             <classpath>
+                <!-- Add build directory to the classpath for test classes -->
                 <pathelement path="${build.dir}"/>
+                <!-- Add JUnit jar to the classpath for running tests -->
                 <pathelement path="${junit.jar}"/>
             </classpath>
+            <!-- Scan the classpath for test classes -->
             <arg value="--scan-classpath"/>
+            <!-- Specify the classpath for tests -->
             <arg value="--classpath=${build.dir}"/>
+            <!-- Provide verbose test results -->
             <arg value="--details=verbose"/>
         </java>
     </target>

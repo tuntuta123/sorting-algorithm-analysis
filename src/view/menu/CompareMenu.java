@@ -1,6 +1,7 @@
 package view.menu;
 
 import view.window.CompareWindow;
+import util.AppConfig;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
@@ -48,10 +49,9 @@ public class CompareMenu extends AbstractMenu {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(25, 80, 25, 80));
 
         algoComboBox1 = makeComboBox(ALGORITHMS);
-        algoComboBox1.setSelectedIndex(0);
-
-        algoComboBox2 = makeComboBox(ALGORITHMS);
-        algoComboBox2.setSelectedIndex(1);
+	algoComboBox1.setSelectedItem(AppConfig.getAlgorithm());
+	algoComboBox2 = makeComboBox(ALGORITHMS);
+	algoComboBox2.setSelectedItem(AppConfig.getAlgorithm2());
 
         algoComboBox2.setRenderer(new BasicComboBoxRenderer() {
             @Override
@@ -74,16 +74,17 @@ public class CompareMenu extends AbstractMenu {
         algoComboBox2.addActionListener(e -> skipBlockedItem());
 
         generatorComboBox = makeComboBox(GENERATORS);
+	generatorComboBox.setSelectedItem(AppConfig.getGenerator());
 
         entropyLabel = makeFieldLabel("Enter Entropy (0.0 - 1.0):");
-        entropyField = new JTextField();
+        entropyField = new JTextField(String.valueOf(AppConfig.getEntropy()));
         entropyField.setMaximumSize(new Dimension(250, 35));
         entropyField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
 	sizeLabel = makeFieldLabel("Choose size of the list:");
-	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 5, 300, 10));
+	sizeSpinner = new JSpinner(new SpinnerNumberModel(AppConfig.getArraySize(), 5, 300, 10));
         sizeSpinner.setMaximumSize(new Dimension(250, 35));
         sizeSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
 	

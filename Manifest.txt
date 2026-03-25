@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: Mehmet Tuna Ozkalkanli, Mila Bucevska, Andrea Gjoreska
+Main-Class: view.menu.MainMenu
+

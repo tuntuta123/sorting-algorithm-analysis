@@ -22,7 +22,7 @@ public class StatsWindow extends JFrame {
     public StatsWindow(SortStats... stats) {
         setTitle("Performance Statistics");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         buildUI(stats);
         setVisible(true);

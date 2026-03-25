@@ -1,6 +1,7 @@
 package view.window;
 
 import view.menu.MainMenu;
+import util.AppConfig;
 import javax.swing.*;
 import java.awt.*;
 
@@ -74,7 +75,7 @@ public abstract class AbstractVisualizer extends JFrame implements VisualizerInt
         sizeSpinner.addChangeListener(e -> onSizeChanged((int) sizeSpinner.getValue()));
 
         JLabel speedLabel = new JLabel("Speed:");
-        speedSlider = new JSlider(1, 100, initialSize);
+        speedSlider = new JSlider(1, 100, AppConfig.getAnimationSpeed());
         speedSlider.setPreferredSize(new Dimension(160, 30));
 
         controls.add(startBtn);

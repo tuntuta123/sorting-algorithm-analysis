@@ -1,0 +1,6 @@
+algorithm=Bubble Sort
+algorithm2=Insertion Sort
+generator=Entropy
+entropy=0.5
+array_size=50
+animation_speed=50

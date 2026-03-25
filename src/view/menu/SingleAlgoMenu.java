@@ -1,6 +1,7 @@
 package view.menu;
 
 import view.window.VisualizerWindow;
+import util.AppConfig;
 import javax.swing.*;
 import java.awt.*;
 
@@ -45,17 +46,19 @@ public class SingleAlgoMenu extends AbstractMenu {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 
         algoComboBox = makeComboBox(ALGORITHMS);
-        generatorComboBox = makeComboBox(GENERATORS);
+	algoComboBox.setSelectedItem(AppConfig.getAlgorithm());
+	generatorComboBox = makeComboBox(GENERATORS);
+	generatorComboBox.setSelectedItem(AppConfig.getGenerator());
 
         entropyLabel = makeFieldLabel("Enter Entropy (0.0 - 1.0):");
-        entropyField = new JTextField();
+        entropyField = new JTextField(String.valueOf(AppConfig.getEntropy()));
         entropyField.setMaximumSize(new Dimension(250, 35));
         entropyField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         wireEntropyVisibility(generatorComboBox, entropyLabel, entropyField);
 
 	sizeLabel = makeFieldLabel("Choose size of the list:");
-	sizeSpinner = new JSpinner(new SpinnerNumberModel(50, 5, 300, 10));
+	sizeSpinner = new JSpinner(new SpinnerNumberModel(AppConfig.getArraySize(), 5, 300, 10));
         sizeSpinner.setMaximumSize(new Dimension(250, 35));
         sizeSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
 
