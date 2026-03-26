@@ -1,72 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="algotris" default="run" basedir=".">
-    <!-- Define project properties -->
-    <property name="src.dir"   value="src"/>
-    <property name="build.dir" value="build"/> 
-    <property name="jar.file"  value="algotris.jar"/> 
-    <property name="junit.jar" value="lib/junit-platform-console-standalone-1.10.2.jar"/> 
-    <property name="javadoc.dir" value="docs/javadoc"/> 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
-        <delete dir="${javadoc.dir}"/> 
 
-    <target name="compile" depends="clean">
-        <mkdir dir="${build.dir}"/>
-       
-        <javac
-            srcdir="${src.dir}"
-            destdir="${build.dir}"
-            includeantruntime="false">
-            <classpath>
-                <pathelement path="${junit.jar}"/>
-            </classpath>
-        </javac>
-    </target>
+    	<property name="src.dir" value="src"/>
+    	<property name="build.dir" value="build"/>
+    	<property name="jar.file" value="algotris.jar"/>
+    	<property name="junit.jar" value="lib/junit-platform-console-standalone-1.10.2.jar"/>
+    	<property name="javadoc.dir" value="docs/javadoc"/>
+    	<property name="main.class" value="view.menu.MainMenu"/>
+    	<property name="benchmark.class" value="benchmark.BenchmarkRunner"/>
 
-    <target name="javadoc" depends="compile">
-        <mkdir dir="${javadoc.dir}"/>
-        
-        <javadoc
-            sourcepath="${src.dir}"
-            destdir="${javadoc.dir}"
-            classpath="${build.dir}:${junit.jar}" >
-            <arg value="-d"/>
-            <arg value="${javadoc.dir}"/>
-            <arg value="-author"/>
-            <arg value="-version"/>
-        </javadoc>
-        
-        <echo>Javadoc generated in ${javadoc.dir}</echo>
-    </target>
-    <target name="jar" depends="compile">
-        <mkdir dir="dist"/>
-       
-        <jar destfile="dist/${jar.file}" basedir="${build.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="view.menu.MainMenu"/>
-            </manifest>
-        </jar>
-        
-        <echo>algotris.jar created.</echo>
-    </target>
+    	<target name="clean">
+        	<delete dir="${build.dir}"/>
+        	<delete dir="${javadoc.dir}"/>
+        	<delete dir="dist"/>
+    	</target>
 
-    <target name="run" depends="jar">
-        <java fork="true" classname="view.menu.MainMenu">
-            <classpath>
-                <pathelement path="dist/${jar.file}"/>
-            </classpath>
-        </java>
-    </target>
+    	<target name="compile" depends="clean">
+        	<mkdir dir="${build.dir}"/>
 
-    <target name="test" depends="compile">
-        <java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-            <classpath>
-                <pathelement path="${build.dir}"/>
-                <pathelement path="${junit.jar}"/>
-            </classpath>
-            <arg value="--scan-classpath"/>
-            <arg value="--details=verbose"/>
-        </java>
-    </target>
+        	<javac
+            		srcdir="${src.dir}"
+            		destdir="${build.dir}"
+            		includeantruntime="false">
+            		<classpath>
+                		<pathelement path="${junit.jar}"/>
+            		</classpath>
+        	</javac>
+    	</target>
+
+    	<target name="javadoc" depends="compile">
+        	<mkdir dir="${javadoc.dir}"/>
+
+        	<javadoc
+            		sourcepath="${src.dir}"
+            		destdir="${javadoc.dir}"
+            		classpath="${build.dir}:${junit.jar}">
+            		<arg value="-author"/>
+            		<arg value="-version"/>
+        	</javadoc>
+
+        	<echo>Javadoc generated in ${javadoc.dir}</echo>
+    	</target>
+
+    	<target name="jar" depends="compile">
+        	<mkdir dir="dist"/>
+
+        	<jar destfile="dist/${jar.file}" basedir="${build.dir}">
+            		<manifest>
+                		<attribute name="Main-Class" value="${main.class}"/>
+            		</manifest>
+        	</jar>
+
+        	<echo>algotris.jar created.</echo>
+    	</target>
+
+    	<target name="run" depends="jar">
+        	<java fork="true" classname="${main.class}">
+            		<classpath>
+                		<pathelement path="dist/${jar.file}"/>
+            		</classpath>
+        	</java>
+    	</target>
+
+    	<target name="benchmark" depends="compile">
+        	<java fork="true" classname="${benchmark.class}">
+            		<classpath>
+                		<pathelement path="${build.dir}"/>
+                		<pathelement path="${junit.jar}"/>
+            		</classpath>
+        	</java>
+    	</target>
+
+    	<target name="test" depends="compile">
+        	<java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
+            		<classpath>
+                		<pathelement path="${build.dir}"/>
+                		<pathelement path="${junit.jar}"/>
+            		</classpath>
+            		<arg value="--scan-classpath"/>
+            		<arg value="--details=verbose"/>
+        	</java>
+    	</target>
 
 </project>

@@ -1,15 +1,27 @@
 
-	//input = size 
-	//generator does its thing
-	//function generate
-	//abstract class for the init
-
 package generator;
 
 import java.util.*;
-
+/**
+ * Common interface for all number generators.
+ */
 public interface NumberGenerator{
+	/**
+	 * Returns the generated list.
+	 *
+	 * @return generated list
+	 */
 	List<Integer> getList();
-    	boolean isSorted();
-    	int getSize();
+	/**
+	 * Checks whether the generated list is sorted.
+	 *
+	 * @return true if sorted, false otherwise
+	 */
+    boolean isSorted();
+	/**
+    * Returns the size of the generated list.
+    *
+    * @return list size
+    */
+    int getSize();
 }

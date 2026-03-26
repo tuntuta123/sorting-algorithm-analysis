@@ -2,6 +2,11 @@ package generator;
 
 import java.util.*;
 
+/**
+ * Generator that starts from a reverse-sorted list and applies
+ * entropy-controlled displacement.
+ */
+
 public class ReverseEntropyGenerator extends AbstractGenerator {
 
     	private final double targetEntropy;
@@ -9,6 +14,14 @@ public class ReverseEntropyGenerator extends AbstractGenerator {
 
     	private int lastDisplaced = -1; //how many elems were changed in the last list
     	private double lastEntropy = -1; //entropy val of list - NOT EQUAL WITH TARGET ENTROPY !!!
+
+		/**
+     	 * Creates a reverse-entropy generator.
+     	 *
+     	 * @param targetEntropy desired entropy value in [0,1]
+     	 * @param size size of the list to generate
+     	 * @throws IllegalArgumentException if targetEntropy is outside [0,1]
+     	 */
 
     	public ReverseEntropyGenerator(double targetEntropy, int size) {
         	super(size);
@@ -21,13 +34,32 @@ public class ReverseEntropyGenerator extends AbstractGenerator {
         	init();
     	}	
 
+		/**
+     	 * Returns how many elements were displaced in the last generated list.
+     	 *
+     	 * @return number of displaced elements
+     	 */
+
     	public int getLastDisplaced() {
         	return lastDisplaced;
     	}
+		
+		/**
+     	 * Returns the actual entropy of the last generated list.
+     	 *
+     	 * @return entropy value of the generated list
+     	 */
 
     	public double getLastEntropy() {
         	return lastEntropy;
     	}
+
+		/**
+     	 * Generates a list starting from reverse order, then applies
+     	 * a cyclic displacement on randomly chosen indices.
+     	 *
+     	 * @return a list with a disorder level close to the target entropy
+     	 */
 
     	@Override
     	protected List<Integer> generate() {
@@ -92,6 +124,15 @@ public class ReverseEntropyGenerator extends AbstractGenerator {
         	return list;
     	}
 
+		/**
+     	 * Finds the number of displaced elements that best matches
+     	 * the requested entropy.
+     	 *
+     	 * @param n size of the list
+     	 * @param target target entropy
+     	 * @return best displacement count for the given target
+     	 */
+
     	private int bestDisplacedCount(int n, double target) {
 
         	int bestD = 0;
@@ -117,6 +158,13 @@ public class ReverseEntropyGenerator extends AbstractGenerator {
     		}
         	return bestD;
     	}
+
+		/**
+     	 * Computes the binary Shannon entropy for a proportion p.
+     	 *
+     	 * @param p proportion of displaced elements
+     	 * @return binary Shannon entropy
+     	 */
 
     	protected double shannon(double p) {
         	double q = 1.0 - p;
