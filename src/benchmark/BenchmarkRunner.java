@@ -8,8 +8,20 @@ import util.*;
 
 import java.util.*;
 
+/**
+ * Main class responsible for running sorting benchmarks.
+ * It generates different configurations, executes sorting algorithms,
+ * collects statistics, and exports results to a CSV file.
+ */
+
 public class BenchmarkRunner {
 
+	/**
+	 * Entry point of the benchmark execution.
+	 * Runs all configurations and exports results to results.csv.
+	 *
+	 * @param args command line arguments (not used)
+	 */
 	public static void main(String[] args) {
 
         	List<BenchmarkConfig> configs = buildConfigs();
@@ -55,7 +67,12 @@ public class BenchmarkRunner {
         	CsvExporter.exportSummary("results.csv", results);
         	System.out.println("benchmarks completed.");
     	}
-
+	/**
+	 * Builds the list of benchmark configurations to execute.
+	 * Combines algorithms, input sizes, entropy values, and generator types.
+	 *
+	 * @return list of benchmark configurations
+	 */
 	private static List<BenchmarkConfig> buildConfigs() {
         	List<BenchmarkConfig> configs = new ArrayList<>();
 
@@ -93,6 +110,16 @@ public class BenchmarkRunner {
         	return configs;
     	}
 
+		/**
+	 * Generates input data according to the given generator type.
+	 *
+	 * @param generatorType type of generator (random, entropy, reverse_entropy)
+	 * @param size size of the list
+	 * @param entropy entropy value (if applicable)
+	 * @return generated list of integers
+	 * @throws IllegalArgumentException if generator type is unknown
+	 */
+
     	private static List<Integer> buildData(String generatorType, int size, double entropy) {
         	if (generatorType.equals("random")) {
             		return new ArrayList<>(new RandomGenerator(size).getList());
@@ -108,6 +135,13 @@ public class BenchmarkRunner {
         	}
     	}
 
+		/**
+	 * Builds a readable label describing the generator configuration.
+	 *
+	 * @param config benchmark configuration
+	 * @param run current repetition index
+	 * @return formatted label string
+	 */
     	private static String buildGeneratorLabel(BenchmarkConfig config, int run) {
     		String type = config.getGeneratorType();
     		int size = config.getSize();
@@ -127,6 +161,14 @@ public class BenchmarkRunner {
         		return "unknown | n=" + size + " | run=" + run;
     		}
 	}
+
+		/**
+	 * Executes the selected sorting algorithm on the given data.
+	 *
+	 * @param algorithmName name of the sorting algorithm
+	 * @param data list to sort
+	 * @throws IllegalArgumentException if algorithm is unknown
+	 */
 
     	private static void runAlgorithm(String algorithmName, List<Integer> data) {
         	switch (algorithmName) {
