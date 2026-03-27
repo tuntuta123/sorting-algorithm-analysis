@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"benchmark"},{"l":"controller"},{"l":"export"},{"l":"generator"},{"l":"model"},{"l":"sorting"},{"l":"test.generator"},{"l":"test.model"},{"l":"test.sorting"},{"l":"util"},{"l":"view.components"},{"l":"view.menu"},{"l":"view.window"}];updateSearchResults();
