@@ -122,6 +122,7 @@ public class CompareController {
             if (visListener2 != null) 
             	visListener2.pause();
             view.onPaused();
+            
         }
     }
 
@@ -189,20 +190,32 @@ public class CompareController {
 	/**
      * Builds the appropriate generator based on the genType field.
      *
-     * @return a RandomGenerator or EntropyGenerator depending on the config
+     * @return a RandomGenerator, EntropyGenerator or ReverseEntropyGenerator depending on the config
      */
     private NumberGenerator buildGenerator() {
-        return "Random".equals(genType)
-                ? new RandomGenerator(arraySize)
-                : new EntropyGenerator(entropy, arraySize);
+    	if("Random".equals(genType)){
+    		return new RandomGenerator(arraySize);
+    	}
+        else if ("Entropy".equals(genType)){
+                return new EntropyGenerator(entropy, arraySize);
+        } else {
+        	return new ReverseEntropyGenerator(entropy, arraySize);
+        }
     }
 
 	/**
      * Returns a label for the generator, used in stats.
      *
-     * @return "Random" or "Entropy X.X" depending on the configuration
+     * @return "Random", "Entropy X.X" or "Reverse Entropy X.X" depending on the configuration
      */
     private String genLabel() {
-        return "Random".equals(genType) ? "Random" : "Entropy " + entropy;
+        if("Random".equals(genType)){
+    		return "Random";
+    	}
+        else if ("Entropy".equals(genType)){
+                return "Entropy " + entropy;
+        } else {
+        	return "Reverse Entropy " + entropy;
+        }
     }
 }

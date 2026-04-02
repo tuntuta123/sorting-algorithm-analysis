@@ -122,6 +122,8 @@ public class CompareWindow extends AbstractVisualizer {
     @Override
     public void startSorting() { 
     	controller.start(); 
+    	liveStatsPanel1.resume();
+    	liveStatsPanel2.resume();
     }
 
     /**
@@ -130,6 +132,8 @@ public class CompareWindow extends AbstractVisualizer {
     @Override
     public void togglePause(){ 
     	controller.pause(); 
+    	liveStatsPanel1.pause();
+    	liveStatsPanel2.pause();
     }
 
     /**

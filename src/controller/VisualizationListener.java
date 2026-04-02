@@ -50,6 +50,7 @@ public class VisualizationListener implements Listener {
      */
     @Override
     public void onComparison(int i1, int i2, int v1, int v2) {
+    	if (Thread.currentThread().isInterrupted()) return;
         highlight(i1, i2);
         checkPauseAndDelay();
     }
@@ -59,6 +60,7 @@ public class VisualizationListener implements Listener {
      */
     @Override
     public void onSwap(int i1, int i2, int v1, int v2) {
+    	if (Thread.currentThread().isInterrupted()) return;
         highlight(i1, i2);
         checkPauseAndDelay();
     }

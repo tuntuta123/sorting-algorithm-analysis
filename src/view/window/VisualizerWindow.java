@@ -99,6 +99,7 @@ public class VisualizerWindow extends AbstractVisualizer {
     @Override
     public void startSorting(){ 
     	controller.start(); 
+    	liveStatsPanel.resume();
     }
 
     /**
@@ -107,6 +108,7 @@ public class VisualizerWindow extends AbstractVisualizer {
     @Override
     public void togglePause(){ 
     	controller.pause(); 
+    	liveStatsPanel.pause();
     }
     
     /**
@@ -180,5 +182,9 @@ public class VisualizerWindow extends AbstractVisualizer {
         pauseBtn.setEnabled(false);
         resetBtn.setEnabled(true);
         statsBtn.setEnabled(true);
+    }
+    
+    public BarPanel getBarPanel(){
+    	return this.barPanel;
     }
 }

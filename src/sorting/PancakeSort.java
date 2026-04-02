@@ -23,11 +23,11 @@ public class PancakeSort {
             SortingListener.notifyAccess(l, vl);
             int vk = list.get(k); 
             SortingListener.notifyAccess(k, vk);
-            SortingListener.notifySwap(l, k, vl, vk);
             list.set(l, vk); 
             SortingListener.notifyAccess(l, vk);
             list.set(k, vl); 
             SortingListener.notifyAccess(k, vl);
+            SortingListener.notifySwap(l, k, vl, vk);
             k--;
         }
     }

@@ -17,6 +17,8 @@ public class LiveStatsPanel extends JPanel {
 
     private SortStats stats;
     private Timer refreshTimer;
+	private long pausedAt = -1;
+	private long totalPausedTime = 0;
 
     private static final Color BG = new Color(45, 52, 62);
     private static final Color FG = new Color(200, 220, 255);
@@ -66,12 +68,14 @@ public class LiveStatsPanel extends JPanel {
      * Stops the timer and resets all labels back to their default state.
      */
     public void reset() {
-        refreshTimer.stop();
-        comparisonsLabel.setText("Comparisons: -");
-        swapsLabel.setText("Swaps: -");
-        accessesLabel.setText("Accesses: -");
-        timeLabel.setText("Time: -");
-    }
+		refreshTimer.stop();
+		pausedAt = -1;
+		totalPausedTime = 0;
+		comparisonsLabel.setText("Comparisons: -");
+		swapsLabel.setText("Swaps: -");
+		accessesLabel.setText("Accesses: -");
+		timeLabel.setText("Time: -");
+	}
 
     /**
      * Reads the latest values from stats and updates all labels, oterwise does nothing if stats is null.
@@ -82,7 +86,7 @@ public class LiveStatsPanel extends JPanel {
             comparisonsLabel.setText("Comparisons: " + String.format("%,d", stats.getComparisons()));
             swapsLabel.setText("Swaps: " + String.format("%,d", stats.getSwaps()));
             accessesLabel.setText("Accesses: " + String.format("%,d", stats.getAccesses()));
-            timeLabel.setText("Time: " + stats.getElapsedMs() + " ms");
+            timeLabel.setText("Time: " + (stats.getElapsedMs() - totalPausedTime) + " ms");
         });
     }
 
@@ -98,4 +102,26 @@ public class LiveStatsPanel extends JPanel {
         label.setForeground(FG);
         return label;
     }
+    
+    /**
+     * Pauses the timer and refreshes the live statistics.
+     *
+     */
+    public void pause() {
+	    refreshTimer.stop();
+	    pausedAt = System.currentTimeMillis();
+	    refresh();
+	}
+
+	/**
+     * Resumes the timer.
+     *
+     */
+	public void resume() {
+	    if (pausedAt >= 0) {
+			totalPausedTime += System.currentTimeMillis() - pausedAt;
+			pausedAt = -1;
+	    }
+	    refreshTimer.start();
+	}
 }

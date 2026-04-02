@@ -63,8 +63,8 @@ public class QuickSort {
             if (vj < pivot) {
                 i++;
                 int vi = list.get(i); 
-                SortingListener.notifyAccess(i, vi);
                 SortingListener.notifySwap(i, j, vi, vj);
+                SortingListener.notifyAccess(i, vi);
                 list.set(i, vj); 
                 SortingListener.notifyAccess(i, vj);
                 list.set(j, vi); 
@@ -73,8 +73,8 @@ public class QuickSort {
         }
 
         int vi1 = list.get(i + 1); 
-        SortingListener.notifyAccess(i + 1, vi1);
         SortingListener.notifySwap(i + 1, high, vi1, pivot);
+        SortingListener.notifyAccess(i + 1, vi1);
         list.set(i + 1, pivot); 
         SortingListener.notifyAccess(i + 1, pivot);
         list.set(high,  vi1);   

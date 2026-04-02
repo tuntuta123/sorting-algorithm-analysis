@@ -117,4 +117,5 @@ public class BarPanel extends JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(900, 500);
     }
+    
 }

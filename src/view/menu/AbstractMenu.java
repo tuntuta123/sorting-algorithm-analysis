@@ -14,7 +14,7 @@ public abstract class AbstractMenu extends JFrame implements MenuInterface {
     protected static final Color ACCENT = new Color(0, 173, 181);
 
     protected static final String[] ALGORITHMS = {
-            "Comb Sort", "Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Bucket Sort", "Pancake Sort", "Cocktail Shaker Sort", "Purge Sort", "Bogo Sort"
+            "Comb Sort", "Bubble Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Bucket Sort", "Pancake Sort", "Cocktail Shaker Sort", "Bogo Sort"
     };
 
     protected static final String[] GENERATORS = { "Random", "Entropy", "Reverse Entropy" };
