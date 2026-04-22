@@ -153,7 +153,7 @@ public class EntropyGenerator extends AbstractGenerator {
 		    	}
         	}
         	
-        	if (target > 0.5) {
+        	if (target > 0.8) {
         		return n - bestD; //symmetry
     		}
         	return bestD;

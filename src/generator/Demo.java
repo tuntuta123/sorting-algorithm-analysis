@@ -22,25 +22,25 @@ public class Demo {
 
         int n = 100;
 
-        EntropyGenerator first  = new EntropyGenerator(1.0, n);
-        EntropyGenerator second  = new EntropyGenerator(0.2, n);
-        EntropyGenerator third = new EntropyGenerator(0.8, n);
-        EntropyGenerator fourth = new EntropyGenerator(0, n);
+        EntropyGenerator first  = new EntropyGenerator(0.75, n);
+        /*EntropyGenerator second  = new EntropyGenerator(0.25, n);
+        EntropyGenerator third = new EntropyGenerator(0.75, n);
+        EntropyGenerator fourth = new EntropyGenerator(0.5, n);
 
-        SortedGenerator sorted = new SortedGenerator(10);
+        SortedGenerator sorted = new SortedGenerator(10);*/
 
-        printEntropyList("1 ENTROPY LIST", 1.0, first);
-        printEntropyList("0.2 ENTROPY LIST", 0.2, second);
-        printEntropyList("0.8 ENTROPY LIST", 0.8, third);
-        printEntropyList("0 ENTROPY LIST", 0, fourth);
+        printEntropyList("1 ENTROPY LIST", 0.75, first);
+        /*printEntropyList("ENTROPY LIST", 0.25, second);
+        printEntropyList("ENTROPY LIST", 0.75, third);
+        printEntropyList("ENTROPY LIST", 0.5, fourth);
 	System.out.println("H(0.3) = " + first.shannon(0.3));
-	System.out.println("H(0.7) = " + first.shannon(0.7));
+	System.out.println("H(0.7) = " + first.shannon(0.7));*/
 	
-        System.out.println("==============================================");
+        /*System.out.println("==============================================");
         System.out.println("SORTED LIST");
         System.out.println("----------------------------------------------");
         System.out.println(sorted.getList());
-        System.out.println("==============================================");
+        System.out.println("==============================================");*/
     }
 }
 
