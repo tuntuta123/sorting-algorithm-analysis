@@ -33,19 +33,7 @@ Run tests:
 Generate javadoc:
     ant javadoc
 
-
-OUTPUT
-------
-- Compiled classes → build/
-- Executable JAR → dist/algotris.jar
-- Documentation → docs/javadoc/
-
-
 NOTES
 -----
 - Benchmark configs can be modified in src/benchmark/BenchmarkRunner.java
 - After running ant benchmark, the results are exported to results.csv in the project root directory.
-
-MAIN CLASS
-----------
-view.menu.MainMenu
